@@ -3,9 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.16331994645247658" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/activity_account_creation.xml" value="0.2" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/activity_login.xml" value="0.2164855072463768" />
+        <entry key="app/src/main/res/layout/activity_account_creation.xml" value="0.28020833333333334" />
+        <entry key="app/src/main/res/layout/activity_cuisine.xml" value="0.18885869565217392" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.22056159420289856" />
       </map>
     </option>
   </component>
