@@ -51,6 +51,9 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Checks if it is a valid username
+     * */
     // A placeholder username validation check
     private boolean isUserNameValid(String username) {
         if (username == null) {
@@ -63,6 +66,9 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Checks if it is a valid password
+     * */
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
