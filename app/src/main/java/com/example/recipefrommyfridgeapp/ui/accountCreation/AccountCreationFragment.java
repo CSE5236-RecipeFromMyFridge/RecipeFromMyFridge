@@ -20,6 +20,7 @@ public class AccountCreationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_account_creation, container, false);
+        Log.i("checkpoint2", "AccountCreationFragment.onCreateView()");
 
         final Button createAccountButton = v.findViewById(R.id.createAccount);
 

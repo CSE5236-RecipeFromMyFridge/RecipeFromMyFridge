@@ -33,6 +33,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
+        Log.i("checkpoint2", "LoginFragment.onCreateView()");
 
         final EditText usernameEditText = v.findViewById(R.id.email);
         final EditText passwordEditText = v.findViewById(R.id.password);
