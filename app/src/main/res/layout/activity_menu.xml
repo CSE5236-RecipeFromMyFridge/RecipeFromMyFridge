@@ -75,7 +75,6 @@
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/back_button"
-        app:layout_constraintEnd_toBottomOf="@id/menu_linear_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menu_linear_layout"/>
 
