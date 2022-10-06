@@ -17,5 +17,23 @@
     <string name="title_my_account">My Account</string>
     <string name="field_email">Email: </string>
     <string name="field_password">Password: </string>
+    <!-- Strings related to Menu -->
+    <string name="title_menu">Menu</string>
+    <string name="change_cuisine">Change Cuisine</string>
+    <string name="my_account">My Account</string>
+    <string name="setting">Setting</string>
+    <string name="back_button">Back</string>
+    <!-- Strings related to Cuisine -->
+    <string name="choose_cuisine">Choose Cuisine</string>
+    <string name="anhui_cuisine">Anhui 安徽菜</string>
+    <string name="cantonese_cuisine">Cantonese 粤菜</string>
+    <string name="fujian_cuisine">Fujian 福建菜</string>
+    <string name="hunan_cuisine">Hunan 湖南菜</string>
+    <string name="jiangsu_cuisine">Jiangsu 江苏菜</string>
+    <string name="shandong_cuisine">Shandong 山东菜</string>
+    <string name="szechuan_cuisine">Szechuan 四川菜</string>
+    <string name="zhejiang_cuisine">Zhejiang 浙江菜</string>
+    <string name="random">Choose one for me</string>
+    <string name="generate">Generate</string>
 
 </resources>

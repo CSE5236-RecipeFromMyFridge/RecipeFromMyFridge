@@ -8,11 +8,12 @@
     tools:context=".CuisineActivity">
 
     <TextView
+        android:id="@+id/choose_cuisine_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="24dp"
-        android:textSize="24dp"
-        android:text="Choose Cuisine"/>
+        android:textSize="24sp"
+        android:text="@string/choose_cuisine"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -23,11 +24,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anhui 安徽菜"/>
+            android:text="@string/anhui_cuisine"/>
 
         <CheckBox
+            android:id="@+id/anhui_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CheckBox>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
@@ -39,11 +41,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cantonese 粤菜"/>
+            android:text="@string/cantonese_cuisine"/>
 
         <CheckBox
+            android:id="@+id/cantonese_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CheckBox>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
@@ -55,11 +58,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fujian 福建菜"/>
+            android:text="@string/fujian_cuisine"/>
 
         <CheckBox
+            android:id="@+id/fujian_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CheckBox>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
@@ -71,11 +75,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hunan 湖南菜"/>
+            android:text="@string/hunan_cuisine"/>
 
         <CheckBox
+            android:id="@+id/hunan_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CheckBox>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
@@ -87,11 +92,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jiangsu 江苏菜"/>
+            android:text="@string/jiangsu_cuisine"/>
 
         <CheckBox
+            android:id="@+id/jiangsu_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CheckBox>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
@@ -103,11 +109,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shandong 山东菜"/>
+            android:text="@string/shandong_cuisine"/>
 
         <CheckBox
+            android:id="@+id/shandong_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CheckBox>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
@@ -119,11 +126,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Szechuan 四川菜"/>
+            android:text="@string/szechuan_cuisine"/>
 
         <CheckBox
+            android:id="@+id/szechuan_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CheckBox>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
@@ -135,11 +143,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zhejiang 浙江菜"/>
+            android:text="@string/zhejiang_cuisine"/>
 
         <CheckBox
+            android:id="@+id/zhejiang_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CheckBox>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
@@ -151,16 +160,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose one for me"/>
+            android:text="@string/random"/>
 
         <CheckBox
+            android:id="@+id/random_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></CheckBox>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:text="Generate"></Button>
+        android:gravity="end"
+        android:text="@string/generate"/>
 </LinearLayout>
