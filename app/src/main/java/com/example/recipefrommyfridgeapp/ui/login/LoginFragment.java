@@ -1,5 +1,6 @@
 package com.example.recipefrommyfridgeapp.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,9 +24,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
-import com.example.recipefrommyfridgeapp.ui.accountCreation.AccountCreationFragment;
+import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientActivity;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements View.OnClickListener{
 
     private LoginViewModel loginViewModel;
 
@@ -130,7 +131,7 @@ public class LoginFragment extends Fragment {
         });
 
         //TODO: inflate with some resource that guests should see after login
-//        guestAccountButton.setOnClickListener(view -> getLayoutInflater().inflate(), null);
+        guestAccountButton.setOnClickListener(this);
         return v;
     }
 
@@ -178,5 +179,12 @@ public class LoginFragment extends Fragment {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.guestAccount){
+            startActivity(new Intent(requireContext(), ChooseIngredientActivity.class));
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.recipefrommyfridgeapp.ui.chooseingredient;
+package com.example.recipefrommyfridgeapp.ui.ingredient;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.recipefrommyfridgeapp.R;
-import com.example.recipefrommyfridgeapp.ui.chooseingredient.IngredientsExpandableListAdapter;
 
 import java.util.HashMap;
 import java.util.Map;

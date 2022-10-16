@@ -1,4 +1,4 @@
-package com.example.recipefrommyfridgeapp.ui.chooseingredient;
+package com.example.recipefrommyfridgeapp.ui.ingredient;
 
 import android.content.Context;
 import android.util.Log;

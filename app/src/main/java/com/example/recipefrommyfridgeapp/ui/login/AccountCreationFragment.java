@@ -1,4 +1,4 @@
-package com.example.recipefrommyfridgeapp.ui.accountCreation;
+package com.example.recipefrommyfridgeapp.ui.login;
 
 import android.content.Context;
 import android.os.Bundle;

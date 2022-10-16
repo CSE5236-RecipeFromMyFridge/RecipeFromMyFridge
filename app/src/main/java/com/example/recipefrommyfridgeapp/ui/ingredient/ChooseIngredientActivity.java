@@ -1,9 +1,8 @@
-package com.example.recipefrommyfridgeapp.ui.chooseingredient;
+package com.example.recipefrommyfridgeapp.ui.ingredient;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.recipefrommyfridgeapp.SingleFragmentActivity;
-import com.example.recipefrommyfridgeapp.ui.chooseingredient.ChooseIngredientFragment;
 
 public class ChooseIngredientActivity extends SingleFragmentActivity {
 
