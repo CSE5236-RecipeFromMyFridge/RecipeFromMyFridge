@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <CheckedTextView
+        android:id="@+id/ingredient_checkmark"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
+        android:checkMark="@drawable/ic_checkmark"
+        android:checked="false"
+        android:gravity="center_vertical"
+        android:text="Placeholder for ingredient name" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
