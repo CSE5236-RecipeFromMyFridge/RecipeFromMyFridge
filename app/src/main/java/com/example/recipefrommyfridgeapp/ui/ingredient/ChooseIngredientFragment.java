@@ -1,15 +1,18 @@
 package com.example.recipefrommyfridgeapp.ui.ingredient;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.recipefrommyfridgeapp.CuisineActivity;
 import com.example.recipefrommyfridgeapp.R;
 
 import java.util.HashMap;
@@ -29,9 +32,12 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
         ingredientMap.put("Meat", new String[]{"Chicken", "Beef", "Lamb", "Pork"});
         ingredientMap.put("Dairy", new String[]{"Milk", "Yogurt", "Cheese", "Soy Milk"});
 
-        ExpandableListView expandableListView = v.findViewById(R.id.expandable_list_choose_ingredients);
-        IngredientsExpandableListAdapter ingredientsExpandableListAdapter = new IngredientsExpandableListAdapter(v.getContext(), ingredientMap, ingredientGroup);
+        final ExpandableListView expandableListView = v.findViewById(R.id.expandable_list_choose_ingredients);
+        final IngredientsExpandableListAdapter ingredientsExpandableListAdapter = new IngredientsExpandableListAdapter(v.getContext(), ingredientMap, ingredientGroup);
         expandableListView.setAdapter(ingredientsExpandableListAdapter);
+
+        final Button chooseCuisineButton = v.findViewById(R.id.button_choose_cuisine);
+        chooseCuisineButton.setOnClickListener(this);
 
         return v;
     }
@@ -39,9 +45,10 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.expandable_list_choose_ingredients:
-//                break;
-//            default:
+            case R.id.button_choose_cuisine:
+                startActivity(new Intent(requireContext(), CuisineActivity.class));
+                break;
+            default:
         }
     }
 }
