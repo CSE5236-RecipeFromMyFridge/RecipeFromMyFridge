@@ -3,10 +3,32 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_account_creation.xml" value="0.28020833333333334" />
-        <entry key="app/src/main/res/layout/activity_cuisine.xml" value="0.18885869565217392" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.22056159420289856" />
-        <entry key="app/src/main/res/layout/activity_menu.xml" value="0.28020833333333334" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.16331994645247658" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout-w1240dp/fragment_login.xml" value="0.1" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout-w936dp/activity_login.xml" value="0.190625" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/activity_account_creation.xml" value="0.2" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/activity_cuisine.xml" value="0.11302083333333333" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/activity_fragment.xml" value="0.11302083333333333" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/activity_login.xml" value="0.2164855072463768" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/activity_my_account.xml" value="0.2" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/fragment_account_creation.xml" value="0.11302083333333333" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/fragment_change_password.xml" value="0.11302083333333333" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/fragment_login.xml" value="0.11302083333333333" />
+        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridgeApp/app/src/main/res/layout/try.xml" value="0.25416666666666665" />
+        <entry key="app/src/main/res/layout/activity_choose_ingredient.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_choose_recipe.xml" value="0.17798913043478262" />
+        <entry key="app/src/main/res/layout/activity_cuisine.xml" value="0.14739583333333334" />
+        <entry key="app/src/main/res/layout/activity_fragment.xml" value="0.14739583333333334" />
+        <entry key="app/src/main/res/layout/activity_menu.xml" value="0.10638297872340426" />
+        <entry key="app/src/main/res/layout/activity_my_account.xml" value="0.18811543782552084" />
+        <entry key="app/src/main/res/layout/fragment_account_creation.xml" value="0.17135416666666667" />
+        <entry key="app/src/main/res/layout/fragment_checkbox_ingredient.xml" value="0.21875" />
+        <entry key="app/src/main/res/layout/fragment_container.xml" value="0.21875" />
+        <entry key="app/src/main/res/layout/fragment_expandable_group_ingredient.xml" value="0.21875" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.17135416666666667" />
+        <entry key="app/src/main/res/layout/fragment_recipe.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_recipe_list.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/list_item_recipe.xml" value="0.17028985507246377" />
       </map>
     </option>
   </component>
