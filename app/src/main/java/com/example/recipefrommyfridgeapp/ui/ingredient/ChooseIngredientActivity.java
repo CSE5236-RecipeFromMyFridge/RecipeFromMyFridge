@@ -1,4 +1,4 @@
-package com.example.recipefrommyfridgeapp.ui.ingredient;
+    package com.example.recipefrommyfridgeapp.ui.ingredient;
 
 import androidx.fragment.app.Fragment;
 

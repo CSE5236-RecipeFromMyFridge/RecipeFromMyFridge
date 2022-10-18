@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "353612521843",
+    "project_id": "recipefrommyfridge",
+    "storage_bucket": "recipefrommyfridge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353612521843:android:c740efe1e76fb283272506",
+        "android_client_info": {
+          "package_name": "com.example.recipefrommyfridgeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353612521843-aklvl6h75l4jmeb78dd974htrm51eed6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLLmupaY0jehLOvTrPHT0MSEKOgKxJP5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353612521843-aklvl6h75l4jmeb78dd974htrm51eed6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
