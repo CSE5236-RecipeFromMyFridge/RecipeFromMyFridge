@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">RecipeFromMyFridgeApp</string>
+    <string name="app_name">Recipe From My Fridge App</string>
     <!-- Strings related to login -->
     <string name="app_front_page">Recipe From Fridge</string>
     <string name="app_description">Save Time and Be Creative</string>
     <string name="prompt_email">Email</string>
+    <string name="prompt_user_name">User Name</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_confirm_password">Confirm Password</string>
     <string name="action_sign_in">Login</string>
@@ -14,6 +15,8 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="back">Back</string>
+    <string name= "successful_registration">User has been registered successfully!</string>
     <!-- Strings related to MyAccount -->
     <string name="action_change_password">Change Password</string>
     <string name="title_my_account">My Account</string>

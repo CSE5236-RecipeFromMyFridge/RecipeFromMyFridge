@@ -3,19 +3,33 @@ package com.example.recipefrommyfridgeapp.ui.login;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.recipefrommyfridgeapp.R;
+import com.example.recipefrommyfridgeapp.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 
-public class AccountCreationFragment extends Fragment {
+public class AccountCreationFragment extends Fragment implements View.OnClickListener {
+
+    private Button createAccountButton, backButton;
+    private EditText name, email, password;
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
@@ -23,21 +37,72 @@ public class AccountCreationFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_account_creation, container, false);
         Log.i("checkpoint2", "AccountCreationFragment.onCreateView()");
 
-        final Button createAccountButton = v.findViewById(R.id.createAccount);
+        mAuth = FirebaseAuth.getInstance();
+        createAccountButton = v.findViewById(R.id.createAccountPage);
+        backButton = v.findViewById(R.id.back);
+        name = v.findViewById(R.id.user_name);
+        email = v.findViewById(R.id.email);
+        password = v.findViewById(R.id.password);
 
 //         TODO: enable button after validation of fields - fields are filled
-        createAccountButton.setEnabled(true);
+        // createAccountButton.setEnabled(true);
 
-        createAccountButton.setOnClickListener(view -> {
-            //TODO: check if account successfully created
-            //navigate back to login
-            getParentFragmentManager().beginTransaction()
-                    .remove(this)
-                    .commit();
-            getParentFragmentManager().popBackStack();
-        });
+//        backButton.setOnClickListener(view -> {
+//            //TODO: check if account successfully created
+//            //navigate back to login
+//            getParentFragmentManager().beginTransaction()
+//                    .remove(this)
+//                    .commit();
+//            getParentFragmentManager().popBackStack();
+//        });
+
 
         return v;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back:
+                getParentFragmentManager().beginTransaction()
+                        .remove(this)
+                        .commit();
+                getParentFragmentManager().popBackStack();
+                break;
+            case R.id.createAccountPage:
+                createUser();
+                break;
+        }
+    }
+
+    private void createUser(){
+        String userName = name.getText().toString().trim();
+        String userEmail = email.getText().toString().trim();
+        String userPassword = password.getText().toString().trim();
+        mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            User user = new User(userName, userEmail, userPassword);
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                Toast.makeText(getContext(), "User has been registered successfully!", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getContext(), "Failed to register!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                    } else {
+                            Toast.makeText(getContext(), "Failed to register!", Toast.LENGTH_SHORT).show();
+                        }
+                }
+
+        });
     }
 
     @Override
