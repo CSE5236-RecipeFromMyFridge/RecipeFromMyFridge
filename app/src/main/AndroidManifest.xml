@@ -23,6 +23,9 @@
             android:name=".ui.ingredient.ChooseIngredientActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.recipe.ChooseRecipeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:label="@string/app_name">
