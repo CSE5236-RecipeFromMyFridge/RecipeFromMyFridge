@@ -43,6 +43,8 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
         name = v.findViewById(R.id.user_name);
         email = v.findViewById(R.id.email);
         password = v.findViewById(R.id.password);
+        createAccountButton.setOnClickListener(this);
+        backButton.setOnClickListener(this);
 
 //         TODO: enable button after validation of fields - fields are filled
         // createAccountButton.setEnabled(true);
