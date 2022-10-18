@@ -6,61 +6,73 @@
 
     <TextView
         android:id="@+id/createAccountTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="24dp"
         android:textAlignment="center"
         android:text="@string/action_creation"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-black"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp" />
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="40dp"
         android:hint="@string/prompt_email"
+        android:ems="10"
+        android:textSize="24sp"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/createAccountTitle" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountTitle" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
         android:hint="@string/prompt_password"
+        android:textSize="24sp"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <EditText
         android:id="@+id/confirmPassword"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
         android:hint="@string/prompt_confirm_password"
+        android:textSize="24sp"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <Button
         android:id="@+id/createAccount"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:enabled="false"
+        android:layout_marginTop="30dp"
         android:text="@string/action_creation"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
         app:layout_constraintVertical_bias="0.1" />
 

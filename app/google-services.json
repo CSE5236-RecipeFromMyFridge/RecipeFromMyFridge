@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "353612521843",
+    "firebase_url": "https://recipefrommyfridge-default-rtdb.firebaseio.com",
     "project_id": "recipefrommyfridge",
     "storage_bucket": "recipefrommyfridge.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:353612521843:android:c740efe1e76fb283272506",
+        "mobilesdk_app_id": "1:353612521843:android:51a9cc4fd47aa518272506",
         "android_client_info": {
           "package_name": "com.example.recipefrommyfridgeapp"
         }
