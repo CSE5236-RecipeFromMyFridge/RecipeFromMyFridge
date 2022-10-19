@@ -30,6 +30,7 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
     private Button createAccountButton, backButton;
     private EditText name, email, password;
     private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -45,19 +46,7 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
         password = v.findViewById(R.id.password);
         createAccountButton.setOnClickListener(this);
         backButton.setOnClickListener(this);
-
-//         TODO: enable button after validation of fields - fields are filled
-        // createAccountButton.setEnabled(true);
-
-//        backButton.setOnClickListener(view -> {
-//            //TODO: check if account successfully created
-//            //navigate back to login
-//            getParentFragmentManager().beginTransaction()
-//                    .remove(this)
-//                    .commit();
-//            getParentFragmentManager().popBackStack();
-//        });
-
+        progressBar = v.findViewById(R.id.progress_circular);
 
         return v;
     }
@@ -81,6 +70,32 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
         String userName = name.getText().toString().trim();
         String userEmail = email.getText().toString().trim();
         String userPassword = password.getText().toString().trim();
+        if (userName.isEmpty()){
+            name.setError("User Name is required!");
+            name.requestFocus();
+            return;
+        }
+        if (userEmail.isEmpty()){
+            email.setError("User Email is required!");
+            email.requestFocus();
+            return;
+        }
+        if (userPassword.isEmpty()){
+            password.setError("User Password is required!");
+            password.requestFocus();
+            return;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
+            email.setError("Invalid Email!");
+            email.requestFocus();
+            return;
+        }
+        if (userPassword.length() < 6){
+            password.setError("Password should be at least 6 characters!");
+            password.requestFocus();
+            return;
+        }
+        progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -94,13 +109,16 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()){
                                                 Toast.makeText(getContext(), "User has been registered successfully!", Toast.LENGTH_SHORT).show();
+                                                progressBar.setVisibility(View.GONE);
                                             } else {
                                                 Toast.makeText(getContext(), "Failed to register!", Toast.LENGTH_SHORT).show();
+                                                progressBar.setVisibility(View.GONE);
                                             }
                                         }
                                     });
                     } else {
                             Toast.makeText(getContext(), "Failed to register!", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                 }
 

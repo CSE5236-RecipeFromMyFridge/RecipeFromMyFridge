@@ -49,27 +49,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         final Button guestAccountButton = v.findViewById(R.id.guestAccount);
         final ProgressBar loadingProgressBar = v.findViewById(R.id.loading);
 
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("/ingredient");
-//
-//        myRef.setValue("Hello, World!");
-//        // Read from the database
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-//                Log.d("tryout", "Value is: " + value);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                Log.w("tryout", "Failed to read value.", error.toException());
-//            }
-//        });
-
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
