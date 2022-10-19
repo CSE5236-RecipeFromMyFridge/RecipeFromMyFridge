@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".CuisineActivity">
+    tools:context=".ui.cuisine.CuisineActivity">
 
     <TextView
         android:id="@+id/choose_cuisine_title"
@@ -174,4 +174,12 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:text="@string/generate"/>
+
+    <Button
+        android:id="@+id/button_create_recipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="@string/create_recipe"/>
+
 </LinearLayout>

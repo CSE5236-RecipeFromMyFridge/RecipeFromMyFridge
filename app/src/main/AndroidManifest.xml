@@ -17,7 +17,7 @@
             android:name=".MenuActivity"
             android:exported="false" />
         <activity
-            android:name=".CuisineActivity"
+            android:name=".ui.cuisine.CuisineActivity"
             android:exported="false" />
         <activity
             android:name=".ui.ingredient.ChooseIngredientActivity"

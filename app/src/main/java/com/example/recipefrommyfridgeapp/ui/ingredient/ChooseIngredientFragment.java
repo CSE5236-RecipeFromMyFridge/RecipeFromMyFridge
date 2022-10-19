@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.recipefrommyfridgeapp.CuisineActivity;
+import com.example.recipefrommyfridgeapp.ui.cuisine.CuisineActivity;
 import com.example.recipefrommyfridgeapp.R;
 
 import java.util.HashMap;

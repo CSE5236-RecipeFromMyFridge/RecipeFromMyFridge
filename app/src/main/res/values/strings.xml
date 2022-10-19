@@ -40,6 +40,7 @@
     <string name="zhejiang_cuisine">Zhejiang 浙江菜</string>
     <string name="random">Choose one for me</string>
     <string name="generate">Generate</string>
+    <string name="create_recipe">Create Recipe</string>
     <!-- Strings related to Recipe -->
 
 </resources>
