@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RecipeCreationFragment extends Fragment implements View.OnClickListener {
@@ -24,12 +26,13 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
     private EditText name, content, rating;
     private ProgressBar progressBar;
     private FirebaseDatabase database;
+    private DatabaseReference databaseRecipe;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_recipe_creation, container, false);
-        createRecipeButton = v.findViewById(R.id.button_create_recipe);
+        createRecipeButton = v.findViewById(R.id.createRecipePage);
         backButton = v.findViewById(R.id.back_generate);
         name = v.findViewById(R.id.recipe_name);
         content = v.findViewById(R.id.recipe_content);
@@ -38,6 +41,7 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
         createRecipeButton.setOnClickListener(this);
         backButton.setOnClickListener(this);
         database = FirebaseDatabase.getInstance();
+        databaseRecipe = database.getReference("Recipes");
 
         return v;
     }
@@ -63,11 +67,18 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
         String recipeRating = rating.getText().toString();
         progressBar.setVisibility(View.VISIBLE);
         Recipe recipe = new Recipe(recipeName, recipeContent, Float.parseFloat(recipeRating));
-        database.getReference("Recipes").child().setValue(recipe).addOnCompleteListener(new OnCompleteListener<Void>() {
+        String id = databaseRecipe.push().getKey();
+        databaseRecipe.child(id).setValue(recipe).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
+                if (task.isSuccessful()){
+                    Toast.makeText(getContext(), "Recipe has been added successfully!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(getContext(), "Failed to add the recipe!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                }
             }
-        })
+        });
     }
 }

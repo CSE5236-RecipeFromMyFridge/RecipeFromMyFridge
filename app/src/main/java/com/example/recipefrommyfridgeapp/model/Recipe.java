@@ -2,12 +2,12 @@ package com.example.recipefrommyfridgeapp.model;
 
 public class Recipe {
 
-    public int mCuisineId;
+    public int cuisineId;
     public String name, content;
     public float rating;
 
     public Recipe(int cuisineId, String name, String content, float rating) {
-        mCuisineId = cuisineId;
+        cuisineId = cuisineId;
         this.name = name;
         this.content = content;
         this.rating = rating;
@@ -24,11 +24,11 @@ public class Recipe {
 
 
     public int getCuisineId() {
-        return mCuisineId;
+        return cuisineId;
     }
 
     public void setCuisineId(int cuisineId) {
-        mCuisineId = cuisineId;
+        cuisineId = cuisineId;
     }
 
     public String getName() {

@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.recipefrommyfridgeapp.R;
-import com.example.recipefrommyfridgeapp.ui.login.AccountCreationFragment;
 import com.example.recipefrommyfridgeapp.ui.recipe.ChooseRecipeActivity;
 import com.example.recipefrommyfridgeapp.ui.recipe.RecipeCreationFragment;
 
@@ -42,7 +41,7 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .setReorderingAllowed(true)
-                        .addToBackStack("Account Creation")
+                        .addToBackStack("Cuisine Creation")
                         .commit();
                 break;
         }
