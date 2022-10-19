@@ -1,4 +1,4 @@
-package com.example.recipefrommyfridgeapp;
+package com.example.recipefrommyfridgeapp.model;
 
 public class User {
 

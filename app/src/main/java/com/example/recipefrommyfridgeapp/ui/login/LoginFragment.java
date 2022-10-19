@@ -25,6 +25,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,6 +38,10 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginFragment extends Fragment implements View.OnClickListener{
 
     private LoginViewModel loginViewModel;
+    private EditText usernameEditText, passwordEditText;
+    private Button loginButton, createAccountButton, guestAccountButton;
+    private ProgressBar loadingProgressBar;
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
@@ -42,12 +49,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         Log.i("checkpoint2", "LoginFragment.onCreateView()");
 
-        final EditText usernameEditText = v.findViewById(R.id.email);
-        final EditText passwordEditText = v.findViewById(R.id.password);
-        final Button loginButton = v.findViewById(R.id.login);
-        final Button createAccountButton = v.findViewById(R.id.createAccount);
-        final Button guestAccountButton = v.findViewById(R.id.guestAccount);
-        final ProgressBar loadingProgressBar = v.findViewById(R.id.loading);
+        usernameEditText = v.findViewById(R.id.email);
+        passwordEditText = v.findViewById(R.id.password);
+        loginButton = v.findViewById(R.id.login);
+        createAccountButton = v.findViewById(R.id.createAccount);
+        guestAccountButton = v.findViewById(R.id.guestAccount);
+        loadingProgressBar = v.findViewById(R.id.loading);
+        mAuth = FirebaseAuth.getInstance();
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -117,14 +125,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        });
+//        loginButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loadingProgressBar.setVisibility(View.VISIBLE);
+//                loginViewModel.login(usernameEditText.getText().toString(),
+//                        passwordEditText.getText().toString());
+//            }
+//        });
 
         createAccountButton.setOnClickListener(view -> {
             //replace with account creation fragment
@@ -139,6 +147,38 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         //TODO: inflate with some resource that guests should see after login
         guestAccountButton.setOnClickListener(this);
         return v;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.guestAccount:
+                startActivity(new Intent(requireContext(), ChooseIngredientActivity.class));
+                break;
+            case R.id.login:
+                userLogin();
+                loadingProgressBar.setVisibility(View.VISIBLE);
+                loginViewModel.login(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());
+                startActivity(new Intent(requireContext(), ChooseIngredientActivity.class));
+                break;
+        }
+    }
+
+    private void userLogin(){
+        String email = usernameEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    return;
+                } else {
+                    Toast.makeText(getContext(), "Failed to login!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+        });
     }
 
     @Override
@@ -187,10 +227,4 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         Toast.makeText(getContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onClick(View view) {
-        if(view.getId() == R.id.guestAccount){
-            startActivity(new Intent(requireContext(), ChooseIngredientActivity.class));
-        }
-    }
 }
