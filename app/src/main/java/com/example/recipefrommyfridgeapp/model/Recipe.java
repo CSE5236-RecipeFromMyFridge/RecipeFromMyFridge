@@ -1,11 +1,10 @@
-package com.example.recipefrommyfridgeapp;
+package com.example.recipefrommyfridgeapp.model;
 
 public class Recipe {
 
-    private int mCuisineId;
-    private String name;
-    private String content;
-    private float rating;
+    public int mCuisineId;
+    public String name, content;
+    public float rating;
 
     public Recipe(int cuisineId, String name, String content, float rating) {
         mCuisineId = cuisineId;
@@ -15,6 +14,12 @@ public class Recipe {
     }
 
     public Recipe() {
+    }
+
+    public Recipe(String name, String content, float rating) {
+        this.name = name;
+        this.content = content;
+        this.rating = rating;
     }
 
 

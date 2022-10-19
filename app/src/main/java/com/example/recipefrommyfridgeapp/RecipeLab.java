@@ -2,6 +2,8 @@ package com.example.recipefrommyfridgeapp;
 
 import android.content.Context;
 
+import com.example.recipefrommyfridgeapp.model.Recipe;
+
 import java.util.ArrayList;
 import java.util.List;
 
