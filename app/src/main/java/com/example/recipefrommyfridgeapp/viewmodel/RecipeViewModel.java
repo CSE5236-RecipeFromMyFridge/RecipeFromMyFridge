@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.recipefrommyfridgeapp.model.Recipe;
+import com.example.recipefrommyfridgeapp.repository.RecipeRepository;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class RecipeViewModel extends ViewModel {
         if (recipes != null){
             return;
         }
+
+        recipes = RecipeRepository.getInstance(context).getRecipes();
     }
 
     public LiveData<List<Recipe>> getRecipes(){
