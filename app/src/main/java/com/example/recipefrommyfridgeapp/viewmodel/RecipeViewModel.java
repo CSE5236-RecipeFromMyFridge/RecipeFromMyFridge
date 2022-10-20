@@ -19,7 +19,6 @@ public class RecipeViewModel extends ViewModel {
             return;
         }
 
-        recipes = RecipeRepository.getInstance(context).getRecipes();
     }
 
     public LiveData<List<Recipe>> getRecipes(){

@@ -41,7 +41,7 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .setReorderingAllowed(true)
-                        .addToBackStack("Cuisine Creation")
+                        .addToBackStack("Recipe Creation")
                         .commit();
                 break;
         }
