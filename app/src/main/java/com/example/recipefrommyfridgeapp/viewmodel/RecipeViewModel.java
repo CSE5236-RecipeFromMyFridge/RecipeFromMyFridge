@@ -18,7 +18,7 @@ public class RecipeViewModel extends ViewModel {
         if (recipes != null){
             return;
         }
-
+        recipes = RecipeRepository.getInstance().getRecipes();
     }
 
     public LiveData<List<Recipe>> getRecipes(){
