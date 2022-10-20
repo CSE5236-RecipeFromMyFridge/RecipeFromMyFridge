@@ -1,27 +1,67 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"
+    android:elevation="6dp"
+    app:cardCornerRadius="6dp"
+    app:cardUseCompatPadding="true"
     tools:context="com.example.recipefrommyfridgeapp.ui.recipe.ChooseRecipeActivity">
 
-    <TextView
-        android:id="@+id/recipe_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recipe Name"/>
+        android:padding="15dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/recipe_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Recipe Content"/>
+        <TextView
+            android:id="@+id/recipe_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Name"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
 
-    <TextView
-        android:id="@+id/recipe_rating"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Recipe Rating"/>
+        <TextView
+            android:id="@+id/recipe_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Content"
+            android:textAlignment="center"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/recipe_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Rating"
+            android:textAlignment="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/recipe_item_edit_button"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:layout_marginRight="5dp" />
+
+            <Button
+                android:id="@+id/recipe_item_delete_button"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:textAllCaps="false"
+                android:layout_marginLeft="10dp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
