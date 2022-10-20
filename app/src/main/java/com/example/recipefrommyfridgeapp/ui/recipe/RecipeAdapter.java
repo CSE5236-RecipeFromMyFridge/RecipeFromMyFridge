@@ -40,7 +40,8 @@ public class RecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeAdapter
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull RecipeViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull Recipe model) {
+    protected void onBindViewHolder(@NonNull RecipeViewHolder holder, final int position, @NonNull Recipe model) {
+        int pos = position;
         holder.mNameTextView.setText(model.getName());
         holder.mContentTextView.setText(model.getContent());
         holder.mRatingTextView.setText(Float.toString(model.getRating()));
@@ -48,23 +49,8 @@ public class RecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeAdapter
         holder.deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(holder.mNameTextView.getContext());
-                builder.setTitle("Are you sure?");
-                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        FirebaseDatabase.getInstance().getReference().child("Recipes")
-                                .child(getRef(position).getKey()).removeValue();
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(holder.mNameTextView.getContext(), "Cancelled", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                });
+                FirebaseDatabase.getInstance().getReference().child("Recipes")
+                        .child(getRef(pos).getKey()).removeValue();
             }
         });
 
@@ -96,7 +82,7 @@ public class RecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeAdapter
                         map.put("rating", Float.parseFloat(rating.getText().toString()));
 
                         FirebaseDatabase.getInstance().getReference().child("Recipes")
-                                .child(getRef(position).getKey()).updateChildren(map)
+                                .child(getRef(pos).getKey()).updateChildren(map)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
