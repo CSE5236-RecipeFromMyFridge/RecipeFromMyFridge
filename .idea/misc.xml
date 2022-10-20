@@ -3,24 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable/rounded.xml" value="0.1175" />
-        <entry key="app/src/main/res/drawable/search_icon.xml" value="0.12" />
-        <entry key="app/src/main/res/layout/activity_account_creation.xml" value="0.23541666666666666" />
-        <entry key="app/src/main/res/layout/activity_cuisine.xml" value="0.23541666666666666" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.23541666666666666" />
-        <entry key="app/src/main/res/layout/activity_menu.xml" value="0.23541666666666666" />
-        <entry key="app/src/main/res/layout/activity_my_account.xml" value="0.23541666666666666" />
-        <entry key="app/src/main/res/layout/fragment_account_creation.xml" value="0.19583333333333333" />
-        <entry key="app/src/main/res/layout/fragment_checkbox_ingredient.xml" value="0.28020833333333334" />
-        <entry key="app/src/main/res/layout/fragment_choose_cuisine.xml" value="0.14375" />
-        <entry key="app/src/main/res/layout/fragment_expandable_group_ingredient.xml" value="0.28020833333333334" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.28020833333333334" />
-        <entry key="app/src/main/res/layout/fragment_recipe.xml" value="0.28020833333333334" />
-        <entry key="app/src/main/res/layout/fragment_recipe_creation.xml" value="0.1308876811594203" />
-        <entry key="app/src/main/res/layout/fragment_recipe_list.xml" value="0.28020833333333334" />
-        <entry key="app/src/main/res/layout/list_item_recipe.xml" value="0.25695343017578126" />
-        <entry key="app/src/main/res/layout/update_popup.xml" value="0.18333333333333332" />
-        <entry key="app/src/main/res/menu/search.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/activity_cuisine.xml" value="0.25594635009765626" />
       </map>
     </option>
   </component>
