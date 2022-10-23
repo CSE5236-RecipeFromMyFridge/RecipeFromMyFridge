@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.recipefrommyfridgeapp.R;
@@ -32,6 +33,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private ProgressBar loadingProgressBar;
 
     private LoginRegisterViewModel loginRegisterViewModel;
+    private NavController navController;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,12 +44,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null){
-                    Fragment fragment = new LoggedInFragment();
-                    getParentFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, fragment)
-                            .setReorderingAllowed(true)
-                            .addToBackStack("User Logged In")
-                            .commit();
+                    Log.d("checkpoint5", "LoginFragment to LoggedInFragment");
+                    Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_loggedInFragment);
+//                    Fragment fragment = new LoggedInFragment();
+//                    getParentFragmentManager().beginTransaction()
+//                            .replace(R.id.fragment_container, fragment)
+//                            .setReorderingAllowed(true)
+//                            .addToBackStack("Logged In")
+//                            .commit();
                 }
             }
         });

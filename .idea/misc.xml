@@ -7,8 +7,9 @@
         <entry key="app/src/main/res/layout/activity_menu.xml" value="0.4659123738606771" />
         <entry key="app/src/main/res/layout/activity_my_account.xml" value="0.17552083333333332" />
         <entry key="app/src/main/res/layout/fragment_account_creation.xml" value="0.184375" />
+        <entry key="app/src/main/res/layout/fragment_container.xml" value="0.11302083333333333" />
         <entry key="app/src/main/res/layout/fragment_logged_in.xml" value="0.18333333333333332" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.17552083333333332" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_recipe.xml" value="0.1703125" />
         <entry key="app/src/main/res/layout/update_popup.xml" value="0.184375" />
       </map>
