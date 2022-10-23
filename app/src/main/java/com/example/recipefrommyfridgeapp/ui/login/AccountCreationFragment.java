@@ -15,12 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.viewmodel.LoginRegisterViewModel;
-import com.google.firebase.auth.FirebaseUser;
 
 
 public class AccountCreationFragment extends Fragment implements View.OnClickListener {
