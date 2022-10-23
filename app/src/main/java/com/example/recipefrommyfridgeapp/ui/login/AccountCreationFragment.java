@@ -104,7 +104,9 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
             password.requestFocus();
             return;
         }
+        progressBar.setVisibility(View.VISIBLE);
         loginRegisterViewModel.register(userName, userEmail, userPassword);
+        progressBar.setVisibility(View.GONE);
     }
 
 

@@ -11,22 +11,36 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
+import com.example.recipefrommyfridgeapp.viewmodel.LoggedInViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.LoginRegisterViewModel;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
 public class LoggedInFragment extends Fragment implements  View.OnClickListener{
 
-    private Button changeIngredientButton, changeCuisineButton, accountButton, logOutButton;
+    private Button changeIngredientButton, changeCuisineButton, accountButton, logOutButton, savedRecipeButton;
     private TextView greetingUser;
 
-    private LoginRegisterViewModel loginRegisterViewModel;
+    private LoggedInViewModel loggedInViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
+        loggedInViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                if (firebaseUser != null){
+                    greetingUser.setText("Hello, " + firebaseUser.getEmail());
+                }
+            }
+        });
+
     }
 
     @Nullable
@@ -38,12 +52,14 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
         changeIngredientButton = v.findViewById(R.id.fragment_logged_in_change_ingredient);
         changeCuisineButton = v.findViewById(R.id.fragment_logged_in_change_cuisine);
         accountButton = v.findViewById(R.id.fragment_logged_in_my_account);
+        savedRecipeButton = v.findViewById(R.id.fragment_logged_in_saved_recipe);
         logOutButton = v.findViewById(R.id.fragment_logged_in_log_out);
         greetingUser = v.findViewById(R.id.fragment_logged_in_greeting);
         changeIngredientButton.setOnClickListener(this);
         changeCuisineButton.setOnClickListener(this);
         accountButton.setOnClickListener(this);
         logOutButton.setOnClickListener(this);
+        savedRecipeButton.setOnClickListener(this);
 
         return v;
     }
@@ -54,7 +70,10 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
             case R.id.fragment_logged_in_change_ingredient:
             case R.id.fragment_logged_in_change_cuisine:
             case R.id.fragment_logged_in_my_account:
+            case R.id.fragment_logged_in_saved_recipe:
             case R.id.fragment_logged_in_log_out:
+                loggedInViewModel.logOut();
+                break;
         }
     }
 }

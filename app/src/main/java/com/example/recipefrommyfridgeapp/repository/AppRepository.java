@@ -21,12 +21,14 @@ public class AppRepository {
 
     private Application application;
     private MutableLiveData<FirebaseUser> mUserMutableLiveData;
+    private MutableLiveData<Boolean> loggedOutMutableLiveData;
     private FirebaseAuth auth;
 
     public AppRepository(Application application){
         this.application = application;
         auth = FirebaseAuth.getInstance();
         mUserMutableLiveData = new MutableLiveData<>();
+        loggedOutMutableLiveData = new MutableLiveData<>();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
@@ -45,13 +47,13 @@ public class AppRepository {
                                             if (task.isSuccessful()){
                                                 Toast.makeText(application.getApplicationContext(), "User has been registered successfully!", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                Toast.makeText(application.getApplicationContext(), "Failed to register!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(application.getApplicationContext(), "(DB) Failed to register!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
                             mUserMutableLiveData.postValue(auth.getCurrentUser());
                         } else {
-                            Toast.makeText(application.getApplicationContext(), "Failed to register!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application.getApplicationContext(), "(Auth) Failed to register!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -66,13 +68,22 @@ public class AppRepository {
                         if (task.isSuccessful()){
                             mUserMutableLiveData.postValue(auth.getCurrentUser());
                         } else {
-                            Toast.makeText(application.getApplicationContext(), "Failed to login!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application.getApplicationContext(), "(Auth) Failed to login!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
+    public void logOut(){
+        auth.signOut();
+        loggedOutMutableLiveData.postValue(true);
+    }
+
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return mUserMutableLiveData;
+    }
+
+    public MutableLiveData<Boolean> getLoggedOutMutableLiveData() {
+        return loggedOutMutableLiveData;
     }
 }

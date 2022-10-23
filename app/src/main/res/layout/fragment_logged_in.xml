@@ -91,6 +91,24 @@
             app:layout_constraintVertical_bias="0.1" />
 
         <Button
+            android:id="@+id/fragment_logged_in_saved_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Saved Recipes"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_logged_in_my_account"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <Button
             android:id="@+id/fragment_logged_in_log_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,7 +123,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_logged_in_my_account"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_logged_in_saved_recipe"
             app:layout_constraintVertical_bias="0.1" />
 
     </LinearLayout>
