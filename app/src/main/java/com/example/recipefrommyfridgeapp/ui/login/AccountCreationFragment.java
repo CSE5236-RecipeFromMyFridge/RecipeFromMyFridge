@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,7 +27,6 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
 
     private Button createAccountButton, backButton;
     private EditText name, email, password;
-    private ProgressBar progressBar;
 
     private LoginRegisterViewModel loginRegisterViewModel;
 
@@ -53,7 +50,6 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
         password = v.findViewById(R.id.fragment_account_creation_password);
         createAccountButton.setOnClickListener(this);
         backButton.setOnClickListener(this);
-        progressBar = v.findViewById(R.id.progress_circular);
 
         return v;
     }
@@ -104,9 +100,7 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
             password.requestFocus();
             return;
         }
-        progressBar.setVisibility(View.VISIBLE);
         loginRegisterViewModel.register(userName, userEmail, userPassword);
-        progressBar.setVisibility(View.GONE);
     }
 
 

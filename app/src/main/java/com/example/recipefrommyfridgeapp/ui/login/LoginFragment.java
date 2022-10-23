@@ -30,7 +30,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
     private EditText usernameEditText, passwordEditText;
     private Button loginButton, createAccountButton, guestAccountButton;
-    private ProgressBar loadingProgressBar;
 
     private LoginRegisterViewModel loginRegisterViewModel;
 
@@ -66,7 +65,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         loginButton = v.findViewById(R.id.fragment_login_login);
         createAccountButton = v.findViewById(R.id.fragment_login_createAccount);
         guestAccountButton = v.findViewById(R.id.fragment_login_guestAccount);
-        loadingProgressBar = v.findViewById(R.id.fragment_login_loading);
 
         createAccountButton.setOnClickListener(view -> {
             //replace with account creation fragment
