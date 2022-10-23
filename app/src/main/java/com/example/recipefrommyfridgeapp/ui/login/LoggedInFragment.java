@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.viewmodel.LoggedInViewModel;
@@ -37,6 +38,18 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null){
                     greetingUser.setText("Hello, " + firebaseUser.getEmail());
+                }
+            }
+        });
+
+        loggedInViewModel.getLoggedOutMutableLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean loggedOut) {
+                if (loggedOut){
+                    getParentFragmentManager().beginTransaction()
+                            .remove(LoggedInFragment.this)
+                            .commit();
+                    getParentFragmentManager().popBackStack();
                 }
             }
         });

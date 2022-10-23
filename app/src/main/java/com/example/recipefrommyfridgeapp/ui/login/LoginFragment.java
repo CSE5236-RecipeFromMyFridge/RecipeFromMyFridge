@@ -33,7 +33,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private ProgressBar loadingProgressBar;
 
     private LoginRegisterViewModel loginRegisterViewModel;
-    private NavController navController;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,13 +44,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null){
                     Log.d("checkpoint5", "LoginFragment to LoggedInFragment");
-                    Navigation.findNavController(getView()).navigate(R.id.action_loginFragment_to_loggedInFragment);
-//                    Fragment fragment = new LoggedInFragment();
-//                    getParentFragmentManager().beginTransaction()
-//                            .replace(R.id.fragment_container, fragment)
-//                            .setReorderingAllowed(true)
-//                            .addToBackStack("Logged In")
-//                            .commit();
+                    Fragment fragment = new LoggedInFragment();
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .setReorderingAllowed(true)
+                            .addToBackStack("Logged In")
+                            .commit();
                 }
             }
         });

@@ -29,6 +29,12 @@ public class AppRepository {
         auth = FirebaseAuth.getInstance();
         mUserMutableLiveData = new MutableLiveData<>();
         loggedOutMutableLiveData = new MutableLiveData<>();
+
+        if (auth.getCurrentUser() != null){
+            getUserMutableLiveData().postValue(auth.getCurrentUser());
+            loggedOutMutableLiveData.postValue(false);
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.P)
