@@ -1,5 +1,6 @@
 package com.example.recipefrommyfridgeapp.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
+import com.example.recipefrommyfridgeapp.ui.cuisine.CuisineActivity;
+import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientActivity;
+import com.example.recipefrommyfridgeapp.ui.recipe.SavedRecipeActivity;
 import com.example.recipefrommyfridgeapp.viewmodel.LoggedInViewModel;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -77,9 +81,17 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_logged_in_change_ingredient:
+                startActivity(new Intent(requireContext(), ChooseIngredientActivity.class));
+                break;
             case R.id.fragment_logged_in_change_cuisine:
+                startActivity(new Intent(requireContext(), CuisineActivity.class));
+                break;
             case R.id.fragment_logged_in_my_account:
+                startActivity(new Intent(requireContext(), MyAccountActivity.class));
+                break;
             case R.id.fragment_logged_in_saved_recipe:
+                startActivity(new Intent(requireContext(), SavedRecipeActivity.class));
+                break;
             case R.id.fragment_logged_in_log_out:
                 loggedInViewModel.logOut();
                 break;

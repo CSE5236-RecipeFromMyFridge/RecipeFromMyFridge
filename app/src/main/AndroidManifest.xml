@@ -17,6 +17,12 @@
             android:name=".MenuActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.login.MyAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.recipe.SavedRecipeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.cuisine.CuisineActivity"
             android:exported="false" />
         <activity
