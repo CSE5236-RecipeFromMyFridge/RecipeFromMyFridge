@@ -70,7 +70,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_gravity="start"
-        android:enabled="false"
         android:text="@string/action_sign_in"
         android:textSize="20sp"
         android:textStyle="bold"

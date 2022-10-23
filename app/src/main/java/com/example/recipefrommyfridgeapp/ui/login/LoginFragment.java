@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientActivity;
@@ -41,7 +42,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null){
-                    Toast.makeText(getContext(), "User created", Toast.LENGTH_SHORT).show();
+                    Fragment fragment = new LoggedInFragment();
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .setReorderingAllowed(true)
+                            .addToBackStack("User Logged In")
+                            .commit();
                 }
             }
         });
@@ -84,7 +90,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.fragment_login_login:
                 loginUser();
-                startActivity(new Intent(requireContext(), ChooseIngredientActivity.class));
                 break;
         }
     }
@@ -103,7 +108,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             passwordEditText.requestFocus();
             return;
         }
-        loadingProgressBar.setVisibility(View.VISIBLE);
         loginRegisterViewModel.login(userName, userPassword);
     }
 

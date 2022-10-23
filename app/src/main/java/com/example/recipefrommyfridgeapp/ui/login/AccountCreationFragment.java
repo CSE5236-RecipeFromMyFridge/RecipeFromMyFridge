@@ -38,15 +38,6 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
         super.onCreate(savedInstanceState);
         Log.i("checkpoint2", "AccountCreationFragment.onCreate()");
         loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
-        loginRegisterViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
-            @Override
-            public void onChanged(FirebaseUser firebaseUser) {
-                if (firebaseUser != null){
-                    Log.d("checkpoint5", "AccountCreationFragment.onCreate().viewmodel changed");
-                    progressBar.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 
     @Nullable
@@ -113,9 +104,7 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
             password.requestFocus();
             return;
         }
-        progressBar.setVisibility(View.VISIBLE);
         loginRegisterViewModel.register(userName, userEmail, userPassword);
-//        progressBar.setVisibility(View.GONE);
     }
 
 

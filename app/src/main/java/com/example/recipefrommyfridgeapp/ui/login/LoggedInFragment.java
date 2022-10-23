@@ -50,6 +50,11 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.fragment_logged_in_change_ingredient:
+            case R.id.fragment_logged_in_change_cuisine:
+            case R.id.fragment_logged_in_my_account:
+            case R.id.fragment_logged_in_log_out:
+        }
     }
 }
