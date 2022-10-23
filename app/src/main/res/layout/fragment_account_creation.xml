@@ -20,8 +20,8 @@
         android:layout_marginTop="50dp" />
 
     <EditText
-        android:id="@+id/user_name"
-        android:layout_width="350dp"
+        android:id="@+id/fragment_account_creation_user_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="@string/prompt_user_name"
@@ -29,13 +29,15 @@
         android:textSize="24sp"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccountTitle" />
 
     <EditText
-        android:id="@+id/email"
-        android:layout_width="350dp"
+        android:id="@+id/fragment_account_creation_email"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/prompt_email"
@@ -43,13 +45,15 @@
         android:textSize="24sp"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_account_creation_user_name" />
 
     <EditText
-        android:id="@+id/password"
-        android:layout_width="350dp"
+        android:id="@+id/fragment_account_creation_password"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
@@ -57,13 +61,15 @@
         android:textSize="24sp"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_account_creation_email" />
 
     <EditText
-        android:id="@+id/confirmPassword"
-        android:layout_width="350dp"
+        android:id="@+id/fragment_account_creation_confirmPassword"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
@@ -71,42 +77,48 @@
         android:textSize="24sp"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_account_creation_password" />
 
     <Button
-        android:id="@+id/createAccountPage"
-        android:layout_width="350dp"
+        android:id="@+id/fragment_account_creation_createAccountPage"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="30dp"
         android:text="@string/action_creation"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPassword"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_account_creation_confirmPassword"
         app:layout_constraintVertical_bias="0.1" />
 
     <Button
-        android:id="@+id/back"
-        android:layout_width="350dp"
+        android:id="@+id/fragment_account_creation_back"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="10dp"
         android:text="@string/back"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccountPage"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_account_creation_createAccountPage"
         app:layout_constraintVertical_bias="0.1" />
 
     <ProgressBar
-        android:id="@+id/progress_circular"
+        android:id="@+id/fragment_account_creation_progress_circular"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,6 +127,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back"/>
+        app:layout_constraintTop_toBottomOf="@+id/fragment_account_creation_back"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

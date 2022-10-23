@@ -1,6 +1,7 @@
 package com.example.recipefrommyfridgeapp.ui.login;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -14,23 +15,39 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
-import com.example.recipefrommyfridgeapp.model.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.recipefrommyfridgeapp.viewmodel.LoginRegisterViewModel;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class AccountCreationFragment extends Fragment implements View.OnClickListener {
 
     private Button createAccountButton, backButton;
     private EditText name, email, password;
-    private FirebaseAuth mAuth;
     private ProgressBar progressBar;
+
+    private LoginRegisterViewModel loginRegisterViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i("checkpoint2", "AccountCreationFragment.onCreate()");
+        loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
+        loginRegisterViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                if (firebaseUser != null){
+                    Log.d("checkpoint5", "AccountCreationFragment.onCreate().viewmodel changed");
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
 
     @Nullable
     @Override
@@ -38,12 +55,11 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
         View v = inflater.inflate(R.layout.fragment_account_creation, container, false);
         Log.i("checkpoint2", "AccountCreationFragment.onCreateView()");
 
-        mAuth = FirebaseAuth.getInstance();
-        createAccountButton = v.findViewById(R.id.createAccountPage);
-        backButton = v.findViewById(R.id.back);
-        name = v.findViewById(R.id.user_name);
-        email = v.findViewById(R.id.email);
-        password = v.findViewById(R.id.password);
+        createAccountButton = v.findViewById(R.id.fragment_account_creation_createAccountPage);
+        backButton = v.findViewById(R.id.fragment_account_creation_back);
+        name = v.findViewById(R.id.fragment_account_creation_user_name);
+        email = v.findViewById(R.id.fragment_account_creation_email);
+        password = v.findViewById(R.id.fragment_account_creation_password);
         createAccountButton.setOnClickListener(this);
         backButton.setOnClickListener(this);
         progressBar = v.findViewById(R.id.progress_circular);
@@ -51,21 +67,23 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
         return v;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back:
+            case R.id.fragment_account_creation_back:
                 getParentFragmentManager().beginTransaction()
                         .remove(this)
                         .commit();
                 getParentFragmentManager().popBackStack();
                 break;
-            case R.id.createAccountPage:
+            case R.id.fragment_account_creation_createAccountPage:
                 createUser();
                 break;
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     private void createUser(){
         String userName = name.getText().toString().trim();
         String userEmail = email.getText().toString().trim();
@@ -96,40 +114,10 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
-        mAuth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            User user = new User(userName, userEmail, userPassword);
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()){
-                                                Toast.makeText(getContext(), "User has been registered successfully!", Toast.LENGTH_SHORT).show();
-                                                progressBar.setVisibility(View.GONE);
-                                            } else {
-                                                Toast.makeText(getContext(), "Failed to register!", Toast.LENGTH_SHORT).show();
-                                                progressBar.setVisibility(View.GONE);
-                                            }
-                                        }
-                                    });
-                    } else {
-                            Toast.makeText(getContext(), "Failed to register!", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                        }
-                }
-
-        });
+        loginRegisterViewModel.register(userName, userEmail, userPassword);
+//        progressBar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.i("checkpoint2", "AccountCreationFragment.onCreate()");
-    }
 
     @Override
     public void onStart() {

@@ -4,6 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_cuisine.xml" value="0.25594635009765626" />
+        <entry key="app/src/main/res/layout/activity_menu.xml" value="0.4659123738606771" />
+        <entry key="app/src/main/res/layout/activity_my_account.xml" value="0.17552083333333332" />
+        <entry key="app/src/main/res/layout/fragment_account_creation.xml" value="0.184375" />
+        <entry key="app/src/main/res/layout/fragment_logged_in.xml" value="0.18333333333333332" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.17552083333333332" />
+        <entry key="app/src/main/res/layout/update_popup.xml" value="0.184375" />
       </map>
     </option>
   </component>

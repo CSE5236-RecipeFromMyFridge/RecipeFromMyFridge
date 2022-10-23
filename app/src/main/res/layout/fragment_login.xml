@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appName"/>
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/fragment_login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -40,12 +40,14 @@
         android:inputType="textEmailAddress"
         android:textSize="24sp"
         android:selectAllOnFocus="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appDescription"/>
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/fragment_login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -56,12 +58,14 @@
         android:inputType="textPassword"
         android:textSize="24sp"
         android:selectAllOnFocus="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_email" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/fragment_login_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -70,14 +74,16 @@
         android:text="@string/action_sign_in"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_password"
         app:layout_constraintVertical_bias="0.1" />
 
     <Button
-        android:id="@+id/createAccount"
+        android:id="@+id/fragment_login_createAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -85,12 +91,14 @@
         android:text="@string/action_creation"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_login" />
 
     <Button
-        android:id="@+id/guestAccount"
+        android:id="@+id/fragment_login_guestAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -98,12 +106,14 @@
         android:text="@string/action_guest_sign_in"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_createAccount" />
 
     <ProgressBar
-        android:id="@+id/loading"
+        android:id="@+id/fragment_login_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -111,8 +121,8 @@
         android:layout_marginBottom="64dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_login_password"
+        app:layout_constraintStart_toStartOf="@+id/fragment_login_password"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
