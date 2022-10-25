@@ -50,14 +50,6 @@ public class MyAccountActivity extends AppCompatActivity{
                 return;
             }
             super.onBackPressed();
-            //TODO: Question：why I can't do the following - error - illegal state,
-            // cannot find view
-//            Fragment fragment = new LoggedInFragment();
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.fragment_container, fragment)
-//                    .setReorderingAllowed(true)
-//                    .addToBackStack("Back to LoggedIn Fragment")
-//                    .commit();
         });
 
         loggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
