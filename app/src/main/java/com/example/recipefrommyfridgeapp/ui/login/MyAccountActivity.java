@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -26,6 +27,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
     private TextView userName, userEmail, userPassword;
     private Button resetPasswordButton;
+    private Button backButton;
 
     private LoggedInViewModel loggedInViewModel;
 
@@ -39,6 +41,22 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         userPassword = findViewById(R.id.my_account_password);
         resetPasswordButton = findViewById(R.id.my_account_reset_password);
         resetPasswordButton.setOnClickListener(this);
+        backButton = findViewById(R.id.my_account_back);
+        backButton.setOnClickListener(view -> {
+            if (getFragmentManager().getBackStackEntryCount() > 0){
+                getFragmentManager().popBackStack();
+                return;
+            }
+            super.onBackPressed();
+            //Question：why I can't do the following - error - illegalstate,
+            // cannot find view
+//            Fragment fragment = new LoggedInFragment();
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.fragment_container, fragment)
+//                    .setReorderingAllowed(true)
+//                    .addToBackStack("Back to LoggedIn Fragment")
+//                    .commit();
+        });
 
         loggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
         loggedInViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
@@ -71,7 +89,9 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
 
+        }
     }
 
 }
