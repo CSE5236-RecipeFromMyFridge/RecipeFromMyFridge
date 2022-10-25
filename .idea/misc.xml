@@ -3,8 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Young Li/Young Li/OSU/AU22/RecipeFromMyFridge/app/src/main/res/layout/activity_cuisine.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_choose_ingredient.xml" value="0.1671875" />
-        <entry key="app/src/main/res/layout/activity_choose_recipe.xml" value="0.1671875" />
         <entry key="app/src/main/res/layout/activity_cuisine.xml" value="0.1671875" />
         <entry key="app/src/main/res/layout/activity_my_account.xml" value="0.2526041666666667" />
         <entry key="app/src/main/res/layout/fragment_expandable_group_ingredient.xml" value="0.1671875" />

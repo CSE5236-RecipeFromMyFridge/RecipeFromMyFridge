@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.recipefrommyfridgeapp.model.Cuisine;
 import com.example.recipefrommyfridgeapp.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +29,7 @@ public class AppRepository {
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
     private FirebaseAuth auth;
     private FirebaseDatabase db;
+    private MutableLiveData<Cuisine> cuisineMutableLiveData;
 
     public AppRepository(Application application){
         this.application = application;
@@ -35,6 +37,7 @@ public class AppRepository {
         db = FirebaseDatabase.getInstance();
         mUserMutableLiveData = new MutableLiveData<>();
         loggedOutMutableLiveData = new MutableLiveData<>();
+        cuisineMutableLiveData = new MutableLiveData<>();
 
         if (auth.getCurrentUser() != null){
             getUserMutableLiveData().postValue(auth.getCurrentUser());
@@ -128,5 +131,9 @@ public class AppRepository {
 
     public MutableLiveData<Boolean> getLoggedOutMutableLiveData() {
         return loggedOutMutableLiveData;
+    }
+
+    public MutableLiveData<Cuisine> getCuisineMutableLiveData() {
+        return cuisineMutableLiveData;
     }
 }
