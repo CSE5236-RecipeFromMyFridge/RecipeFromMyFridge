@@ -13,11 +13,15 @@
 
         <TextView
             android:id="@+id/choose_cuisine_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="24dp"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
             android:text="@string/choose_cuisine"
-            android:textSize="24sp" />
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-black"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -28,7 +32,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/anhui_cuisine" />
+                android:text="@string/anhui_cuisine"
+                android:textSize="20sp"/>
 
             <CheckBox
                 android:id="@+id/anhui_checkbox"
@@ -45,7 +50,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cantonese_cuisine" />
+                android:text="@string/cantonese_cuisine"
+                android:textSize="20sp"/>
 
             <CheckBox
                 android:id="@+id/cantonese_checkbox"
@@ -62,7 +68,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fujian_cuisine" />
+                android:text="@string/fujian_cuisine"
+                android:textSize="20sp"/>
 
             <CheckBox
                 android:id="@+id/fujian_checkbox"
@@ -79,7 +86,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hunan_cuisine" />
+                android:text="@string/hunan_cuisine"
+                android:textSize="20sp"/>
 
             <CheckBox
                 android:id="@+id/hunan_checkbox"
@@ -96,7 +104,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/jiangsu_cuisine" />
+                android:text="@string/jiangsu_cuisine"
+                android:textSize="20sp"/>
 
             <CheckBox
                 android:id="@+id/jiangsu_checkbox"
@@ -113,7 +122,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/shandong_cuisine" />
+                android:text="@string/shandong_cuisine"
+                android:textSize="20sp"/>
 
             <CheckBox
                 android:id="@+id/shandong_checkbox"
@@ -130,7 +140,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/szechuan_cuisine" />
+                android:text="@string/szechuan_cuisine"
+                android:textSize="20sp"/>
 
             <CheckBox
                 android:id="@+id/szechuan_checkbox"
@@ -147,7 +158,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/zhejiang_cuisine" />
+                android:text="@string/zhejiang_cuisine"
+                android:textSize="20sp"/>
 
             <CheckBox
                 android:id="@+id/zhejiang_checkbox"
@@ -164,7 +176,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/random" />
+                android:text="@string/random"
+                android:textSize="20sp"/>
 
             <CheckBox
                 android:id="@+id/random_checkbox"
@@ -173,17 +186,34 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button_generate_recipe"
-            android:layout_width="wrap_content"
+            android:id="@+id/choose_cuisine_generate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:text="@string/generate" />
+            android:layout_marginTop="15dp"
+            android:text="@string/generate"
+            android:textAlignment="center"
+            android:layout_marginLeft="90dp"
+            android:layout_marginRight="90dp"/>
 
         <Button
-            android:id="@+id/button_create_recipe"
-            android:layout_width="wrap_content"
+            android:id="@+id/choose_cuisine_create"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:text="@string/create_recipe" />
+            android:text="@string/create_recipe"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:layout_marginLeft="90dp"
+            android:layout_marginRight="90dp"/>
+
+        <Button
+            android:id="@+id/choose_cuisine_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:layout_marginLeft="90dp"
+            android:layout_marginRight="90dp"/>
+
     </LinearLayout>
 </ScrollView>
