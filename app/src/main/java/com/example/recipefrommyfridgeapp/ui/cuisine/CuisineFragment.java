@@ -41,7 +41,41 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
         cuisineViewModel = new ViewModelProvider(this).get(CuisineViewModel.class);
         cuisineViewModel.getCuisineMutableLiveData().observe(this, new Observer<List<Cuisine>>() {
             @Override
+            //TODO: find an easier way to display it
             public void onChanged(List<Cuisine> cuisines) {
+                for (int i = 0; i < cuisines.size(); i++){
+                    Cuisine current = cuisines.get(i);
+                    String input = current.getName() + " - " + current.getType();
+                    switch (i){
+                        case 0:
+                            cuisine_1.setText(input);
+                            break;
+                        case 1:
+                            cuisine_2.setText(input);
+                            break;
+                        case 2:
+                            cuisine_3.setText(input);
+                            break;
+                        case 3:
+                            cuisine_4.setText(input);
+                            break;
+                        case 4:
+                            cuisine_5.setText(input);
+                            break;
+                        case 5:
+                            cuisine_6.setText(input);
+                            break;
+                        case 6:
+                            cuisine_7.setText(input);
+                            break;
+                        case 7:
+                            cuisine_8.setText(input);
+                            break;
+                        case 8:
+                            cuisine_9.setText(input);
+                            break;
+                    }
+                }
 
             }
         });
