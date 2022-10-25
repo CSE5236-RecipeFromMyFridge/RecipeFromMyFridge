@@ -21,7 +21,7 @@ import com.example.recipefrommyfridgeapp.ui.recipe.RecipeCreationFragment;
 
 public class CuisineFragment extends Fragment implements View.OnClickListener{
 
-    private Button generateButton, createButton, backButton;
+    private Button generateButton, createButton;
 
     @Nullable
     @Override
@@ -29,10 +29,8 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
         View v = inflater.inflate(R.layout.activity_cuisine, container, false);
         generateButton = v.findViewById(R.id.choose_cuisine_generate);
         createButton = v.findViewById(R.id.choose_cuisine_create);
-        backButton = v.findViewById(R.id.choose_cuisine_back);
         generateButton.setOnClickListener(this);
         createButton.setOnClickListener(this);
-        backButton.setOnClickListener(this);
 
         return v;
     }
@@ -50,23 +48,6 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
                         .setReorderingAllowed(true)
                         .addToBackStack("Recipe Creation")
                         .commit();
-                break;
-            case R.id.choose_cuisine_back:
-                // TODO: not sure how to fixed this -
-                //  Two situations: from menu to choose_cuisine; from choose_ingredient to choose_cuisine;
-                //  work out Fragment.OnBackPressed listener
-                if (getParentFragmentManager().getBackStackEntryCount() == 0){
-                    getParentFragmentManager().beginTransaction()
-                            .remove(this)
-                            .commit();
-                    getParentFragmentManager().popBackStack();
-                    LoggedInFragment loggedInFragment = new LoggedInFragment();
-                    getParentFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, loggedInFragment)
-                            .setReorderingAllowed(true)
-                            .addToBackStack("Return to logged in page")
-                            .commit();
-                }
                 break;
         }
 
