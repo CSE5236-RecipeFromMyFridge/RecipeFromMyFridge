@@ -20,7 +20,14 @@ import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppRepository {
 
@@ -29,7 +36,7 @@ public class AppRepository {
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
     private FirebaseAuth auth;
     private FirebaseDatabase db;
-    private MutableLiveData<Cuisine> cuisineMutableLiveData;
+    private MutableLiveData<List<Cuisine>> cuisineMutableLiveData;
 
     public AppRepository(Application application){
         this.application = application;
@@ -94,6 +101,26 @@ public class AppRepository {
         loggedOutMutableLiveData.postValue(true);
     }
 
+    public void retrieveCuisines(){
+        List<Cuisine> cuisines = new ArrayList<>();
+        DatabaseReference ref = db.getReference("Cuisines");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot post : snapshot.getChildren()){
+                    Cuisine single = post.getValue(Cuisine.class);
+                    cuisines.add(single);
+                }
+                Log.d("checkpoint5", "Successfully retrieve Cuisines");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("checkpoint5", "Fail to retrieve Cuisines");
+            }
+        });
+        cuisineMutableLiveData.postValue(cuisines);
+    }
+
     public void resetPassword(String name, String email, String password, String newPassword){
         FirebaseUser user = auth.getCurrentUser();
         AuthCredential credential = EmailAuthProvider.getCredential(email, password);
@@ -133,7 +160,8 @@ public class AppRepository {
         return loggedOutMutableLiveData;
     }
 
-    public MutableLiveData<Cuisine> getCuisineMutableLiveData() {
+    public MutableLiveData<List<Cuisine>> getCuisineMutableLiveData() {
+        retrieveCuisines();
         return cuisineMutableLiveData;
     }
 }

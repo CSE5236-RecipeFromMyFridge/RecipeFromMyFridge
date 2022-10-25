@@ -31,6 +31,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/cuisine_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/anhui_cuisine"
@@ -49,6 +50,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/cuisine_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cantonese_cuisine"
@@ -67,6 +69,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/cuisine_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fujian_cuisine"
@@ -85,6 +88,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/cuisine_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hunan_cuisine"
@@ -103,6 +107,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/cuisine_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/jiangsu_cuisine"
@@ -121,6 +126,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/cuisine_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shandong_cuisine"
@@ -139,6 +145,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/cuisine_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/szechuan_cuisine"
@@ -157,6 +164,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/cuisine_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/zhejiang_cuisine"
@@ -175,6 +183,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/cuisine_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/random"
