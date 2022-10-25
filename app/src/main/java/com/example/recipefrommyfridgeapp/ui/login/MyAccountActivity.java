@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,8 +23,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
-public class MyAccountActivity extends AppCompatActivity implements View.OnClickListener {
+public class MyAccountActivity extends AppCompatActivity{
 
     private TextView userName, userEmail, userPassword;
     private Button resetPasswordButton;
@@ -40,7 +43,6 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
         userEmail = findViewById(R.id.my_account_email);
         userPassword = findViewById(R.id.my_account_password);
         resetPasswordButton = findViewById(R.id.my_account_reset_password);
-        resetPasswordButton.setOnClickListener(this);
         backButton = findViewById(R.id.my_account_back);
         backButton.setOnClickListener(view -> {
             if (getFragmentManager().getBackStackEntryCount() > 0){
@@ -48,7 +50,7 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                 return;
             }
             super.onBackPressed();
-            //Question：why I can't do the following - error - illegalstate,
+            //TODO: Question：why I can't do the following - error - illegal state,
             // cannot find view
 //            Fragment fragment = new LoggedInFragment();
 //            getSupportFragmentManager().beginTransaction()
@@ -73,6 +75,32 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
                             userName.setText("User Name: " + user.getName());
                             userEmail.setText("User Email: " + user.getEmail());
                             userPassword.setText("User Password: " + user.getPassword());
+                            // TODO: Not sure if this is the right place or I should have two observers
+                            resetPasswordButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    final DialogPlus dialogPlus = DialogPlus.newDialog(MyAccountActivity.this)
+                                            .setContentHolder(new ViewHolder(R.layout.password_popup))
+                                            .setExpanded(true, 1200)
+                                            .create();
+                                    View popup = dialogPlus.getHolderView();
+                                    TextView name = popup.findViewById(R.id.password_popup_name);
+                                    TextView email = popup.findViewById(R.id.password_popup_email);
+                                    EditText password = popup.findViewById(R.id.password_popup_password);
+                                    Button reset = popup.findViewById(R.id.password_popup_reset);
+                                    name.setText(user.getName());
+                                    email.setText(user.getEmail());
+                                    password.setText(user.getPassword());
+                                    dialogPlus.show();
+                                    reset.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            loggedInViewModel.resetPassword(user.getName(), user.getEmail(), user.getPassword(), password.getText().toString().trim());
+                                            dialogPlus.dismiss();
+                                        }
+                                    });
+                                }
+                            });
                         }
 
                         @Override
@@ -86,12 +114,5 @@ public class MyAccountActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-
-        }
-    }
 
 }

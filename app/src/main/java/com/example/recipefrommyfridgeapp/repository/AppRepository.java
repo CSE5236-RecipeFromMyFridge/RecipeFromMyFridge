@@ -2,6 +2,7 @@ package com.example.recipefrommyfridgeapp.repository;
 
 import android.app.Application;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -12,7 +13,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.recipefrommyfridgeapp.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,10 +27,12 @@ public class AppRepository {
     private MutableLiveData<FirebaseUser> mUserMutableLiveData;
     private MutableLiveData<Boolean> loggedOutMutableLiveData;
     private FirebaseAuth auth;
+    private FirebaseDatabase db;
 
     public AppRepository(Application application){
         this.application = application;
         auth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
         mUserMutableLiveData = new MutableLiveData<>();
         loggedOutMutableLiveData = new MutableLiveData<>();
 
@@ -83,6 +89,38 @@ public class AppRepository {
     public void logOut(){
         auth.signOut();
         loggedOutMutableLiveData.postValue(true);
+    }
+
+    public void resetPassword(String name, String email, String password, String newPassword){
+        FirebaseUser user = auth.getCurrentUser();
+        AuthCredential credential = EmailAuthProvider.getCredential(email, password);
+        user.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(application.getApplicationContext(), "Successfully reauthenticate!", Toast.LENGTH_SHORT).show();
+                            Log.d("checkpoint5", "User re-authenticated");
+                        } else {
+                            Toast.makeText(application.getApplicationContext(), "Fail to reauthenticate!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        user.updatePassword(newPassword)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(application.getApplicationContext(), "Successfully reset the password!", Toast.LENGTH_SHORT).show();
+                            Log.d("checkpoint5", "User reset the password");
+                        } else {
+                            Toast.makeText(application.getApplicationContext(), "Fail to update the password!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        User person = new User(name, email, newPassword);
+        db.getReference("Users").child(user.getUid()).setValue(person);
+
     }
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {

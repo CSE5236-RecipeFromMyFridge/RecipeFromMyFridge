@@ -26,6 +26,10 @@ public class LoggedInViewModel extends AndroidViewModel {
         mAppRepository.logOut();
     }
 
+    public void resetPassword(String name, String email, String password, String newPassword){
+        mAppRepository.resetPassword(name, email, password, newPassword);
+    }
+
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return mUserMutableLiveData;
     }
