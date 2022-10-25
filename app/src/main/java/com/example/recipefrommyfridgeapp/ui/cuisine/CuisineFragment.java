@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.recipefrommyfridgeapp.R;
+import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientActivity;
+import com.example.recipefrommyfridgeapp.ui.login.LoggedInFragment;
 import com.example.recipefrommyfridgeapp.ui.recipe.ChooseRecipeActivity;
 import com.example.recipefrommyfridgeapp.ui.recipe.RecipeCreationFragment;
 
@@ -48,12 +50,20 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
                         .commit();
                 break;
             case R.id.choose_cuisine_back:
-//                if (getParentFragmentManager().findFragmentById(R.id.fragment_logged_in) != null){
-//                    getParentFragmentManager().beginTransaction()
-//                            .replace(this, R.id.fragment_logged_in)
-//                            .commit();
-//                    getParentFragmentManager().popBackStack();
-//                }
+                // TODO: not sure how to fixed this -
+                //  Two situations: from menu to choose_cuisine; from choose_ingredient to choose_cuisine
+                if (getParentFragmentManager().findFragmentById(R.id.fragment_logged_in) != null){
+                    LoggedInFragment loggedInFragment = new LoggedInFragment();
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.activity_cuisine, loggedInFragment)
+                            .addToBackStack(null)
+                            .commit();
+                } else {
+                    getParentFragmentManager().beginTransaction()
+                            .remove(this)
+                            .commit();
+                    getParentFragmentManager().popBackStack();
+                }
                 break;
         }
 
