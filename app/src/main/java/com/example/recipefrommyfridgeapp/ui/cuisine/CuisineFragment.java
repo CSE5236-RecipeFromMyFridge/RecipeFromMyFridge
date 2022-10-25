@@ -1,11 +1,13 @@
 package com.example.recipefrommyfridgeapp.ui.cuisine;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -51,18 +53,19 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.choose_cuisine_back:
                 // TODO: not sure how to fixed this -
-                //  Two situations: from menu to choose_cuisine; from choose_ingredient to choose_cuisine
-                if (getParentFragmentManager().findFragmentById(R.id.fragment_logged_in) != null){
-                    LoggedInFragment loggedInFragment = new LoggedInFragment();
-                    getParentFragmentManager().beginTransaction()
-                            .replace(R.id.activity_cuisine, loggedInFragment)
-                            .addToBackStack(null)
-                            .commit();
-                } else {
+                //  Two situations: from menu to choose_cuisine; from choose_ingredient to choose_cuisine;
+                //  work out Fragment.OnBackPressed listener
+                if (getParentFragmentManager().getBackStackEntryCount() == 0){
                     getParentFragmentManager().beginTransaction()
                             .remove(this)
                             .commit();
                     getParentFragmentManager().popBackStack();
+                    LoggedInFragment loggedInFragment = new LoggedInFragment();
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, loggedInFragment)
+                            .setReorderingAllowed(true)
+                            .addToBackStack("Return to logged in page")
+                            .commit();
                 }
                 break;
         }
