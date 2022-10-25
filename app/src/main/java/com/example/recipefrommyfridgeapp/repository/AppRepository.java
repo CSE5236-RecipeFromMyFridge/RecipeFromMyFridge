@@ -99,7 +99,6 @@ public class AppRepository {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
-                            Toast.makeText(application.getApplicationContext(), "Successfully reauthenticate!", Toast.LENGTH_SHORT).show();
                             Log.d("checkpoint5", "User re-authenticated");
                         } else {
                             Toast.makeText(application.getApplicationContext(), "Fail to reauthenticate!", Toast.LENGTH_SHORT).show();
