@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.recipefrommyfridgeapp.model.Cuisine;
+import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.example.recipefrommyfridgeapp.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,6 +38,7 @@ public class AppRepository {
     private FirebaseAuth auth;
     private FirebaseDatabase db;
     private MutableLiveData<List<Cuisine>> cuisineMutableLiveData;
+    private MutableLiveData<List<Recipe>> recipeMutableLiveData;
 
     public AppRepository(Application application){
         this.application = application;
@@ -45,6 +47,7 @@ public class AppRepository {
         mUserMutableLiveData = new MutableLiveData<>();
         loggedOutMutableLiveData = new MutableLiveData<>();
         cuisineMutableLiveData = new MutableLiveData<>();
+        recipeMutableLiveData = new MutableLiveData<>();
 
         if (auth.getCurrentUser() != null){
             getUserMutableLiveData().postValue(auth.getCurrentUser());
@@ -61,8 +64,8 @@ public class AppRepository {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             User user = new User(name, email, password);
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            db.getReference("Users")
+                                    .child(auth.getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -73,7 +76,7 @@ public class AppRepository {
                                             }
                                         }
                                     });
-                            mUserMutableLiveData.postValue(auth.getCurrentUser());
+                            //mUserMutableLiveData.postValue(auth.getCurrentUser());
                         } else {
                             Toast.makeText(application.getApplicationContext(), "(Auth) Failed to register!", Toast.LENGTH_SHORT).show();
                         }
@@ -156,6 +159,22 @@ public class AppRepository {
 
     }
 
+    public void createRecipe(String name, String content, Float rating){
+        Recipe recipe = new Recipe(name, content, rating);
+        DatabaseReference ref = db.getReference("Recipes");
+        String id = ref.push().getKey();
+        ref.child(id).setValue(recipe).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(application.getApplicationContext(), "Recipe has been added successfully!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(application.getApplicationContext(), "(DB) Failed to add the recipe!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return mUserMutableLiveData;
     }
@@ -166,5 +185,9 @@ public class AppRepository {
 
     public MutableLiveData<List<Cuisine>> getCuisineMutableLiveData() {
         return cuisineMutableLiveData;
+    }
+
+    public MutableLiveData<List<Recipe>> getRecipeMutableLiveData() {
+        return recipeMutableLiveData;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.recipefrommyfridgeapp.ui.recipe;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Recipe;
+import com.example.recipefrommyfridgeapp.viewmodel.LoginRegisterViewModel;
+import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -25,8 +29,15 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
     private Button createRecipeButton, backButton;
     private EditText name, content, rating;
     private ProgressBar progressBar;
-    private FirebaseDatabase database;
-    private DatabaseReference databaseRecipe;
+
+    private RecipeViewModel mRecipeViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i("checkpoint5", "RecipeCreationFragment.onCreate()");
+        mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
+    }
 
     @Nullable
     @Override
@@ -40,8 +51,7 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
         progressBar = v.findViewById(R.id.progress_circular);
         createRecipeButton.setOnClickListener(this);
         backButton.setOnClickListener(this);
-        database = FirebaseDatabase.getInstance();
-        databaseRecipe = database.getReference("Recipes");
+
 
         return v;
     }
@@ -65,20 +75,25 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
         String recipeName = name.getText().toString().trim();
         String recipeContent = content.getText().toString().trim();
         String recipeRating = rating.getText().toString();
+        if (recipeName.isEmpty()){
+            name.setError("Recipe Name is required!");
+            name.requestFocus();
+            return;
+        }
+        if (recipeContent.isEmpty()){
+            content.setError("Recipe Content is required!");
+            content.requestFocus();
+            return;
+        }
+        if (recipeRating.isEmpty()){
+            rating.setError("Recipe Rating is required!");
+            rating.requestFocus();
+            return;
+        }
         progressBar.setVisibility(View.VISIBLE);
-        Recipe recipe = new Recipe(recipeName, recipeContent, Float.parseFloat(recipeRating));
-        String id = databaseRecipe.push().getKey();
-        databaseRecipe.child(id).setValue(recipe).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(getContext(), "Recipe has been added successfully!", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                } else {
-                    Toast.makeText(getContext(), "Failed to add the recipe!", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                }
-            }
-        });
+        mRecipeViewModel.createRecipe(recipeName, recipeContent, Float.parseFloat(recipeRating));
+        progressBar.setVisibility(View.GONE);
+
+
     }
 }

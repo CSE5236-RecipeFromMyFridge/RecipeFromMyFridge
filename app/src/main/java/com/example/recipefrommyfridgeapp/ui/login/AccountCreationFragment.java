@@ -31,7 +31,7 @@ public class AccountCreationFragment extends Fragment implements View.OnClickLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("checkpoint2", "AccountCreationFragment.onCreate()");
+        Log.i("checkpoint5", "AccountCreationFragment.onCreate()");
         loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
     }
 
