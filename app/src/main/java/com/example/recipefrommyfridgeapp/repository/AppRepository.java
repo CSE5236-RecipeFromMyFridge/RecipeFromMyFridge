@@ -175,6 +175,31 @@ public class AppRepository {
         });
     }
 
+    public void retrieveRecipes(){
+        List<Recipe> recipes = new ArrayList<>();
+        DatabaseReference ref = db.getReference("Recipes");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot post : snapshot.getChildren()){
+                    Recipe single = post.getValue(Recipe.class);
+                    String str = single.getName() + " - " + single.getContent() + " - "
+                            + Float.toString(single.getRating());
+                    Log.d("checkpoint5", str);
+                    recipes.add(single);
+                }
+                recipeMutableLiveData.postValue(recipes);
+                Log.d("checkpoint5", "Successfully retrieve Recipes");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("checkpoint5", "Fail to retrieve Recipes");
+            }
+        });
+
+        Log.d("checkpoint5", "retrieving " + Integer.toString(recipes.size()));
+    }
+
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return mUserMutableLiveData;
     }

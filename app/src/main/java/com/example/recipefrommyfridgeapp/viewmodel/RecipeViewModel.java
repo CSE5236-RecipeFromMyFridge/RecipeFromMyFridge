@@ -32,6 +32,10 @@ public class RecipeViewModel extends AndroidViewModel {
         mAppRepository.createRecipe(name, content, rating);
     }
 
+    public void retrieveRecipes(){
+        mAppRepository.retrieveRecipes();
+    }
+
     public MutableLiveData<List<Recipe>> getRecipeListMutableData() {
         return mRecipeListMutableData;
     }

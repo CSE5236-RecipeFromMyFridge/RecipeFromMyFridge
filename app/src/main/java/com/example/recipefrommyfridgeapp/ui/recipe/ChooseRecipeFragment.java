@@ -40,7 +40,7 @@ public class ChooseRecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
-        Log.d("checkpoint4", "onCreateView");
+        Log.d("checkpoint5", "ChooseRecipeFragment.onCreateView");
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Recipes");
 
@@ -85,7 +85,7 @@ public class ChooseRecipeFragment extends Fragment {
 
         @Override
         protected void onBindViewHolder(@NonNull RecipeAdapter.RecipeViewHolder holder, int position, @NonNull Recipe model) {
-            Log.d("checkpoint4", "onBindViewHolder");
+            Log.d("checkpoint5", "onBindViewHolder");
             final DatabaseReference itemRef = getRef(position);
             final String key = itemRef.getKey();
             holder.mNameTextView.setText(model.getName());
