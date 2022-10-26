@@ -39,46 +39,7 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "CuisineFragment.onCreate()");
         cuisineViewModel = new ViewModelProvider(this).get(CuisineViewModel.class);
-        cuisineViewModel.getCuisineMutableLiveData().observe(this, new Observer<List<Cuisine>>() {
-            @Override
-            //TODO: find an easier way to display it
-            public void onChanged(List<Cuisine> cuisines) {
-                for (int i = 0; i < cuisines.size(); i++){
-                    Cuisine current = cuisines.get(i);
-                    String input = current.getName() + " - " + current.getType();
-                    switch (i){
-                        case 0:
-                            cuisine_1.setText(input);
-                            break;
-                        case 1:
-                            cuisine_2.setText(input);
-                            break;
-                        case 2:
-                            cuisine_3.setText(input);
-                            break;
-                        case 3:
-                            cuisine_4.setText(input);
-                            break;
-                        case 4:
-                            cuisine_5.setText(input);
-                            break;
-                        case 5:
-                            cuisine_6.setText(input);
-                            break;
-                        case 6:
-                            cuisine_7.setText(input);
-                            break;
-                        case 7:
-                            cuisine_8.setText(input);
-                            break;
-                        case 8:
-                            cuisine_9.setText(input);
-                            break;
-                    }
-                }
-
-            }
-        });
+        cuisineViewModel.retrieveCuisines();
     }
 
     @Nullable
@@ -89,6 +50,73 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
         createButton = v.findViewById(R.id.choose_cuisine_create);
         generateButton.setOnClickListener(this);
         createButton.setOnClickListener(this);
+        cuisine_1 = v.findViewById(R.id.cuisine_1);
+        cuisine_2 = v.findViewById(R.id.cuisine_2);
+        cuisine_3 = v.findViewById(R.id.cuisine_3);
+        cuisine_4 = v.findViewById(R.id.cuisine_4);
+        cuisine_5 = v.findViewById(R.id.cuisine_5);
+        cuisine_6 = v.findViewById(R.id.cuisine_6);
+        cuisine_7 = v.findViewById(R.id.cuisine_7);
+        cuisine_8 = v.findViewById(R.id.cuisine_8);
+        cuisine_9 = v.findViewById(R.id.cuisine_9);
+
+        cuisineViewModel.getCuisineMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<Cuisine>>() {
+            @Override
+            //TODO: find an easier way to display it
+            public void onChanged(List<Cuisine> cuisines) {
+                if (cuisines != null){
+                    Log.d("checkpoint5", "Successfully get Cuisines list");
+                    for (int i = 0; i < cuisines.size(); i++){
+                        Cuisine current = cuisines.get(i);
+                        String input = current.getName() + " - " + current.getType();
+                        Log.d("checkpoint5", input);
+                        switch (i){
+                            case 0:
+                                cuisine_1.setText(input);
+                                Log.d("checkpoint5", "cuisine1");
+                                break;
+                            case 1:
+                                cuisine_2.setText(input);
+                                Log.d("checkpoint5", "cuisine2");
+                                break;
+                            case 2:
+                                cuisine_3.setText(input);
+                                Log.d("checkpoint5", "cuisine3");
+                                break;
+                            case 3:
+                                cuisine_4.setText(input);
+                                Log.d("checkpoint5", "cuisine4");
+                                break;
+                            case 4:
+                                cuisine_5.setText(input);
+                                Log.d("checkpoint5", "cuisine5");
+                                break;
+                            case 5:
+                                cuisine_6.setText(input);
+                                Log.d("checkpoint5", "cuisine6");
+                                break;
+                            case 6:
+                                cuisine_7.setText(input);
+                                Log.d("checkpoint5", "cuisine7");
+                                break;
+                            case 7:
+                                cuisine_8.setText(input);
+                                Log.d("checkpoint5", "cuisine8");
+                                break;
+                            case 8:
+                                cuisine_9.setText(input);
+                                Log.d("checkpoint5", "cuisine9");
+                                break;
+                        }
+                    }
+                } else {
+                    Log.d("checkpoint5", "Fail to get Cuisine list");
+                }
+
+
+            }
+        });
+
 
         return v;
     }

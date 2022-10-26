@@ -23,6 +23,10 @@ public class CuisineViewModel extends AndroidViewModel {
         mCuisineMutableLiveData = mAppRepository.getCuisineMutableLiveData();
     }
 
+    public void retrieveCuisines(){
+        mAppRepository.retrieveCuisines();
+    }
+
     public MutableLiveData<List<Cuisine>> getCuisineMutableLiveData() {
         return mCuisineMutableLiveData;
     }
