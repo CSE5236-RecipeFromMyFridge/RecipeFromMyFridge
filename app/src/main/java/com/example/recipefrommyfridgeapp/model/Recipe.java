@@ -22,7 +22,7 @@ public class Recipe {
     }
 
     public void setCuisineId(String cuisineId) {
-        cuisineId = cuisineId;
+        this.cuisineId = cuisineId;
     }
 
     public String getName() {

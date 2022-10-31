@@ -97,6 +97,7 @@ public class ChooseRecipeFragment extends Fragment {
             holder.mNameTextView.setText(model.getName());
             holder.mContentTextView.setText(model.getContent());
             holder.mRatingTextView.setText(Float.toString(model.getRating()));
+            holder.CuisineIdTextView.setText(model.getCuisineId());
 
             holder.deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -149,13 +150,14 @@ public class ChooseRecipeFragment extends Fragment {
         }
 
         private class RecipeViewHolder extends RecyclerView.ViewHolder{
-            private TextView mNameTextView, mContentTextView, mRatingTextView;
+            private TextView mNameTextView, mContentTextView, mRatingTextView, CuisineIdTextView;
             private Button editRecipeButton, deleteRecipeButton;
             public RecipeViewHolder(@NonNull View recipeView){
                 super(recipeView);
                 mNameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
                 mContentTextView = (TextView) itemView.findViewById(R.id.recipe_content);
                 mRatingTextView = (TextView) itemView.findViewById(R.id.recipe_rating);
+                CuisineIdTextView = (TextView) itemView.findViewById(R.id.recipe_cuisineId);
                 editRecipeButton = (Button) itemView.findViewById(R.id.recipe_item_edit_button);
                 deleteRecipeButton = (Button) itemView.findViewById(R.id.recipe_item_delete_button);
             }

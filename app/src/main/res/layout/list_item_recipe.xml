@@ -36,6 +36,13 @@
             android:text="Recipe Rating"
             android:textAlignment="center"/>
 
+        <TextView
+            android:id="@+id/recipe_cuisineId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Cuisine Id"
+            android:textAlignment="center"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
