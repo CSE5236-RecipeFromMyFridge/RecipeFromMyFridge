@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.recipefrommyfridgeapp.model.Cuisine;
 import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.example.recipefrommyfridgeapp.model.User;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -28,7 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AppRepository {
 
@@ -38,7 +41,6 @@ public class AppRepository {
     private FirebaseAuth auth;
     private FirebaseDatabase db;
     private MutableLiveData<List<Cuisine>> cuisineMutableLiveData;
-    private MutableLiveData<List<Recipe>> recipeMutableLiveData;
 
     public AppRepository(Application application){
         this.application = application;
@@ -47,7 +49,6 @@ public class AppRepository {
         mUserMutableLiveData = new MutableLiveData<>();
         loggedOutMutableLiveData = new MutableLiveData<>();
         cuisineMutableLiveData = new MutableLiveData<>();
-        recipeMutableLiveData = new MutableLiveData<>();
 
         if (auth.getCurrentUser() != null){
             getUserMutableLiveData().postValue(auth.getCurrentUser());
@@ -175,29 +176,32 @@ public class AppRepository {
         });
     }
 
-    public void retrieveRecipes(){
-        List<Recipe> recipes = new ArrayList<>();
+    public void deleteRecipe(String id){
         DatabaseReference ref = db.getReference("Recipes");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot post : snapshot.getChildren()){
-                    Recipe single = post.getValue(Recipe.class);
-                    String str = single.getName() + " - " + single.getContent() + " - "
-                            + Float.toString(single.getRating());
-                    Log.d("checkpoint5", str);
-                    recipes.add(single);
-                }
-                recipeMutableLiveData.postValue(recipes);
-                Log.d("checkpoint5", "Successfully retrieve Recipes");
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("checkpoint5", "Fail to retrieve Recipes");
-            }
-        });
+        ref.child(id).removeValue();
+    }
 
-        Log.d("checkpoint5", "retrieving " + Integer.toString(recipes.size()));
+    public void updateRecipe(String id, Map<String, Object> newRecipe){
+        DatabaseReference ref = db.getReference("Recipes");
+        ref.child(id).updateChildren(newRecipe)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(application.getApplicationContext(), "Recipe Updated Successfully!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(application.getApplicationContext(), "Failed to login!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(){
+        DatabaseReference ref = db.getReference("Recipes");
+        FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
+                .setQuery(ref, Recipe.class)
+                .build();
+        return options;
     }
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
@@ -212,7 +216,4 @@ public class AppRepository {
         return cuisineMutableLiveData;
     }
 
-    public MutableLiveData<List<Recipe>> getRecipeMutableLiveData() {
-        return recipeMutableLiveData;
-    }
 }

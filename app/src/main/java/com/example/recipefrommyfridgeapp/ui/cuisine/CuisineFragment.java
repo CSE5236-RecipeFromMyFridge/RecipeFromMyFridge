@@ -69,43 +69,33 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
                     for (int i = 0; i < cuisines.size(); i++){
                         Cuisine current = cuisines.get(i);
                         String input = current.getName() + " - " + current.getType();
-                        Log.d("checkpoint5", input);
                         switch (i){
                             case 0:
                                 cuisine_1.setText(input);
-                                Log.d("checkpoint5", "cuisine1");
                                 break;
                             case 1:
                                 cuisine_2.setText(input);
-                                Log.d("checkpoint5", "cuisine2");
                                 break;
                             case 2:
                                 cuisine_3.setText(input);
-                                Log.d("checkpoint5", "cuisine3");
                                 break;
                             case 3:
                                 cuisine_4.setText(input);
-                                Log.d("checkpoint5", "cuisine4");
                                 break;
                             case 4:
                                 cuisine_5.setText(input);
-                                Log.d("checkpoint5", "cuisine5");
                                 break;
                             case 5:
                                 cuisine_6.setText(input);
-                                Log.d("checkpoint5", "cuisine6");
                                 break;
                             case 6:
                                 cuisine_7.setText(input);
-                                Log.d("checkpoint5", "cuisine7");
                                 break;
                             case 7:
                                 cuisine_8.setText(input);
-                                Log.d("checkpoint5", "cuisine8");
                                 break;
                             case 8:
                                 cuisine_9.setText(input);
-                                Log.d("checkpoint5", "cuisine9");
                                 break;
                         }
                     }

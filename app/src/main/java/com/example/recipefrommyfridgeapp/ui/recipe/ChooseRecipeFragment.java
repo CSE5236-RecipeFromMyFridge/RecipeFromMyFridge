@@ -11,30 +11,45 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Recipe;
+import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChooseRecipeFragment extends Fragment {
 
     private RecyclerView mRecipeRecyclerView;
     private RecipeAdapter mAdapter;
-    private DatabaseReference mDatabaseReference;
+    private FirebaseRecyclerOptions<Recipe> options;
 
+    private RecipeViewModel mRecipeViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i("checkpoint5", "ChooseRecipeFragment.onCreate()");
+        mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
+        options = mRecipeViewModel.retrieveRecipes();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,20 +57,11 @@ public class ChooseRecipeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
         Log.d("checkpoint5", "ChooseRecipeFragment.onCreateView");
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Recipes");
-
         mRecipeRecyclerView = (RecyclerView) view
                 .findViewById(R.id.recipe_recycler_view);
         mRecipeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        FirebaseRecyclerOptions<Recipe> options =
-                new FirebaseRecyclerOptions.Builder<Recipe>()
-                        .setQuery(mDatabaseReference, Recipe.class)
-                        .build();
         mAdapter = new RecipeAdapter(options);
         mRecipeRecyclerView.setAdapter(mAdapter);
-
-//        updateUI();
 
         return view;
     }
@@ -95,8 +101,7 @@ public class ChooseRecipeFragment extends Fragment {
             holder.deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mDatabaseReference
-                            .child(key).removeValue();
+                    mRecipeViewModel.deleteRecipe(key);
                 }
             });
 
@@ -126,27 +131,10 @@ public class ChooseRecipeFragment extends Fragment {
                             map.put("name", name.getText().toString());
                             map.put("content", content.getText().toString());
                             map.put("rating", Float.parseFloat(rating.getText().toString()));
-
-                            mDatabaseReference
-                                    .child(key).updateChildren(map)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()){
-                                                Toast.makeText(holder.mNameTextView.getContext(), "Recipe Updated Successfully!", Toast.LENGTH_SHORT).show();
-                                                dialogPlus.dismiss();
-                                                return;
-                                            } else {
-                                                Toast.makeText(holder.mNameTextView.getContext(), "Failed to login!", Toast.LENGTH_SHORT).show();
-                                                dialogPlus.dismiss();
-                                                return;
-                                            }
-                                        }
-                                    });
+                            mRecipeViewModel.updateRecipe(key, map);
+                            dialogPlus.dismiss();
                         }
                     });
-
-
                 }
             });
 
@@ -161,7 +149,6 @@ public class ChooseRecipeFragment extends Fragment {
         }
 
         private class RecipeViewHolder extends RecyclerView.ViewHolder{
-            private Recipe mRecipe;
             private TextView mNameTextView, mContentTextView, mRatingTextView;
             private Button editRecipeButton, deleteRecipeButton;
             public RecipeViewHolder(@NonNull View recipeView){
