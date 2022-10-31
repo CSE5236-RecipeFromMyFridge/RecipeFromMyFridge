@@ -46,7 +46,6 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
     private RecipeViewModel mRecipeViewModel;
     private CuisineViewModel mCuisineViewModel;
 
-    private DatabaseReference ref;
     private List<String> names;
     private String cuisineIdChosen;
 

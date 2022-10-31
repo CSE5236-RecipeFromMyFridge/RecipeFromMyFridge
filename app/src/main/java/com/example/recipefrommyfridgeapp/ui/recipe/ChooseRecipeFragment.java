@@ -5,8 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipefrommyfridgeapp.R;
+import com.example.recipefrommyfridgeapp.model.Cuisine;
 import com.example.recipefrommyfridgeapp.model.Recipe;
+import com.example.recipefrommyfridgeapp.viewmodel.CuisineViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -31,6 +36,7 @@ import com.google.firebase.database.Query;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +48,10 @@ public class ChooseRecipeFragment extends Fragment {
     private FirebaseRecyclerOptions<Recipe> options;
 
     private RecipeViewModel mRecipeViewModel;
+    private CuisineViewModel mCuisineViewModel;
+
+    private List<String> names;
+    private String cuisineIdChosen;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +59,8 @@ public class ChooseRecipeFragment extends Fragment {
         Log.i("checkpoint5", "ChooseRecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         options = mRecipeViewModel.retrieveRecipes();
+        mCuisineViewModel = new ViewModelProvider(this).get(CuisineViewModel.class);
+        mCuisineViewModel.retrieveCuisines();
     }
 
     @Override
@@ -111,13 +123,14 @@ public class ChooseRecipeFragment extends Fragment {
                 public void onClick(View v) {
                     final DialogPlus dialogPlus = DialogPlus.newDialog(holder.mNameTextView.getContext())
                             .setContentHolder(new ViewHolder(R.layout.update_popup))
-                            .setExpanded(true, 1200)
+                            .setExpanded(true, 1400)
                             .create();
 
                     View view = dialogPlus.getHolderView();
                     EditText name = view.findViewById(R.id.edit_recipe_name);
                     EditText content = view.findViewById(R.id.edit_recipe_content);
                     EditText rating = view.findViewById(R.id.edit_recipe_rating);
+                    Spinner spinner = view.findViewById(R.id.update_recipe_spinner);
                     Button update = view.findViewById(R.id.update_recipe_button);
                     name.setText(model.getName());
                     content.setText(model.getContent());
@@ -132,6 +145,30 @@ public class ChooseRecipeFragment extends Fragment {
                             map.put("name", name.getText().toString());
                             map.put("content", content.getText().toString());
                             map.put("rating", Float.parseFloat(rating.getText().toString()));
+                            names = new ArrayList<>();
+                            mCuisineViewModel.getCuisineMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<Cuisine>>() {
+                                @Override
+                                public void onChanged(List<Cuisine> cuisines) {
+                                    for (int i = 0; i < cuisines.size(); i++){
+                                        names.add(cuisines.get(i).getType());
+                                    }
+                                    ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(getContext(),
+                                            android.R.layout.simple_spinner_item, names);
+                                    mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                                    spinner.setAdapter(mArrayAdapter);
+                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                            cuisineIdChosen = names.get(position);
+                                            Toast.makeText(getContext(), cuisineIdChosen, Toast.LENGTH_SHORT).show();
+                                        }
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> parent) {
+                                        }
+                                    });
+                                }
+                            });
+                            map.put("cuisineId", spinner.getSelectedItem());
                             mRecipeViewModel.updateRecipe(key, map);
                             dialogPlus.dismiss();
                         }
