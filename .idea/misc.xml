@@ -6,7 +6,11 @@
         <entry key="..\:/Young Li/Young Li/OSU/AU22/RecipeFromMyFridge/app/src/main/res/layout/activity_cuisine.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_choose_ingredient.xml" value="0.1671875" />
         <entry key="app/src/main/res/layout/activity_cuisine.xml" value="0.1671875" />
+        <entry key="app/src/main/res/layout/activity_menu.xml" value="0.14166666666666666" />
         <entry key="app/src/main/res/layout/activity_my_account.xml" value="0.2526041666666667" />
+        <entry key="app/src/main/res/layout/fragment_account_creation.xml" value="0.14166666666666666" />
+        <entry key="app/src/main/res/layout/fragment_checkbox_ingredient.xml" value="0.14166666666666666" />
+        <entry key="app/src/main/res/layout/fragment_container.xml" value="0.14166666666666666" />
         <entry key="app/src/main/res/layout/fragment_expandable_group_ingredient.xml" value="0.1671875" />
         <entry key="app/src/main/res/layout/fragment_logged_in.xml" value="0.1671875" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1671875" />
