@@ -113,8 +113,6 @@ public class AppRepository {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot post : snapshot.getChildren()){
                     Cuisine single = post.getValue(Cuisine.class);
-                    String str = single.getName() + " - " + single.getType();
-                    Log.d("checkpoint5", str);
                     cuisines.add(single);
                 }
                 cuisineMutableLiveData.postValue(cuisines);
@@ -125,8 +123,6 @@ public class AppRepository {
                 Log.d("checkpoint5", "Fail to retrieve Cuisines");
             }
         });
-
-        Log.d("checkpoint5", "retrieving " + Integer.toString(cuisines.size()));
     }
 
     public void resetPassword(String name, String email, String password, String newPassword){

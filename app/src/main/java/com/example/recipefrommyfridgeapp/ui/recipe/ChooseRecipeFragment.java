@@ -153,7 +153,6 @@ public class ChooseRecipeFragment extends Fragment {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             cuisineIdChosen = names.get(position);
-                            Log.d("checkpoint5", "update cuisine id retrieved");
                             Toast.makeText(getContext(), cuisineIdChosen, Toast.LENGTH_SHORT).show();
                         }
                         @Override
