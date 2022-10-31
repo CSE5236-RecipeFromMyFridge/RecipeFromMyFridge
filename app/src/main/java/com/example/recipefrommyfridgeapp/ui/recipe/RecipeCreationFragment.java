@@ -74,15 +74,14 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
         backButton.setOnClickListener(this);
 
         names = new ArrayList<>();
-        ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("Cuisines").addValueEventListener(new ValueEventListener() {
+        mCuisineViewModel.getCuisineMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<Cuisine>>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot post : snapshot.getChildren()){
-                    String spinnerName = post.getKey();
-                    names.add(spinnerName);
+            public void onChanged(List<Cuisine> cuisines) {
+                for (int i = 0; i < cuisines.size(); i++){
+                    names.add(cuisines.get(i).getType());
                 }
-                ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, names);
+                ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(getContext(),
+                        android.R.layout.simple_spinner_item, names);
                 mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 spinner.setAdapter(mArrayAdapter);
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -93,13 +92,8 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
                     }
                 });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
