@@ -168,7 +168,7 @@ public class ChooseRecipeFragment extends Fragment {
                                     });
                                 }
                             });
-                            map.put("cuisineId", spinner.getSelectedItem());
+                            map.put("cuisineId", cuisineIdChosen);
                             mRecipeViewModel.updateRecipe(key, map);
                             dialogPlus.dismiss();
                         }
