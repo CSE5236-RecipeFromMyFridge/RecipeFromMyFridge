@@ -61,6 +61,15 @@ public class ChooseRecipeFragment extends Fragment {
         options = mRecipeViewModel.retrieveRecipes();
         mCuisineViewModel = new ViewModelProvider(this).get(CuisineViewModel.class);
         mCuisineViewModel.retrieveCuisines();
+        names = new ArrayList<>();
+        mCuisineViewModel.getCuisineMutableLiveData().observe(this, new Observer<List<Cuisine>>() {
+            @Override
+            public void onChanged(List<Cuisine> cuisines) {
+                for (int i = 0; i < cuisines.size(); i++){
+                    names.add(cuisines.get(i).getType());
+                }
+            }
+        });
     }
 
     @Override
@@ -135,6 +144,22 @@ public class ChooseRecipeFragment extends Fragment {
                     name.setText(model.getName());
                     content.setText(model.getContent());
                     rating.setText(Float.toString(model.getRating()));
+                    ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(getContext(),
+                            android.R.layout.simple_spinner_item, names);
+                    mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                    spinner.setAdapter(mArrayAdapter);
+                    Log.d("checkpoint5", "update cuisine list retrieved");
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            cuisineIdChosen = names.get(position);
+                            Log.d("checkpoint5", "update cuisine id retrieved");
+                            Toast.makeText(getContext(), cuisineIdChosen, Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                        }
+                    });
 
                     dialogPlus.show();
 
@@ -145,29 +170,6 @@ public class ChooseRecipeFragment extends Fragment {
                             map.put("name", name.getText().toString());
                             map.put("content", content.getText().toString());
                             map.put("rating", Float.parseFloat(rating.getText().toString()));
-                            names = new ArrayList<>();
-                            mCuisineViewModel.getCuisineMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<Cuisine>>() {
-                                @Override
-                                public void onChanged(List<Cuisine> cuisines) {
-                                    for (int i = 0; i < cuisines.size(); i++){
-                                        names.add(cuisines.get(i).getType());
-                                    }
-                                    ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(getContext(),
-                                            android.R.layout.simple_spinner_item, names);
-                                    mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                                    spinner.setAdapter(mArrayAdapter);
-                                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                        @Override
-                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                            cuisineIdChosen = names.get(position);
-                                            Toast.makeText(getContext(), cuisineIdChosen, Toast.LENGTH_SHORT).show();
-                                        }
-                                        @Override
-                                        public void onNothingSelected(AdapterView<?> parent) {
-                                        }
-                                    });
-                                }
-                            });
                             map.put("cuisineId", cuisineIdChosen);
                             mRecipeViewModel.updateRecipe(key, map);
                             dialogPlus.dismiss();
