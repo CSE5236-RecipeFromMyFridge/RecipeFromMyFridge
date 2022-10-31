@@ -47,8 +47,8 @@ public class RecipeViewModel extends AndroidViewModel {
         mAppRepository = new AppRepository(application);
     }
 
-    public void createRecipe(String name, String content, Float rating){
-        mAppRepository.createRecipe(name, content, rating);
+    public void createRecipe(String cuisineId, String name, String content, Float rating){
+        mAppRepository.createRecipe(cuisineId, name, content, rating);
     }
 
     public FirebaseRecyclerOptions<Recipe> retrieveRecipes(){

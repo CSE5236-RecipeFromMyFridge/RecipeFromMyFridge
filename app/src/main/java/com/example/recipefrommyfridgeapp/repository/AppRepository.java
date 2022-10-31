@@ -160,8 +160,8 @@ public class AppRepository {
 
     }
 
-    public void createRecipe(String name, String content, Float rating){
-        Recipe recipe = new Recipe(name, content, rating);
+    public void createRecipe(String cuisineId, String name, String content, Float rating){
+        Recipe recipe = new Recipe(cuisineId, name, content, rating);
         DatabaseReference ref = db.getReference("Recipes");
         String id = ref.push().getKey();
         ref.child(id).setValue(recipe).addOnCompleteListener(new OnCompleteListener<Void>() {

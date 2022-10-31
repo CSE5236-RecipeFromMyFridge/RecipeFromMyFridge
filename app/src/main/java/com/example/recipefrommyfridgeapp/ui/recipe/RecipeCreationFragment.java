@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +48,7 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
 
     private DatabaseReference ref;
     private List<String> names;
+    private String cuisineIdChosen;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,18 +79,27 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot post : snapshot.getChildren()){
-                    Cuisine single = post.getValue(Cuisine.class);
-                    String spinnerName = single.getType();
+                    String spinnerName = post.getKey();
                     names.add(spinnerName);
                 }
                 ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, names);
                 mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 spinner.setAdapter(mArrayAdapter);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        cuisineIdChosen = names.get(position);
+                        Toast.makeText(getContext(), cuisineIdChosen, Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
@@ -115,7 +126,8 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
         String recipeName = name.getText().toString().trim();
         String recipeContent = content.getText().toString().trim();
         String recipeRating = rating.getText().toString();
-        String type = spinner.getSelectedItem().toString();
+        String cuisineId = cuisineIdChosen;
+        Log.d("checkpoint5", cuisineId);
         if (recipeName.isEmpty()){
             name.setError("Recipe Name is required!");
             name.requestFocus();
@@ -131,13 +143,13 @@ public class RecipeCreationFragment extends Fragment implements View.OnClickList
             rating.requestFocus();
             return;
         }
-        if (type.isEmpty()){
+        if (cuisineId.isEmpty()){
             Toast.makeText(getContext(), "Cuisine selection is required!", Toast.LENGTH_SHORT).show();
             spinner.requestFocus();
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
-        mRecipeViewModel.createRecipe(recipeName, recipeContent, Float.parseFloat(recipeRating));
+        mRecipeViewModel.createRecipe(cuisineId, recipeName, recipeContent, Float.parseFloat(recipeRating));
         progressBar.setVisibility(View.GONE);
 
 
