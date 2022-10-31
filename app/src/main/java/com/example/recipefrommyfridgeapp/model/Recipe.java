@@ -2,11 +2,11 @@ package com.example.recipefrommyfridgeapp.model;
 
 public class Recipe {
 
-    public int cuisineId;
+    public String cuisineId;
     public String name, content;
     public float rating;
 
-    public Recipe(int cuisineId, String name, String content, float rating) {
+    public Recipe(String cuisineId, String name, String content, float rating) {
         cuisineId = cuisineId;
         this.name = name;
         this.content = content;
@@ -23,11 +23,11 @@ public class Recipe {
     }
 
 
-    public int getCuisineId() {
+    public String getCuisineId() {
         return cuisineId;
     }
 
-    public void setCuisineId(int cuisineId) {
+    public void setCuisineId(String cuisineId) {
         cuisineId = cuisineId;
     }
 
