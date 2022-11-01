@@ -1,5 +1,6 @@
 package com.example.recipefrommyfridgeapp.ui.recipe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Cuisine;
 import com.example.recipefrommyfridgeapp.model.Recipe;
+import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientActivity;
 import com.example.recipefrommyfridgeapp.viewmodel.CuisineViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -119,6 +121,13 @@ public class ChooseRecipeFragment extends Fragment {
             holder.mContentTextView.setText(model.getContent());
             holder.mRatingTextView.setText(Float.toString(model.getRating()));
             holder.CuisineIdTextView.setText(model.getCuisineId());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = RecipeActivity.newIntent(getActivity(), key);
+                    startActivity(intent);
+                }
+            });
 
             holder.deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -155,6 +164,7 @@ public class ChooseRecipeFragment extends Fragment {
                             cuisineIdChosen = names.get(position);
                             Toast.makeText(getContext(), cuisineIdChosen, Toast.LENGTH_SHORT).show();
                         }
+
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
                         }
@@ -187,10 +197,11 @@ public class ChooseRecipeFragment extends Fragment {
             return new RecipeViewHolder(view);
         }
 
-        private class RecipeViewHolder extends RecyclerView.ViewHolder{
+        private class RecipeViewHolder extends RecyclerView.ViewHolder {
             private TextView mNameTextView, mContentTextView, mRatingTextView, CuisineIdTextView;
             private Button editRecipeButton, deleteRecipeButton;
-            public RecipeViewHolder(@NonNull View recipeView){
+
+            public RecipeViewHolder(@NonNull View recipeView) {
                 super(recipeView);
                 mNameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
                 mContentTextView = (TextView) itemView.findViewById(R.id.recipe_content);
@@ -201,5 +212,4 @@ public class ChooseRecipeFragment extends Fragment {
             }
         }
     }
-
 }
