@@ -82,7 +82,7 @@ public class ChooseRecipeFragment extends Fragment {
 
         mRecipeRecyclerView = (RecyclerView) view
                 .findViewById(R.id.recipe_recycler_view);
-        mRecipeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecipeRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mAdapter = new RecipeAdapter(options);
         mRecipeRecyclerView.setAdapter(mAdapter);
 
