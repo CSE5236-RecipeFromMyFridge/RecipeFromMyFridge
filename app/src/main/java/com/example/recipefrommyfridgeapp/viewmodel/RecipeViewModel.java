@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.example.recipefrommyfridgeapp.repository.AppRepository;
@@ -14,10 +15,12 @@ import java.util.Map;
 public class RecipeViewModel extends AndroidViewModel {
     private AppRepository mAppRepository;
     private FirebaseRecyclerOptions<Recipe> options;
+    private MutableLiveData<Recipe> mRecipeMutableLiveData;
 
     public RecipeViewModel(@NonNull Application application) {
         super(application);
         mAppRepository = new AppRepository(application);
+        mRecipeMutableLiveData = mAppRepository.getRecipeMutableLiveData();
     }
 
     public void createRecipe(String cuisineId, String name, String content, Float rating){
@@ -35,5 +38,13 @@ public class RecipeViewModel extends AndroidViewModel {
 
     public void updateRecipe(String id, Map<String, Object> newRecipe){
         mAppRepository.updateRecipe(id, newRecipe);
+    }
+
+    public void getCurrentRecipe(String recipeId){
+        mAppRepository.getCurrentRecipe(recipeId);
+    }
+
+    public MutableLiveData<Recipe> getRecipeMutableLiveData() {
+        return mRecipeMutableLiveData;
     }
 }
