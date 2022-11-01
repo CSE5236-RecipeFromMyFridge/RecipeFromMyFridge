@@ -42,5 +42,7 @@
     <string name="generate">Generate</string>
     <string name="create_recipe">Create Recipe</string>
     <!-- Strings related to Recipe -->
+    <string name="previous_button">Previous</string>
+    <string name="next_button">Next</string>
 
 </resources>
