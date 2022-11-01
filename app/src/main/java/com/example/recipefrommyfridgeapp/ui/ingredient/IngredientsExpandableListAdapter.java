@@ -43,7 +43,7 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
 
     @Override
     public String getChild(int i, int i1) {
-        return mIngredients.get(getGroup(i)).get(i).getName();
+        return mIngredients.get(getGroup(i)).get(i1).getName();
     }
 
     @Override
