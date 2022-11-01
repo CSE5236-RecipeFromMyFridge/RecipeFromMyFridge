@@ -2,16 +2,13 @@ package com.example.recipefrommyfridgeapp.model;
 
 public class Ingredient {
 
-    public String name, unit;
-    public int amount;
+    public String name;
 
     public Ingredient() {
     }
 
-    public Ingredient(String name, String unit, int amount) {
+    public Ingredient(String name) {
         this.name = name;
-        this.unit = unit;
-        this.amount = amount;
     }
 
     public String getName() {
@@ -20,21 +17,5 @@ public class Ingredient {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 }

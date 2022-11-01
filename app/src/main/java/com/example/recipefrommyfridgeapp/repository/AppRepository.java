@@ -42,6 +42,7 @@ public class AppRepository {
     private final MutableLiveData<List<Cuisine>> cuisineMutableLiveData;
     private final MutableLiveData<Map<String, List<Ingredient>>> mIngredientMutableLiveData;
     private final MutableLiveData<List<String>> mIngredientGroupMutableLiveData;
+    private final MutableLiveData<Recipe> mRecipeMutableLiveData;
 
 
     public AppRepository(Application application) {
@@ -53,6 +54,7 @@ public class AppRepository {
         cuisineMutableLiveData = new MutableLiveData<>();
         mIngredientMutableLiveData = new MutableLiveData<>();
         mIngredientGroupMutableLiveData = new MutableLiveData<>();
+        mRecipeMutableLiveData = new MutableLiveData<>();
 
         if (auth.getCurrentUser() != null) {
             getUserMutableLiveData().postValue(auth.getCurrentUser());
@@ -264,6 +266,25 @@ public class AppRepository {
         return options;
     }
 
+    public void getCurrentRecipe(String recipeId){
+        DatabaseReference ref = db.getReference("Recipes");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot shot : snapshot.getChildren()){
+                    if (shot.getKey().equals(recipeId)){
+                        Recipe current = shot.getValue(Recipe.class);
+                        mRecipeMutableLiveData.postValue(current);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return mUserMutableLiveData;
     }
@@ -282,5 +303,9 @@ public class AppRepository {
 
     public MutableLiveData<List<String>> getIngredientsGroupMutableLiveData() {
         return mIngredientGroupMutableLiveData;
+    }
+
+    public MutableLiveData<Recipe> getRecipeMutableLiveData() {
+        return mRecipeMutableLiveData;
     }
 }
