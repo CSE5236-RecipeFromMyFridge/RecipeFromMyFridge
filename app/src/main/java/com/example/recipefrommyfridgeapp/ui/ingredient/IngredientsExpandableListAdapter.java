@@ -1,12 +1,12 @@
 package com.example.recipefrommyfridgeapp.ui.ingredient;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.recipefrommyfridgeapp.R;
@@ -15,7 +15,7 @@ import com.example.recipefrommyfridgeapp.model.Ingredient;
 import java.util.List;
 import java.util.Map;
 
-public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter implements View.OnClickListener {
+public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter implements CompoundButton.OnCheckedChangeListener {
     Map<String, List<Ingredient>> mIngredients;
     List<String> mIngredientGroup;
     Context mContext;
@@ -76,11 +76,11 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.fragment_checkbox_ingredient, viewGroup, false);
+            view = layoutInflater.inflate(R.layout.fragment_expandable_list_item_ingredient, viewGroup, false);
         }
-        CheckedTextView ingredient = view.findViewById(R.id.ingredient_checkmark);
+        CheckBox ingredient = view.findViewById(R.id.ingredient_checkmark);
         ingredient.setText(getChild(i, i1));
-        ingredient.setOnClickListener(this);
+        ingredient.setOnCheckedChangeListener(this);
         return view;
     }
 
@@ -90,14 +90,10 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
     }
 
     @Override
-    public void onClick(View view) {
-        //TODO: checkmark is not changing when clicked
-        if (view.getId() == R.id.ingredient_checkmark) {
-            CheckedTextView ingredient = view.findViewById(R.id.ingredient_checkmark);
-            Log.i("testing", "onClick: before - " + ingredient.isChecked());
-            ingredient.setChecked(!ingredient.isChecked());
-            Log.i("testing", "onClick: after - " + ingredient.isChecked());
-            notifyDataSetChanged();
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if (compoundButton.getId() == R.id.ingredient_checkmark) {
+            CheckBox ingredient = compoundButton.findViewById(R.id.ingredient_checkmark);
+            ingredient.setChecked(b);
         }
     }
 

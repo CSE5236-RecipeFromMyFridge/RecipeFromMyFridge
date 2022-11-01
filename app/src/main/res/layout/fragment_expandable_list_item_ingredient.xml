@@ -4,15 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <CheckedTextView
+    <CheckBox
         android:id="@+id/ingredient_checkmark"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="8dp"
-        android:paddingHorizontal="16dp"
-        android:checkMark="@drawable/ic_checkmark"
-        android:checked="false"
+        android:paddingLeft="8dp"
+        android:layout_marginLeft="24dp"
         android:gravity="center_vertical"
-        android:text="Placeholder for ingredient name" />
+        android:text="Placeholder for ingredient name"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
