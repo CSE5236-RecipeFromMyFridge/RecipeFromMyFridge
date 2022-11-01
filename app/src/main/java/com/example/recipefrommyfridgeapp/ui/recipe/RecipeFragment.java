@@ -24,7 +24,6 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     private TextView recipeName, recipeType, recipeRating, recipeContent;
     private ImageButton mPreviousButton, mNextButton;
-    private Recipe current;
 
     private RecipeViewModel mRecipeViewModel;
 
@@ -33,21 +32,11 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "RecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
-        current = new Recipe();
         String recipeId = (String) getActivity().getIntent()
                 .getSerializableExtra(RecipeActivity.EXTRA_RECIPE_ID);
         Log.d("checkpoint5", recipeId);
         mRecipeViewModel.getCurrentRecipe(recipeId);
-        mRecipeViewModel.getRecipeMutableLiveData().observe(this, new Observer<Recipe>() {
-            @Override
-            public void onChanged(Recipe recipe) {
-                if (recipe != null){
-                    Log.d("checkpoint5", recipe.getName());
-                    current = new Recipe(recipe.getCuisineId(), recipe.getName(), recipe.getContent(), recipe.getRating());
-                    Log.d("checkpoint5", current.getContent());
-                }
-            }
-        });
+
     }
 
     @Nullable
@@ -63,7 +52,17 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         mNextButton = v.findViewById(R.id.fragment_recipe_next_button);
         mPreviousButton.setOnClickListener(this);
         mNextButton.setOnClickListener(this);
-        recipeName.setText(current.getName());
+        mRecipeViewModel.getRecipeMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Recipe>() {
+            @Override
+            public void onChanged(Recipe recipe) {
+                if (recipe != null){
+                    recipeName.setText("Name: " + recipe.getName());
+                    recipeType.setText("Cuisine Type: " + recipe.getCuisineId());
+                    recipeRating.setText("Rating: " + recipe.getRating());
+                    recipeContent.setText("Content: " + recipe.getContent());
+                }
+            }
+        });
 
         return v;
     }
