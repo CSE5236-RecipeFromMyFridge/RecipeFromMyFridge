@@ -11,30 +11,49 @@ import android.widget.ExpandableListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.recipefrommyfridgeapp.ui.cuisine.CuisineActivity;
 import com.example.recipefrommyfridgeapp.R;
+import com.example.recipefrommyfridgeapp.model.Ingredient;
+import com.example.recipefrommyfridgeapp.ui.cuisine.CuisineActivity;
+import com.example.recipefrommyfridgeapp.viewmodel.IngredientViewModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChooseIngredientFragment extends Fragment implements View.OnClickListener {
+
+    private IngredientViewModel mIngredientViewModel;
+    private Map<String, List<Ingredient>> mIngredients;
+    private List<String> mIngredientGroup;
+    private IngredientsExpandableListAdapter mIngredientsExpandableListAdapter;
+    private ExpandableListView mExpandableListView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mIngredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
+        mIngredientViewModel.retrieveIngredient();
+        mIngredients = new HashMap<>();
+        mIngredientGroup = new ArrayList<>();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_choose_ingredient, container, false);
 
-        //TODO:replace dummy data from data in database
-        Map<String, String[]> ingredientMap = new HashMap<>();
-        String[] ingredientGroup = new String[]{"Vegetables", "Meat", "Dairy"};
+        mExpandableListView = v.findViewById(R.id.expandable_list_choose_ingredients);
+        mIngredientsExpandableListAdapter = new IngredientsExpandableListAdapter(v.getContext(), mIngredients, mIngredientGroup);
+        mExpandableListView.setAdapter(mIngredientsExpandableListAdapter);
 
-        ingredientMap.put("Vegetables", new String[]{"Celery", "Tomato", "Lettuce", "Cabbage", "Mushroom", "Spinach"});
-        ingredientMap.put("Meat", new String[]{"Chicken", "Beef", "Lamb", "Pork"});
-        ingredientMap.put("Dairy", new String[]{"Milk", "Yogurt", "Cheese", "Soy Milk"});
+        mIngredientViewModel.getIngredientMutableLiveData().observe(getViewLifecycleOwner(),
+                map -> mIngredientsExpandableListAdapter.updateItems(map));
 
-        final ExpandableListView expandableListView = v.findViewById(R.id.expandable_list_choose_ingredients);
-        final IngredientsExpandableListAdapter ingredientsExpandableListAdapter = new IngredientsExpandableListAdapter(v.getContext(), ingredientMap, ingredientGroup);
-        expandableListView.setAdapter(ingredientsExpandableListAdapter);
+        mIngredientViewModel.getIngredientGroupMutableLiveData().observe(getViewLifecycleOwner(),
+                list -> mIngredientsExpandableListAdapter.updateItems(list));
 
         final Button chooseCuisineButton = v.findViewById(R.id.button_choose_cuisine);
         chooseCuisineButton.setOnClickListener(this);

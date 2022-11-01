@@ -10,38 +10,40 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.example.recipefrommyfridgeapp.R;
+import com.example.recipefrommyfridgeapp.model.Ingredient;
 
+import java.util.List;
 import java.util.Map;
 
 public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter implements View.OnClickListener {
-    Map<String, String[]> mIngredientList;
-    String[] mIngredientGroup;
+    Map<String, List<Ingredient>> mIngredients;
+    List<String> mIngredientGroup;
     Context mContext;
 
-    public IngredientsExpandableListAdapter(Context context, Map<String, String[]> ingredientList, String[] ingredientGroup) {
+    public IngredientsExpandableListAdapter(Context context, Map<String, List<Ingredient>> ingredients, List<String> ingredientGroup) {
         mContext = context;
-        mIngredientList = ingredientList;
+        mIngredients = ingredients;
         mIngredientGroup = ingredientGroup;
     }
 
     @Override
     public int getGroupCount() {
-        return mIngredientList.keySet().size();
+        return mIngredientGroup.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return mIngredientList.get(getGroup(i)).length;
+        return mIngredients.get(getGroup(i)).size();
     }
 
     @Override
     public String getGroup(int i) {
-        return mIngredientGroup[i];
+        return mIngredientGroup.get(i);
     }
 
     @Override
     public String getChild(int i, int i1) {
-        return mIngredientList.get(getGroup(i))[i1];
+        return mIngredients.get(getGroup(i)).get(i).getName();
     }
 
     @Override
@@ -97,5 +99,15 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
             Log.i("testing", "onClick: after - " + ingredient.isChecked());
             notifyDataSetChanged();
         }
+    }
+
+    public void updateItems(Map<String, List<Ingredient>> ingredients) {
+        mIngredients = ingredients;
+        notifyDataSetChanged();
+    }
+
+    public void updateItems(List<String> ingredientGroup) {
+        mIngredientGroup = ingredientGroup;
+        notifyDataSetChanged();
     }
 }
