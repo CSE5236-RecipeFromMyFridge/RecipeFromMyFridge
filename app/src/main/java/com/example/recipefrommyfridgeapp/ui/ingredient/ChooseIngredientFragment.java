@@ -29,7 +29,6 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
     private Map<String, List<Ingredient>> mIngredients;
     private List<String> mIngredientGroup;
     private IngredientsExpandableListAdapter mIngredientsExpandableListAdapter;
-    private ExpandableListView mExpandableListView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,9 +44,9 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_choose_ingredient, container, false);
 
-        mExpandableListView = v.findViewById(R.id.expandable_list_choose_ingredients);
+        final ExpandableListView expandableListView = v.findViewById(R.id.expandable_list_choose_ingredients);
         mIngredientsExpandableListAdapter = new IngredientsExpandableListAdapter(v.getContext(), mIngredients, mIngredientGroup);
-        mExpandableListView.setAdapter(mIngredientsExpandableListAdapter);
+        expandableListView.setAdapter(mIngredientsExpandableListAdapter);
 
         mIngredientViewModel.getIngredientMutableLiveData().observe(getViewLifecycleOwner(),
                 map -> mIngredientsExpandableListAdapter.updateItems(map));
@@ -63,11 +62,8 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_choose_cuisine:
-                startActivity(new Intent(requireContext(), CuisineActivity.class));
-                break;
-            default:
+        if (view.getId() == R.id.button_choose_cuisine) {
+            startActivity(new Intent(requireContext(), CuisineActivity.class));
         }
     }
 }
