@@ -14,9 +14,6 @@
         android:theme="@style/Theme.RecipeFromMyFridgeApp"
         tools:targetApi="31">
         <activity
-            android:name=".MenuActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.recipe.RecipeActivity"
             android:exported="false" />
         <activity
