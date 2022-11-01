@@ -28,4 +28,9 @@ public class WrapContentLinearLayoutManager extends LinearLayoutManager {
             Log.e("TAG", "meet a IOOBE in RecyclerView");
         }
     }
+
+    @Override
+    public boolean supportsPredictiveItemAnimations(){
+        return false;
+    }
 }
