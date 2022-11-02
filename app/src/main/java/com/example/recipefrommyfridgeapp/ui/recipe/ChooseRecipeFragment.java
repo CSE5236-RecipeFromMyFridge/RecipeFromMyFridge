@@ -1,6 +1,5 @@
 package com.example.recipefrommyfridgeapp.ui.recipe;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,16 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Cuisine;
 import com.example.recipefrommyfridgeapp.model.Recipe;
-import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientActivity;
 import com.example.recipefrommyfridgeapp.viewmodel.CuisineViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
@@ -124,8 +118,12 @@ public class ChooseRecipeFragment extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = RecipeActivity.newIntent(getActivity(), key);
-                    startActivity(intent);
+                    Fragment fragment = new RecipeFragment(key);
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .setReorderingAllowed(true)
+                            .addToBackStack("Get recipe details")
+                            .commit();
                 }
             });
 

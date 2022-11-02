@@ -18,8 +18,6 @@ import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 
-import java.util.List;
-
 public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     private TextView recipeName, recipeType, recipeRating, recipeContent;
@@ -27,13 +25,18 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     private RecipeViewModel mRecipeViewModel;
 
+    private String id;
+
+    public RecipeFragment(String recipeId) {
+        id = "" + recipeId;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "RecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
-        String recipeId = (String) getActivity().getIntent()
-                .getSerializableExtra(RecipeActivity.EXTRA_RECIPE_ID);
+        String recipeId = "" + id;
         Log.d("checkpoint5", recipeId);
         mRecipeViewModel.getCurrentRecipe(recipeId);
 
