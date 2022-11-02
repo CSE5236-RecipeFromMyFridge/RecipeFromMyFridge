@@ -402,6 +402,7 @@ public class AppRepository {
         });
     }
 
+    // TODO: cascade delete in both recipes and savedRecipes
     public void deleteSavedRecipe(String userId, String recipeId) {
         DatabaseReference ref = db.getReference("SavedRecipes");
         ref.child(userId).child(recipeId).removeValue();
