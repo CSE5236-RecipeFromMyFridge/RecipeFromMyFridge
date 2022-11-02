@@ -46,8 +46,8 @@ import java.util.Map;
 public class ChooseRecipeFragment extends Fragment {
 
     private RecyclerView mRecipeRecyclerView;
-    private RecipeAdapter mAdapter;
-    private FirebaseRecyclerOptions<Recipe> options;
+    private List<Recipe> mRecipeList;
+    private RecipeListAdapter mRecipeListAdapter;
 
     private RecipeViewModel mRecipeViewModel;
     private CuisineViewModel mCuisineViewModel;
@@ -60,7 +60,6 @@ public class ChooseRecipeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "ChooseRecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
-        options = mRecipeViewModel.retrieveRecipes();
         mCuisineViewModel = new ViewModelProvider(this).get(CuisineViewModel.class);
         mCuisineViewModel.retrieveCuisines();
         names = new ArrayList<>();
@@ -83,63 +82,66 @@ public class ChooseRecipeFragment extends Fragment {
         mRecipeRecyclerView = (RecyclerView) view
                 .findViewById(R.id.recipe_recycler_view);
         mRecipeRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mAdapter = new RecipeAdapter(options);
-        mRecipeRecyclerView.setAdapter(mAdapter);
-
+        mRecipeList = new ArrayList<>();
+        mRecipeViewModel.retrieveRecipeList();
+        mRecipeViewModel.getRecipeListMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+                mRecipeList.clear();
+                for (Recipe current: recipes){
+                    mRecipeList.add(current);
+                }
+                Log.d("checkpoint5", Integer.toString(mRecipeList.size()));
+                mRecipeListAdapter = new RecipeListAdapter(mRecipeList);
+                mRecipeRecyclerView.setAdapter(mRecipeListAdapter);
+            }
+        });
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAdapter.startListening();
-    }
+    private class RecipeListHolder extends RecyclerView.ViewHolder{
 
-    @Override
-    public void onStop(){
-        super.onStop();
-        mAdapter.stopListening();
-    }
+        private Recipe mRecipe;
+        private TextView mNameTextView, mContentTextView, mRatingTextView, CuisineIdTextView;
+        private Button editRecipeButton, deleteRecipeButton;
+        private String recipeId;
 
-    private class RecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeAdapter.RecipeViewHolder> {
-        /**
-         * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
-         * {@link FirebaseRecyclerOptions} for configuration options.
-         *
-         * @param options
-         */
-        public RecipeAdapter(@NonNull FirebaseRecyclerOptions<Recipe> options) {
-            super(options);
+        public RecipeListHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.list_item_recipe, parent, false));
+            mNameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
+            mContentTextView = (TextView) itemView.findViewById(R.id.recipe_content);
+            mRatingTextView = (TextView) itemView.findViewById(R.id.recipe_rating);
+            CuisineIdTextView = (TextView) itemView.findViewById(R.id.recipe_cuisineId);
+            editRecipeButton = (Button) itemView.findViewById(R.id.recipe_item_edit_button);
+            deleteRecipeButton = (Button) itemView.findViewById(R.id.recipe_item_delete_button);
         }
 
-        @Override
-        protected void onBindViewHolder(@NonNull RecipeAdapter.RecipeViewHolder holder, int position, @NonNull Recipe model) {
-            Log.d("checkpoint5", "onBindViewHolder");
-            final DatabaseReference itemRef = getRef(position);
-            final String key = itemRef.getKey();
-            holder.mNameTextView.setText(model.getName());
-            holder.mContentTextView.setText(model.getContent());
-            holder.mRatingTextView.setText(Float.toString(model.getRating()));
-            holder.CuisineIdTextView.setText(model.getCuisineId());
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+        public void bind(Recipe current) {
+            mRecipe = current;
+            mNameTextView.setText(mRecipe.getName());
+            mContentTextView.setText(mRecipe.getContent());
+            mRatingTextView.setText(Float.toString(mRecipe.getRating()));
+            CuisineIdTextView.setText(mRecipe.getCuisineId());
+            mRecipeViewModel.returnRecipeId(mRecipe.getName());
+            mRecipeViewModel.getRecipeIdMutableLiveData().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    if (s != null){
+                        recipeId = "" + s;
+                    }
+                }
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = RecipeActivity.newIntent(getActivity(), key);
+                    Intent intent = RecipeActivity.newIntent(getActivity(), recipeId);
                     startActivity(intent);
                 }
             });
-
-            holder.deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
+            editRecipeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mRecipeViewModel.deleteRecipe(key);
-                }
-            });
-
-            holder.editRecipeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final DialogPlus dialogPlus = DialogPlus.newDialog(holder.mNameTextView.getContext())
+                    final DialogPlus dialogPlus = DialogPlus.newDialog(mNameTextView.getContext())
                             .setContentHolder(new ViewHolder(R.layout.update_popup))
                             .setExpanded(true, 1400)
                             .create();
@@ -150,9 +152,9 @@ public class ChooseRecipeFragment extends Fragment {
                     EditText rating = view.findViewById(R.id.edit_recipe_rating);
                     Spinner spinner = view.findViewById(R.id.update_recipe_spinner);
                     Button update = view.findViewById(R.id.update_recipe_button);
-                    name.setText(model.getName());
-                    content.setText(model.getContent());
-                    rating.setText(Float.toString(model.getRating()));
+                    name.setText(mRecipe.getName());
+                    content.setText(mRecipe.getContent());
+                    rating.setText(Float.toString(mRecipe.getRating()));
                     ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(getContext(),
                             android.R.layout.simple_spinner_item, names);
                     mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -180,36 +182,45 @@ public class ChooseRecipeFragment extends Fragment {
                             map.put("content", content.getText().toString());
                             map.put("rating", Float.parseFloat(rating.getText().toString()));
                             map.put("cuisineId", cuisineIdChosen);
-                            mRecipeViewModel.updateRecipe(key, map);
+                            mRecipeViewModel.updateRecipe(recipeId, map);
                             dialogPlus.dismiss();
                         }
                     });
                 }
             });
 
+            deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecipeViewModel.deleteRecipe(recipeId);
+                }
+            });
 
         }
+    }
 
+    private class RecipeListAdapter extends RecyclerView.Adapter<RecipeListHolder> {
+
+        private List<Recipe> mRecipes;
+        public RecipeListAdapter(List<Recipe> recipes) {
+            mRecipes = recipes;
+        }
         @NonNull
         @Override
-        public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_recipe, parent, false);
-            return new RecipeViewHolder(view);
+        public RecipeListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            return new RecipeListHolder(layoutInflater, parent);
         }
 
-        private class RecipeViewHolder extends RecyclerView.ViewHolder {
-            private TextView mNameTextView, mContentTextView, mRatingTextView, CuisineIdTextView;
-            private Button editRecipeButton, deleteRecipeButton;
+        @Override
+        public void onBindViewHolder(@NonNull RecipeListHolder holder, int position) {
+            Recipe current = mRecipes.get(position);
+            holder.bind(current);
+        }
 
-            public RecipeViewHolder(@NonNull View recipeView) {
-                super(recipeView);
-                mNameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
-                mContentTextView = (TextView) itemView.findViewById(R.id.recipe_content);
-                mRatingTextView = (TextView) itemView.findViewById(R.id.recipe_rating);
-                CuisineIdTextView = (TextView) itemView.findViewById(R.id.recipe_cuisineId);
-                editRecipeButton = (Button) itemView.findViewById(R.id.recipe_item_edit_button);
-                deleteRecipeButton = (Button) itemView.findViewById(R.id.recipe_item_delete_button);
-            }
+        @Override
+        public int getItemCount() {
+            return mRecipes.size();
         }
     }
 }
