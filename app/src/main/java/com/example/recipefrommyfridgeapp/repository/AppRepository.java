@@ -48,6 +48,7 @@ public class AppRepository {
     private final MutableLiveData<List<String>> mRecipeListMutableLiveData;
     private final MutableLiveData<Recipe> savedRecipeMutableLiveData;
     private final MutableLiveData<List<String>> savedRecipeListMutableLiveData;
+    private final MutableLiveData<List<String>> userSavedRecipeMutableLiveData;
 
 
     public AppRepository(Application application) {
@@ -63,6 +64,7 @@ public class AppRepository {
         mRecipeListMutableLiveData = new MutableLiveData<>();
         savedRecipeMutableLiveData = new MutableLiveData<>();
         savedRecipeListMutableLiveData = new MutableLiveData<>();
+        userSavedRecipeMutableLiveData = new MutableLiveData<>();
 
         if (auth.getCurrentUser() != null) {
             getUserMutableLiveData().postValue(auth.getCurrentUser());
@@ -402,6 +404,30 @@ public class AppRepository {
         });
     }
 
+    public void userSavedRecipe(String userId){
+        List<String> recipes = new ArrayList<>();
+        DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot post : snapshot.getChildren()) {
+                    String single = post.getKey();
+                    recipes.add(single);
+                }
+                userSavedRecipeMutableLiveData.postValue(recipes);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void saveRecipe(String userId, String recipeId){
+        DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
+        ref.child(recipeId).setValue(true);
+    }
+
     // TODO: cascade delete in both recipes and savedRecipes
     public void deleteSavedRecipe(String userId, String recipeId) {
         DatabaseReference ref = db.getReference("SavedRecipes");
@@ -444,5 +470,9 @@ public class AppRepository {
 
     public MutableLiveData<List<String>> getSavedRecipeListMutableLiveData() {
         return savedRecipeListMutableLiveData;
+    }
+
+    public MutableLiveData<List<String>> getUserSavedRecipeMutableLiveData() {
+        return userSavedRecipeMutableLiveData;
     }
 }
