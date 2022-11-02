@@ -56,10 +56,10 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onChanged(Recipe recipe) {
                 if (recipe != null){
-                    recipeName.setText("Name: " + recipe.getName());
-                    recipeType.setText("Cuisine Type: " + recipe.getCuisineId());
-                    recipeRating.setText("Rating: " + recipe.getRating());
-                    recipeContent.setText("Content: " + recipe.getContent());
+                    recipeName.setText(String.format("Name: %s", recipe.getName()));
+                    recipeType.setText(String.format("Cuisine Type: %s", recipe.getCuisineId()));
+                    recipeRating.setText(String.format("Rating: %s", recipe.getRating()));
+                    recipeContent.setText(String.format("Content: %s", recipe.getContent()));
                 }
             }
         });
