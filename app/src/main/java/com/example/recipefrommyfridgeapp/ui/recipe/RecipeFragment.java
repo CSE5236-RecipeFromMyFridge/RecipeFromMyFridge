@@ -17,8 +17,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
+import com.google.android.gms.common.util.ArrayUtils;
 
-public class RecipeFragment extends Fragment implements View.OnClickListener {
+import java.util.List;
+
+public class RecipeFragment extends Fragment {
 
     private TextView recipeName, recipeType, recipeRating, recipeContent;
     private ImageButton mPreviousButton, mNextButton;
@@ -39,6 +42,7 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         String recipeId = "" + id;
         Log.d("checkpoint5", recipeId);
         mRecipeViewModel.getCurrentRecipe(recipeId);
+        mRecipeViewModel.retrieveRecipeIdList();
 
     }
 
@@ -53,8 +57,6 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         recipeContent = v.findViewById(R.id.fragment_recipe_content);
         mPreviousButton = v.findViewById(R.id.fragment_recipe_previous_button);
         mNextButton = v.findViewById(R.id.fragment_recipe_next_button);
-        mPreviousButton.setOnClickListener(this);
-        mNextButton.setOnClickListener(this);
         mRecipeViewModel.getRecipeMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Recipe>() {
             @Override
             public void onChanged(Recipe recipe) {
@@ -62,21 +64,50 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
                     recipeName.setText(String.format("Name: %s", recipe.getName()));
                     recipeType.setText(String.format("Cuisine Type: %s", recipe.getCuisineId()));
                     recipeRating.setText(String.format("Rating: %s", recipe.getRating()));
-                    recipeContent.setText(String.format("Content: %s", recipe.getContent()));
+                    recipeContent.setText(String.format("Content: %s", recipe.getContent()));}
+            }
+        });
+
+        mRecipeViewModel.getRecipeListMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> ids) {
+                if (ids.size() != 0){
+                    final int[] idx = {ids.indexOf(id)};
+                    mPreviousButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            idx[0] = (idx[0] - 1) % ids.size();
+                            if (idx[0] < 0) {
+                                idx[0] = ids.size() - 1;
+                            }
+                            updateRecipe(ids, idx);
+                        }
+                    });
+                    mNextButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            idx[0] = (idx[0] + 1) % ids.size();
+                            updateRecipe(ids, idx);
+                        }
+                    });
                 }
             }
         });
 
+
         return v;
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.fragment_recipe_previous_button:
-                break;
-            case R.id.fragment_recipe_next_button:
-                break;
-        }
+    private void updateRecipe(List<String> ids, int[] idx){
+        getParentFragmentManager().beginTransaction()
+                .remove(RecipeFragment.this)
+                .commit();
+        getParentFragmentManager().popBackStack();
+        Fragment fragment = new RecipeFragment(ids.get(idx[0]));
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .setReorderingAllowed(true)
+                .addToBackStack("Get recipe details")
+                .commit();
     }
 }

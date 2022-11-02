@@ -43,6 +43,7 @@ public class AppRepository {
     private final MutableLiveData<Map<String, List<Ingredient>>> mIngredientMutableLiveData;
     private final MutableLiveData<List<String>> mIngredientGroupMutableLiveData;
     private final MutableLiveData<Recipe> mRecipeMutableLiveData;
+    private final MutableLiveData<List<String>> mRecipeListMutableLiveData;
 
 
     public AppRepository(Application application) {
@@ -55,6 +56,7 @@ public class AppRepository {
         mIngredientMutableLiveData = new MutableLiveData<>();
         mIngredientGroupMutableLiveData = new MutableLiveData<>();
         mRecipeMutableLiveData = new MutableLiveData<>();
+        mRecipeListMutableLiveData = new MutableLiveData<>();
 
         if (auth.getCurrentUser() != null) {
             getUserMutableLiveData().postValue(auth.getCurrentUser());
@@ -128,6 +130,27 @@ public class AppRepository {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("checkpoint5", "Fail to retrieve Cuisines");
+            }
+        });
+    }
+
+    public void retrieveRecipeIdList() {
+        List<String> recipes = new ArrayList<>();
+        DatabaseReference ref = db.getReference("Recipes");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot post : snapshot.getChildren()) {
+                    String single = post.getKey();
+                    recipes.add(single);
+                }
+                mRecipeListMutableLiveData.postValue(recipes);
+                Log.d("checkpoint5", "Successfully retrieve recipes");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("checkpoint5", "Fail to retrieve recipes");
             }
         });
     }
@@ -307,5 +330,9 @@ public class AppRepository {
 
     public MutableLiveData<Recipe> getRecipeMutableLiveData() {
         return mRecipeMutableLiveData;
+    }
+
+    public MutableLiveData<List<String>> getRecipeListMutableLiveData() {
+        return mRecipeListMutableLiveData;
     }
 }
