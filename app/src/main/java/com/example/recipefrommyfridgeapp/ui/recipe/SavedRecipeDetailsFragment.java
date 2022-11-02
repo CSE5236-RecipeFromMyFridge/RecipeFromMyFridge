@@ -16,10 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Recipe;
-import com.example.recipefrommyfridgeapp.viewmodel.LoggedInViewModel;
-import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.SavedRecipeViewModel;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -29,9 +26,9 @@ public class SavedRecipeDetailsFragment extends Fragment {
     private ImageButton mPreviousButton, mNextButton;
 
     private SavedRecipeViewModel mRecipeViewModel;
-    private LoggedInViewModel loggedInViewModel;
 
     private String id;
+    private String userId;
 
     public SavedRecipeDetailsFragment(String recipeId) {
         id = "" + recipeId;
@@ -42,19 +39,13 @@ public class SavedRecipeDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "RecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(SavedRecipeViewModel.class);
-        loggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
         String recipeId = "" + id;
         Log.d("checkpoint5", recipeId);
-        loggedInViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
-            @Override
-            public void onChanged(FirebaseUser firebaseUser) {
-                if (firebaseUser != null){
-                    String userId = firebaseUser.getUid();
-                    mRecipeViewModel.getCurrentSavedRecipe(userId, recipeId);
-                    mRecipeViewModel.retrieveSavedRecipeIdList(userId);
-                }
-            }
-        });
+        userId = (String) getActivity().getIntent()
+                .getSerializableExtra(SavedRecipeActivity.EXTRA_USER_ID);
+        Log.d("checkpoint5", "SavedRecipeDetailsFragment " + userId);
+        mRecipeViewModel.getCurrentSavedRecipe(userId, recipeId);
+        mRecipeViewModel.retrieveSavedRecipeIdList(userId);
 
     }
 

@@ -11,25 +11,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Recipe;
-import com.example.recipefrommyfridgeapp.viewmodel.LoggedInViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.SavedRecipeViewModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 public class SavedRecipeFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private SavedRecipeViewModel mRecipeViewModel;
-    private LoggedInViewModel loggedInViewModel;
     private FirebaseRecyclerOptions<Recipe> options;
     private RecipeAdapter mAdapter;
     private String userId;
@@ -39,8 +35,9 @@ public class SavedRecipeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "SavedRecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(SavedRecipeViewModel.class);
-        loggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
-        userId = "";
+        userId = (String) getActivity().getIntent()
+                .getSerializableExtra(SavedRecipeActivity.EXTRA_USER_ID);
+        Log.d("checkpoint5", "SavedRecipeFragment " + userId);
     }
 
     @Override
@@ -52,14 +49,6 @@ public class SavedRecipeFragment extends Fragment {
         mRecyclerView = (RecyclerView) view
                 .findViewById(R.id.recipe_recycler_view);
         mRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        loggedInViewModel.getUserMutableLiveData().observe(getViewLifecycleOwner(), new Observer<FirebaseUser>() {
-            @Override
-            public void onChanged(FirebaseUser firebaseUser) {
-                if (firebaseUser != null){
-                    userId = "" + firebaseUser.getUid();
-                }
-            }
-        });
         options = mRecipeViewModel.retrieveSavedRecipes(userId);
         mAdapter = new RecipeAdapter(options);
         mRecyclerView.setAdapter(mAdapter);
@@ -114,15 +103,7 @@ public class SavedRecipeFragment extends Fragment {
             holder.deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    loggedInViewModel.getUserMutableLiveData().observe(getViewLifecycleOwner(), new Observer<FirebaseUser>() {
-                        @Override
-                        public void onChanged(FirebaseUser firebaseUser) {
-                            if (firebaseUser != null){
-                                String userId = firebaseUser.getUid();
-                                mRecipeViewModel.deleteSavedRecipe(userId, key);
-                            }
-                        }
-                    });
+                    mRecipeViewModel.deleteSavedRecipe(userId, key);
                 }
             });
 
