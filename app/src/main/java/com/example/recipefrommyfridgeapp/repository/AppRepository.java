@@ -115,6 +115,8 @@ public class AppRepository {
     }
 
     public void logOut() {
+        DatabaseReference previous = db.getReference("currentUserSavedRecipe");
+        previous.removeValue();
         auth.signOut();
         loggedOutMutableLiveData.postValue(true);
     }
@@ -330,6 +332,11 @@ public class AppRepository {
 
             }
         });
+
+        DatabaseReference previous = db.getReference("currentUserSavedRecipe");
+        if (previous != null){
+            previous.removeValue();
+        }
 
         DatabaseReference currentUserSavedRecipe = db.getReference("currentUserSavedRecipe");
         DatabaseReference recipes = db.getReference("Recipes");
