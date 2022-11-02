@@ -2,6 +2,7 @@ package com.example.recipefrommyfridgeapp.repository;
 
 import android.app.Application;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -314,8 +316,41 @@ public class AppRepository {
 
     public FirebaseRecyclerOptions<Recipe> retrieveSavedRecipes(String userId) {
         DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
+        List<String> recipeIds = new ArrayList<>();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot shot: snapshot.getChildren()){
+                    String current = shot.getKey();
+                    recipeIds.add(current);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference currentUserSavedRecipe = db.getReference("currentUserSavedRecipe");
+        DatabaseReference recipes = db.getReference("Recipes");
+        recipes.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot shot : snapshot.getChildren()){
+                    String currentId = shot.getKey();
+                    if (recipeIds.contains(currentId)){
+                        Recipe include = shot.getValue(Recipe.class);
+                        currentUserSavedRecipe.child(currentId).setValue(include);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
-                .setQuery(ref, Recipe.class)
+                .setQuery(currentUserSavedRecipe, Recipe.class)
                 .build();
         return options;
     }
