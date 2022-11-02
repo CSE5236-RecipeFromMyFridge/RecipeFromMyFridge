@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class SavedRecipeDetailsFragment extends Fragment {
 
     private TextView recipeName, recipeType, recipeRating, recipeContent;
     private ImageButton mPreviousButton, mNextButton;
+    private Button saveButton;
 
     private SavedRecipeViewModel mRecipeViewModel;
 
@@ -60,6 +62,8 @@ public class SavedRecipeDetailsFragment extends Fragment {
         recipeContent = v.findViewById(R.id.fragment_recipe_content);
         mPreviousButton = v.findViewById(R.id.fragment_recipe_previous_button);
         mNextButton = v.findViewById(R.id.fragment_recipe_next_button);
+        saveButton = v.findViewById(R.id.fragment_recipe_save);
+        saveButton.setEnabled(false);
         mRecipeViewModel.getSavedRecipeMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Recipe>() {
             @Override
             public void onChanged(Recipe recipe) {
