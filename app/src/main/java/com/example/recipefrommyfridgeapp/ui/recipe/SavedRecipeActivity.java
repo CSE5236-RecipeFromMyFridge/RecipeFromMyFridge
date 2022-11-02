@@ -1,6 +1,12 @@
 package com.example.recipefrommyfridgeapp.ui.recipe;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-public class SavedRecipeActivity extends AppCompatActivity {
+import com.example.recipefrommyfridgeapp.SingleFragmentActivity;
+
+public class SavedRecipeActivity extends SingleFragmentActivity {
+    @Override
+    protected Fragment createFragment() {
+        return new SavedRecipeFragment();
+    }
 }
