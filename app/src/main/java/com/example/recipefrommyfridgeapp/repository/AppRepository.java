@@ -363,7 +363,7 @@ public class AppRepository {
     }
 
     public void getCurrentSavedRecipe(String userId, String recipeId){
-        DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
+        DatabaseReference ref = db.getReference("currentUserSavedRecipe");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -383,7 +383,7 @@ public class AppRepository {
 
     public void retrieveSavedRecipeIdList(String userId) {
         List<String> recipes = new ArrayList<>();
-        DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
+        DatabaseReference ref = db.getReference("currentUserSavedRecipe");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -405,6 +405,8 @@ public class AppRepository {
     public void deleteSavedRecipe(String userId, String recipeId) {
         DatabaseReference ref = db.getReference("SavedRecipes");
         ref.child(userId).child(recipeId).removeValue();
+        DatabaseReference currentUserSaved = db.getReference("currentUserSavedRecipe");
+        currentUserSaved.child(recipeId).removeValue();
     }
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
