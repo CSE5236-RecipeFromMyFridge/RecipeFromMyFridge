@@ -117,5 +117,22 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/fragment_recipe_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Save Recipe"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_buttons"
+            app:layout_constraintVertical_bias="0.1" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
