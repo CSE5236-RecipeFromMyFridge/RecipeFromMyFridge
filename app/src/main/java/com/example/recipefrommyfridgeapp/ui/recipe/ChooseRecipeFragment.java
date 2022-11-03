@@ -50,27 +50,12 @@ public class ChooseRecipeFragment extends Fragment {
     private RecipeListAdapter mRecipeListAdapter;
 
     private RecipeViewModel mRecipeViewModel;
-    private CuisineViewModel mCuisineViewModel;
-
-    private List<String> names;
-    private String cuisineIdChosen;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "ChooseRecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
-        mCuisineViewModel = new ViewModelProvider(this).get(CuisineViewModel.class);
-        mCuisineViewModel.retrieveCuisines();
-        names = new ArrayList<>();
-        mCuisineViewModel.getCuisineMutableLiveData().observe(this, new Observer<List<Cuisine>>() {
-            @Override
-            public void onChanged(List<Cuisine> cuisines) {
-                for (int i = 0; i < cuisines.size(); i++){
-                    names.add(cuisines.get(i).getType());
-                }
-            }
-        });
     }
 
     @Override
