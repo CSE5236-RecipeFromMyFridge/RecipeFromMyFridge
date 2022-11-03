@@ -1,0 +1,59 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="6dp"
+    app:cardCornerRadius="6dp"
+    app:cardUseCompatPadding="true"
+    tools:context="com.example.recipefrommyfridgeapp.ui.recipe.ChooseRecipeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/recipe_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Name"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/recipe_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Content"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/recipe_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Rating"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/recipe_cuisineId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe Cuisine Id"
+            android:textAlignment="center"/>
+
+        <Button
+            android:id="@+id/recipe_item_delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:layout_marginLeft="10dp" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

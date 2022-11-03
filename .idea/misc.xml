@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/layout/fragment_recipe_creation.xml" value="0.14221014492753623" />
         <entry key="app/src/main/res/layout/fragment_recipe_list.xml" value="0.17798913043478262" />
         <entry key="app/src/main/res/layout/list_item_recipe.xml" value="0.17798913043478262" />
+        <entry key="app/src/main/res/layout/list_item_saved_recipe.xml" value="0.15260416666666668" />
         <entry key="app/src/main/res/layout/password_popup.xml" value="0.16614583333333333" />
         <entry key="app/src/main/res/layout/update_popup.xml" value="0.1671875" />
       </map>

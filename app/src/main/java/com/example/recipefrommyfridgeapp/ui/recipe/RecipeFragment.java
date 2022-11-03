@@ -19,6 +19,7 @@ import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Ingredient;
 import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
+import com.example.recipefrommyfridgeapp.viewmodel.SavedRecipeViewModel;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ public class RecipeFragment extends Fragment {
     private Button saveButton;
 
     private RecipeViewModel mRecipeViewModel;
+    private SavedRecipeViewModel mSavedRecipeViewModel;
 
     private String id;
     private String user;
@@ -44,10 +46,12 @@ public class RecipeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "RecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
+        mSavedRecipeViewModel = new ViewModelProvider(this).get(SavedRecipeViewModel.class);
         String recipeId = "" + id;
         Log.d("checkpoint5", recipeId);
         mRecipeViewModel.getCurrentRecipe(recipeId);
         mRecipeViewModel.retrieveRecipeIdList();
+        mSavedRecipeViewModel.userSavedRecipe(user);
     }
 
     @Nullable
@@ -108,6 +112,17 @@ public class RecipeFragment extends Fragment {
                             updateRecipe(ids, idx);
                         }
                     });
+                }
+            }
+        });
+
+        mSavedRecipeViewModel.getUserSavedRecipeListMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                if (strings.contains(id)){
+                    saveButton.setEnabled(false);
+                } else {
+                    mSavedRecipeViewModel.saveRecipe(user, id);
                 }
             }
         });

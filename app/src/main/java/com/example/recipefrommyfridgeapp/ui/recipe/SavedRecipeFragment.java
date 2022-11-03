@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -99,17 +100,25 @@ public class SavedRecipeFragment extends Fragment {
                 }
             });
 
+            holder.deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSavedRecipeViewModel.deleteSavedRecipe(userId, key);
+                }
+            });
+
         }
 
         @NonNull
         @Override
         public RecipeAdapter.RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_recipe, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_saved_recipe, parent, false);
             return new RecipeAdapter.RecipeViewHolder(view);
         }
 
         private class RecipeViewHolder extends RecyclerView.ViewHolder {
             private TextView mNameTextView, mContentTextView, mRatingTextView, CuisineIdTextView;
+            private Button deleteRecipeButton;
 
             public RecipeViewHolder(@NonNull View recipeView) {
                 super(recipeView);
@@ -117,7 +126,8 @@ public class SavedRecipeFragment extends Fragment {
                 mContentTextView = (TextView) itemView.findViewById(R.id.recipe_content);
                 mRatingTextView = (TextView) itemView.findViewById(R.id.recipe_rating);
                 CuisineIdTextView = (TextView) itemView.findViewById(R.id.recipe_cuisineId);
-            }
+                deleteRecipeButton = (Button) itemView.findViewById(R.id.recipe_item_delete_button);
+             }
         }
     }
 
