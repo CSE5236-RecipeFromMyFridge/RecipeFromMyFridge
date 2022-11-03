@@ -28,22 +28,22 @@ public class RecipeViewModel extends AndroidViewModel {
         recipeIdMutableLiveData = mAppRepository.getRecipeIdMutableLiveData();
     }
 
-    public void createRecipe(String cuisineId, String name, String content, Float rating){
-        mAppRepository.createRecipe(cuisineId, name, content, rating);
-    }
-
-    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(){
-        options = mAppRepository.retrieveRecipes();
-        return options;
-    }
-
-    public void deleteRecipe(String id){
-        mAppRepository.deleteRecipe(id);
-    }
-
-    public void updateRecipe(String id, Map<String, Object> newRecipe){
-        mAppRepository.updateRecipe(id, newRecipe);
-    }
+//    public void createRecipe(String cuisineId, String name, String content, Float rating){
+//        mAppRepository.createRecipe(cuisineId, name, content, rating);
+//    }
+//
+//    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(){
+//        options = mAppRepository.retrieveRecipes();
+//        return options;
+//    }
+//
+//    public void deleteRecipe(String id){
+//        mAppRepository.deleteRecipe(id);
+//    }
+//
+//    public void updateRecipe(String id, Map<String, Object> newRecipe){
+//        mAppRepository.updateRecipe(id, newRecipe);
+//    }
 
     public void getCurrentRecipe(String recipeId){
         mAppRepository.getCurrentRecipe(recipeId);

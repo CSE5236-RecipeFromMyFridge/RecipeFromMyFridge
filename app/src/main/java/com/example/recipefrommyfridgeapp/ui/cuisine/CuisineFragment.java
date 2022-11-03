@@ -50,6 +50,9 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
         createButton = v.findViewById(R.id.choose_cuisine_create);
         generateButton.setOnClickListener(this);
         createButton.setOnClickListener(this);
+        // TODO: for checkpoint 5, user cannot create recipe;
+        createButton.setEnabled(false);
+        createButton.setVisibility(View.GONE);
         cuisine_1 = v.findViewById(R.id.cuisine_1);
         cuisine_2 = v.findViewById(R.id.cuisine_2);
         cuisine_3 = v.findViewById(R.id.cuisine_3);
@@ -117,15 +120,14 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
             case R.id.choose_cuisine_generate:
                 startActivity(new Intent(requireContext(), ChooseRecipeActivity.class));
                 break;
-            case R.id.choose_cuisine_create:
-                Fragment fragment = new RecipeCreationFragment();
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, fragment)
-                        .setReorderingAllowed(true)
-                        .addToBackStack("Recipe Creation")
-                        .commit();
-                break;
         }
-
+//        case R.id.choose_cuisine_create:
+//        Fragment fragment = new RecipeCreationFragment();
+//        getParentFragmentManager().beginTransaction()
+//                .replace(R.id.fragment_container, fragment)
+//                .setReorderingAllowed(true)
+//                .addToBackStack("Recipe Creation")
+//                .commit();
+//        break;
     }
 }
