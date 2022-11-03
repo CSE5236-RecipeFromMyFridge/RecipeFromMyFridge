@@ -19,11 +19,13 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
     Map<String, List<Ingredient>> mIngredients;
     List<String> mIngredientGroup;
     Context mContext;
+    StringBuilder mIngredientSelected;
 
-    public IngredientsExpandableListAdapter(Context context, Map<String, List<Ingredient>> ingredients, List<String> ingredientGroup) {
+    public IngredientsExpandableListAdapter(Context context, Map<String, List<Ingredient>> ingredients, List<String> ingredientGroup, StringBuilder ingredientSelected) {
         mContext = context;
         mIngredients = ingredients;
         mIngredientGroup = ingredientGroup;
+        mIngredientSelected = ingredientSelected;
     }
 
     @Override
@@ -94,6 +96,11 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
         if (compoundButton.getId() == R.id.ingredient_checkmark) {
             CheckBox ingredient = compoundButton.findViewById(R.id.ingredient_checkmark);
             ingredient.setChecked(b);
+            if (b) {
+                addIngredient(compoundButton.getText().toString());
+            } else {
+                removeIngredient(compoundButton.getText().toString());
+            }
         }
     }
 
@@ -105,5 +112,22 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
     public void updateItems(List<String> ingredientGroup) {
         mIngredientGroup = ingredientGroup;
         notifyDataSetChanged();
+    }
+
+    public void addIngredient(String ingredient) {
+        if (mIngredientSelected.length() == 0) {
+            mIngredientSelected.append(ingredient);
+        } else {
+            mIngredientSelected.append("," + ingredient);
+        }
+    }
+
+    public void removeIngredient(String ingredient) {
+        int i = mIngredientSelected.indexOf(ingredient);
+        i = i == 0 ? i : i - 1; //check if it is at the start else remove comma as well
+        mIngredientSelected.delete(i, i + ingredient.length() + 1);
+        while (mIngredientSelected.length() > 0 && mIngredientSelected.charAt(0) == ',') {
+            mIngredientSelected.deleteCharAt(0);
+        }
     }
 }

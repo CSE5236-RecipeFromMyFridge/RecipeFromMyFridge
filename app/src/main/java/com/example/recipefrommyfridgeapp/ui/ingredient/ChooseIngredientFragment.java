@@ -29,6 +29,7 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
     private Map<String, List<Ingredient>> mIngredients;
     private List<String> mIngredientGroup;
     private IngredientsExpandableListAdapter mIngredientsExpandableListAdapter;
+    private StringBuilder mIngredientSelected;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
         mIngredientViewModel.retrieveIngredient();
         mIngredients = new HashMap<>();
         mIngredientGroup = new ArrayList<>();
+        mIngredientSelected = new StringBuilder();
     }
 
     @Nullable
@@ -45,7 +47,7 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
         View v = inflater.inflate(R.layout.activity_choose_ingredient, container, false);
 
         final ExpandableListView expandableListView = v.findViewById(R.id.expandable_list_choose_ingredients);
-        mIngredientsExpandableListAdapter = new IngredientsExpandableListAdapter(v.getContext(), mIngredients, mIngredientGroup);
+        mIngredientsExpandableListAdapter = new IngredientsExpandableListAdapter(v.getContext(), mIngredients, mIngredientGroup, mIngredientSelected);
         expandableListView.setAdapter(mIngredientsExpandableListAdapter);
 
         mIngredientViewModel.getIngredientMutableLiveData().observe(getViewLifecycleOwner(),
