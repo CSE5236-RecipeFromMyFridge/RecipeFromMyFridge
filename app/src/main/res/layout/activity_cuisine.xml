@@ -206,15 +206,6 @@
             android:layout_marginLeft="90dp"
             android:layout_marginRight="90dp"/>
 
-        <Button
-            android:id="@+id/choose_cuisine_create"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/create_recipe"
-            android:layout_marginTop="5dp"
-            android:textAlignment="center"
-            android:layout_marginLeft="90dp"
-            android:layout_marginRight="90dp"/>
 
 
     </LinearLayout>

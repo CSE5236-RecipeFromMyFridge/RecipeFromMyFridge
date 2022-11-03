@@ -23,7 +23,7 @@ import java.util.List;
 
 public class CuisineFragment extends Fragment implements View.OnClickListener{
 
-    private Button generateButton, createButton;
+    private Button generateButton;
     private TextView cuisine_1, cuisine_2, cuisine_3, cuisine_4, cuisine_5,
             cuisine_6, cuisine_7, cuisine_8, cuisine_9;
     private CuisineViewModel cuisineViewModel;
@@ -41,11 +41,7 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.activity_cuisine, container, false);
         generateButton = v.findViewById(R.id.choose_cuisine_generate);
-        createButton = v.findViewById(R.id.choose_cuisine_create);
         generateButton.setOnClickListener(this);
-        createButton.setOnClickListener(this);
-        // TODO: for checkpoint 5, user cannot create recipe;
-        createButton.setEnabled(false);
         cuisine_1 = v.findViewById(R.id.cuisine_1);
         cuisine_2 = v.findViewById(R.id.cuisine_2);
         cuisine_3 = v.findViewById(R.id.cuisine_3);

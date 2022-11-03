@@ -43,31 +43,6 @@
             android:text="Recipe Cuisine Id"
             android:textAlignment="center"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="10dp">
-
-            <Button
-                android:id="@+id/recipe_item_edit_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit"
-                android:textAllCaps="false"
-                android:layout_marginRight="5dp" />
-
-            <Button
-                android:id="@+id/recipe_item_delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete"
-                android:textAllCaps="false"
-                android:layout_marginLeft="10dp" />
-
-
-        </LinearLayout>
 
     </LinearLayout>
 

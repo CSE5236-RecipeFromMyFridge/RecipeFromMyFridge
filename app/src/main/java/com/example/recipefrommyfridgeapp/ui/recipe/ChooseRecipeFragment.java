@@ -103,7 +103,6 @@ public class ChooseRecipeFragment extends Fragment {
 
         private Recipe mRecipe;
         private TextView mNameTextView, mContentTextView, mRatingTextView, CuisineIdTextView;
-        private Button editRecipeButton, deleteRecipeButton;
         private String recipeId;
 
         public RecipeListHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -112,8 +111,6 @@ public class ChooseRecipeFragment extends Fragment {
             mContentTextView = (TextView) itemView.findViewById(R.id.recipe_content);
             mRatingTextView = (TextView) itemView.findViewById(R.id.recipe_rating);
             CuisineIdTextView = (TextView) itemView.findViewById(R.id.recipe_cuisineId);
-            editRecipeButton = (Button) itemView.findViewById(R.id.recipe_item_edit_button);
-            deleteRecipeButton = (Button) itemView.findViewById(R.id.recipe_item_delete_button);
         }
 
         public void bind(Recipe current) {
@@ -142,10 +139,6 @@ public class ChooseRecipeFragment extends Fragment {
                             .commit();
                 }
             });
-            // TODO: for checkpoint 5, user cannot edit/delete existing recipe;
-            editRecipeButton.setEnabled(false);
-            deleteRecipeButton.setEnabled(false);
-
         }
     }
 
