@@ -16,14 +16,16 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
+import com.example.recipefrommyfridgeapp.model.Ingredient;
 import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 
 import java.util.List;
+import java.util.Map;
 
 public class RecipeFragment extends Fragment {
 
-    private TextView recipeName, recipeType, recipeRating, recipeContent;
+    private TextView recipeName, recipeType, recipeRating, recipeContent, recipeIngredient;
     private ImageButton mPreviousButton, mNextButton;
     private Button saveButton;
 
@@ -55,6 +57,7 @@ public class RecipeFragment extends Fragment {
         recipeType = v.findViewById(R.id.fragment_recipe_type);
         recipeRating = v.findViewById(R.id.fragment_recipe_rating);
         recipeContent = v.findViewById(R.id.fragment_recipe_content);
+        recipeIngredient = v.findViewById(R.id.fragment_recipe_ingredients);
         mPreviousButton = v.findViewById(R.id.fragment_recipe_previous_button);
         mNextButton = v.findViewById(R.id.fragment_recipe_next_button);
         saveButton = v.findViewById(R.id.fragment_recipe_save);
@@ -65,7 +68,19 @@ public class RecipeFragment extends Fragment {
                     recipeName.setText(String.format("Name: %s", recipe.getName()));
                     recipeType.setText(String.format("Cuisine Type: %s", recipe.getCuisineId()));
                     recipeRating.setText(String.format("Rating: %s", recipe.getRating()));
-                    recipeContent.setText(String.format("Content: %s", recipe.getContent()));}
+                    recipeContent.setText(String.format("Content: %s", recipe.getContent()));
+                    Map<String, Ingredient> ingredientMap = recipe.getIngredients();
+                    StringBuilder output = new StringBuilder();
+                    output.append("Ingredients: ");
+                    for (Ingredient current : ingredientMap.values()){
+                        Log.d("checkpoint5", current.getName());
+                        output.append(current.getName());
+                        output.append(" - ");
+                        output.append(current.getAmount());
+                        output.append(" ");
+                    }
+                    recipeIngredient.setText(output);
+                }
             }
         });
 
