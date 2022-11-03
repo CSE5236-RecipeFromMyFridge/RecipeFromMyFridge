@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Ingredient;
 import com.example.recipefrommyfridgeapp.model.Recipe;
+import com.example.recipefrommyfridgeapp.viewmodel.LoggedInViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.SavedRecipeViewModel;
 
@@ -32,6 +33,7 @@ public class RecipeFragment extends Fragment {
 
     private RecipeViewModel mRecipeViewModel;
     private SavedRecipeViewModel mSavedRecipeViewModel;
+    private LoggedInViewModel mLoggedInViewModel;
 
     private String id;
     private String user;
@@ -47,6 +49,7 @@ public class RecipeFragment extends Fragment {
         Log.i("checkpoint5", "RecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         mSavedRecipeViewModel = new ViewModelProvider(this).get(SavedRecipeViewModel.class);
+        mLoggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
         String recipeId = "" + id;
         Log.d("checkpoint5", recipeId);
         mRecipeViewModel.getCurrentRecipe(recipeId);
@@ -67,6 +70,16 @@ public class RecipeFragment extends Fragment {
         mPreviousButton = v.findViewById(R.id.fragment_recipe_previous_button);
         mNextButton = v.findViewById(R.id.fragment_recipe_next_button);
         saveButton = v.findViewById(R.id.fragment_recipe_save);
+
+        mLoggedInViewModel.getLoggedOutMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean loggedOut) {
+                if (loggedOut){
+                    saveButton.setEnabled(false);
+                }
+            }
+        });
+
         mRecipeViewModel.getRecipeMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Recipe>() {
             @Override
             public void onChanged(Recipe recipe) {

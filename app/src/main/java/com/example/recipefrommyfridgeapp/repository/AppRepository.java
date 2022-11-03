@@ -67,6 +67,8 @@ public class AppRepository {
         if (auth.getCurrentUser() != null) {
             getUserMutableLiveData().postValue(auth.getCurrentUser());
             loggedOutMutableLiveData.postValue(false);
+        } else {
+            loggedOutMutableLiveData.postValue(true);
         }
 
     }
