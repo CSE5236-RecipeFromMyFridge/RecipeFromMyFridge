@@ -32,6 +32,7 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
 
     private Button changeIngredientButton, changeCuisineButton, accountButton, logOutButton, savedRecipeButton;
     private TextView greetingUser;
+    private String userId = "";
 
     private LoggedInViewModel loggedInViewModel;
 
@@ -39,40 +40,6 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
-        loggedInViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
-            @Override
-            public void onChanged(FirebaseUser firebaseUser) {
-                if (firebaseUser != null){
-                    final FirebaseDatabase db = FirebaseDatabase.getInstance();
-                    DatabaseReference ref = db.getReference("Users").child(firebaseUser.getUid());
-                    ref.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            User user = snapshot.getValue(User.class);
-                            Log.d("checkpoint5", "the user name retrieved");
-                            greetingUser.setText("Hello, " + user.getName());
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Log.d("checkpoint5", "fail to show the user name");
-                        }
-                    });
-//                    greetingUser.setText("Hello, " + firebaseUser.getEmail());
-                }
-            }
-        });
-
-        loggedInViewModel.getLoggedOutMutableLiveData().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean loggedOut) {
-                if (loggedOut){
-                    getParentFragmentManager().beginTransaction()
-                            .remove(LoggedInFragment.this)
-                            .commit();
-                    getParentFragmentManager().popBackStack();
-                }
-            }
-        });
 
     }
 
@@ -92,7 +59,48 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
         changeCuisineButton.setOnClickListener(this);
         accountButton.setOnClickListener(this);
         logOutButton.setOnClickListener(this);
-        savedRecipeButton.setOnClickListener(this);
+        loggedInViewModel.getUserMutableLiveData().observe(getViewLifecycleOwner(), new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                if (firebaseUser != null){
+                    userId = "" + firebaseUser.getUid();
+                    savedRecipeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = SavedRecipeActivity.newIntent(getActivity(), userId);
+                            startActivity(intent);
+                        }
+                    });
+                    final FirebaseDatabase db = FirebaseDatabase.getInstance();
+                    DatabaseReference ref = db.getReference("Users").child(firebaseUser.getUid());
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            User user = snapshot.getValue(User.class);
+                            Log.d("checkpoint5", "the user name retrieved");
+                            greetingUser.setText("Hello, " + user.getName());
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d("checkpoint5", "fail to show the user name");
+                        }
+                    });}
+            }
+        });
+
+        loggedInViewModel.getLoggedOutMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean loggedOut) {
+                if (loggedOut){
+                    getParentFragmentManager().beginTransaction()
+                            .remove(LoggedInFragment.this)
+                            .commit();
+                    getParentFragmentManager().popBackStack();
+                }
+            }
+        });
+
+
 
         return v;
     }
@@ -108,9 +116,6 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
                 break;
             case R.id.fragment_logged_in_my_account:
                 startActivity(new Intent(requireContext(), MyAccountActivity.class));
-                break;
-            case R.id.fragment_logged_in_saved_recipe:
-                startActivity(new Intent(requireContext(), SavedRecipeActivity.class));
                 break;
             case R.id.fragment_logged_in_log_out:
                 loggedInViewModel.logOut();

@@ -44,6 +44,9 @@ public class AppRepository {
     private final MutableLiveData<List<String>> mIngredientGroupMutableLiveData;
     private final MutableLiveData<Recipe> mRecipeMutableLiveData;
     private final MutableLiveData<List<String>> mRecipeListMutableLiveData;
+    private final MutableLiveData<Recipe> savedRecipeMutableLiveData;
+    private final MutableLiveData<List<String>> savedRecipeListMutableLiveData;
+    private final MutableLiveData<List<String>> userSavedRecipeMutableLiveData;
 
 
     public AppRepository(Application application) {
@@ -57,6 +60,9 @@ public class AppRepository {
         mIngredientGroupMutableLiveData = new MutableLiveData<>();
         mRecipeMutableLiveData = new MutableLiveData<>();
         mRecipeListMutableLiveData = new MutableLiveData<>();
+        savedRecipeMutableLiveData = new MutableLiveData<>();
+        savedRecipeListMutableLiveData = new MutableLiveData<>();
+        userSavedRecipeMutableLiveData = new MutableLiveData<>();
 
         if (auth.getCurrentUser() != null) {
             getUserMutableLiveData().postValue(auth.getCurrentUser());
@@ -244,6 +250,124 @@ public class AppRepository {
         });
     }
 
+    public FirebaseRecyclerOptions<Recipe> retrieveSavedRecipes(String userId) {
+        DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
+        List<String> recipeIds = new ArrayList<>();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot shot: snapshot.getChildren()){
+                    String current = shot.getKey();
+                    recipeIds.add(current);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference previous = db.getReference(userId);
+        if (previous != null){
+            previous.removeValue();
+        }
+
+        DatabaseReference currentUserSavedRecipe = db.getReference(userId);
+        DatabaseReference recipes = db.getReference("Recipes");
+        recipes.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot shot : snapshot.getChildren()){
+                    String currentId = shot.getKey();
+                    if (recipeIds.contains(currentId)){
+                        Recipe include = shot.getValue(Recipe.class);
+                        currentUserSavedRecipe.child(currentId).setValue(include);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
+                .setQuery(currentUserSavedRecipe, Recipe.class)
+                .build();
+        return options;
+    }
+
+    public void getCurrentSavedRecipe(String userId, String recipeId){
+        DatabaseReference ref = db.getReference(userId);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot shot : snapshot.getChildren()){
+                    if (shot.getKey().equals(recipeId)){
+                        Recipe current = shot.getValue(Recipe.class);
+                        savedRecipeMutableLiveData.postValue(current);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    public void retrieveSavedRecipeIdList(String userId) {
+        List<String> recipes = new ArrayList<>();
+        DatabaseReference ref = db.getReference(userId);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot post : snapshot.getChildren()) {
+                    String single = post.getKey();
+                    recipes.add(single);
+                }
+                savedRecipeListMutableLiveData.postValue(recipes);
+                Log.d("checkpoint5", "Successfully retrieve saved recipes");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("checkpoint5", "Fail to retrieve saved recipes");
+            }
+        });
+    }
+
+    public void userSavedRecipe(String userId){
+        List<String> recipes = new ArrayList<>();
+        DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot post : snapshot.getChildren()) {
+                    String single = post.getKey();
+                    recipes.add(single);
+                }
+                userSavedRecipeMutableLiveData.postValue(recipes);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void saveRecipe(String userId, String recipeId){
+        DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
+        ref.child(recipeId).setValue(true);
+    }
+
+    public void deleteSavedRecipe(String userId, String recipeId) {
+        DatabaseReference ref = db.getReference("SavedRecipes");
+        ref.child(userId).child(recipeId).removeValue();
+        DatabaseReference currentUserSaved = db.getReference(userId);
+        currentUserSaved.child(recipeId).removeValue();
+    }
+
+
+
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return mUserMutableLiveData;
     }
@@ -272,4 +396,15 @@ public class AppRepository {
         return mRecipeListMutableLiveData;
     }
 
+    public MutableLiveData<Recipe> getSavedRecipeMutableLiveData() {
+        return savedRecipeMutableLiveData;
+    }
+
+    public MutableLiveData<List<String>> getSavedRecipeListMutableLiveData() {
+        return savedRecipeListMutableLiveData;
+    }
+
+    public MutableLiveData<List<String>> getUserSavedRecipeMutableLiveData() {
+        return userSavedRecipeMutableLiveData;
+    }
 }
