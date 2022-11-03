@@ -23,7 +23,7 @@ import java.util.List;
 
 public class RecipeFragment extends Fragment {
 
-    private TextView recipeName, recipeType, recipeRating, recipeContent, recipeIngredient;
+    private TextView recipeName, recipeType, recipeRating, recipeContent;
     private ImageButton mPreviousButton, mNextButton;
     private Button saveButton;
 
@@ -55,7 +55,6 @@ public class RecipeFragment extends Fragment {
         recipeType = v.findViewById(R.id.fragment_recipe_type);
         recipeRating = v.findViewById(R.id.fragment_recipe_rating);
         recipeContent = v.findViewById(R.id.fragment_recipe_content);
-        recipeIngredient = v.findViewById(R.id.fragment_recipe_ingredients);
         mPreviousButton = v.findViewById(R.id.fragment_recipe_previous_button);
         mNextButton = v.findViewById(R.id.fragment_recipe_next_button);
         saveButton = v.findViewById(R.id.fragment_recipe_save);
@@ -67,6 +66,32 @@ public class RecipeFragment extends Fragment {
                     recipeType.setText(String.format("Cuisine Type: %s", recipe.getCuisineId()));
                     recipeRating.setText(String.format("Rating: %s", recipe.getRating()));
                     recipeContent.setText(String.format("Content: %s", recipe.getContent()));}
+            }
+        });
+
+        mRecipeViewModel.getRecipeListMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> ids) {
+                if (ids.size() != 0){
+                    final int[] idx = {ids.indexOf(id)};
+                    mPreviousButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            idx[0] = (idx[0] - 1) % ids.size();
+                            if (idx[0] < 0) {
+                                idx[0] = ids.size() - 1;
+                            }
+                            updateRecipe(ids, idx);
+                        }
+                    });
+                    mNextButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            idx[0] = (idx[0] + 1) % ids.size();
+                            updateRecipe(ids, idx);
+                        }
+                    });
+                }
             }
         });
 

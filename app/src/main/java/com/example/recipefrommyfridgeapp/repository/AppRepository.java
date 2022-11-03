@@ -43,9 +43,7 @@ public class AppRepository {
     private final MutableLiveData<Map<String, List<Ingredient>>> mIngredientMutableLiveData;
     private final MutableLiveData<List<String>> mIngredientGroupMutableLiveData;
     private final MutableLiveData<Recipe> mRecipeMutableLiveData;
-    private final MutableLiveData<List<Recipe>> recipeListMutableLiveData;
-    private final MutableLiveData<String> recipeIdMutableLiveData;
-    private final MutableLiveData<Map<String, String>> recipeIngredientsMutableLiveData;
+    private final MutableLiveData<List<String>> mRecipeListMutableLiveData;
 
 
     public AppRepository(Application application) {
@@ -58,9 +56,7 @@ public class AppRepository {
         mIngredientMutableLiveData = new MutableLiveData<>();
         mIngredientGroupMutableLiveData = new MutableLiveData<>();
         mRecipeMutableLiveData = new MutableLiveData<>();
-        recipeListMutableLiveData = new MutableLiveData<>();
-        recipeIdMutableLiveData = new MutableLiveData<>();
-        recipeIngredientsMutableLiveData = new MutableLiveData<>();
+        mRecipeListMutableLiveData = new MutableLiveData<>();
 
         if (auth.getCurrentUser() != null) {
             getUserMutableLiveData().postValue(auth.getCurrentUser());
@@ -138,23 +134,23 @@ public class AppRepository {
         });
     }
 
-    public void retrieveRecipeList() {
-        List<Recipe> recipes = new ArrayList<>();
+    public void retrieveRecipeIdList() {
+        List<String> recipes = new ArrayList<>();
         DatabaseReference ref = db.getReference("Recipes");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot post : snapshot.getChildren()) {
-                    Recipe single = post.getValue(Recipe.class);
+                    String single = post.getKey();
                     recipes.add(single);
                 }
-                recipeListMutableLiveData.postValue(recipes);
-                Log.d("checkpoint5", "Successfully retrieve Recipes");
+                mRecipeListMutableLiveData.postValue(recipes);
+                Log.d("checkpoint5", "Successfully retrieve recipes");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("checkpoint5", "Fail to retrieve Recipes");
+                Log.d("checkpoint5", "Fail to retrieve recipes");
             }
         });
     }
@@ -221,6 +217,14 @@ public class AppRepository {
 
     }
 
+    public FirebaseRecyclerOptions<Recipe> retrieveRecipes() {
+        DatabaseReference ref = db.getReference("Recipes");
+        FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
+                .setQuery(ref, Recipe.class)
+                .build();
+        return options;
+    }
+
     public void getCurrentRecipe(String recipeId){
         DatabaseReference ref = db.getReference("Recipes");
         ref.addValueEventListener(new ValueEventListener() {
@@ -240,15 +244,38 @@ public class AppRepository {
         });
     }
 
-    public void returnRecipeId(String recipeName){
-        DatabaseReference ref = db.getReference("Recipes");
+    public FirebaseRecyclerOptions<Recipe> retrieveSavedRecipes(String userId) {
+        DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
+        List<String> recipeIds = new ArrayList<>();
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot shot: snapshot.getChildren()){
+                    String current = shot.getKey();
+                    recipeIds.add(current);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference previous = db.getReference("currentUserSavedRecipe");
+        if (previous != null){
+            previous.removeValue();
+        }
+
+        DatabaseReference currentUserSavedRecipe = db.getReference("currentUserSavedRecipe");
+        DatabaseReference recipes = db.getReference("Recipes");
+        recipes.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot shot : snapshot.getChildren()){
-                    Recipe current = shot.getValue(Recipe.class);
-                    if (current.getName().equals(recipeName)){
-                        recipeIdMutableLiveData.postValue(shot.getKey());
+                    String currentId = shot.getKey();
+                    if (recipeIds.contains(currentId)){
+                        Recipe include = shot.getValue(Recipe.class);
+                        currentUserSavedRecipe.child(currentId).setValue(include);
                     }
                 }
             }
@@ -257,35 +284,12 @@ public class AppRepository {
 
             }
         });
+        FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
+                .setQuery(currentUserSavedRecipe, Recipe.class)
+                .build();
+        return options;
     }
 
-    public void getRecipeIngredients(String recipeId) {
-        Map<String, String> ingredients = new HashMap<>();
-        DatabaseReference ref = db.getReference("Recipes");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot shot : snapshot.getChildren()){
-                    if (shot.getKey().equals(recipeId)){
-                        for (DataSnapshot inside : shot.getChildren()){
-                            if (inside.getKey().equals("ingredients")){
-                                for (DataSnapshot type : inside.getChildren()){
-                                    ingredients.put(type.getKey(), type.getValue().toString());
-                                }
-                            }
-                        }
-                    }
-                }
-                recipeIngredientsMutableLiveData.postValue(ingredients);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-    }
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return mUserMutableLiveData;
@@ -311,15 +315,8 @@ public class AppRepository {
         return mRecipeMutableLiveData;
     }
 
-    public MutableLiveData<List<Recipe>> getRecipeListMutableLiveData() {
-        return recipeListMutableLiveData;
+    public MutableLiveData<List<String>> getRecipeListMutableLiveData() {
+        return mRecipeListMutableLiveData;
     }
 
-    public MutableLiveData<String> getRecipeIdMutableLiveData() {
-        return recipeIdMutableLiveData;
-    }
-
-    public MutableLiveData<Map<String, String>> getRecipeIngredientsMutableLiveData() {
-        return recipeIngredientsMutableLiveData;
-    }
 }

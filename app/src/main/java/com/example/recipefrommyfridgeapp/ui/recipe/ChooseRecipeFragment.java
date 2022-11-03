@@ -46,8 +46,8 @@ import java.util.Map;
 public class ChooseRecipeFragment extends Fragment {
 
     private RecyclerView mRecipeRecyclerView;
-    private List<Recipe> mRecipeList;
-    private RecipeListAdapter mRecipeListAdapter;
+    private RecipeAdapter mAdapter;
+    private FirebaseRecyclerOptions<Recipe> options;
 
     private RecipeViewModel mRecipeViewModel;
 
@@ -56,6 +56,7 @@ public class ChooseRecipeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "ChooseRecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
+        options = mRecipeViewModel.retrieveRecipes();
     }
 
     @Override
@@ -67,56 +68,48 @@ public class ChooseRecipeFragment extends Fragment {
         mRecipeRecyclerView = (RecyclerView) view
                 .findViewById(R.id.recipe_recycler_view);
         mRecipeRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mRecipeList = new ArrayList<>();
-        mRecipeViewModel.retrieveRecipeList();
-        mRecipeViewModel.getRecipeListMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
-            @Override
-            public void onChanged(List<Recipe> recipes) {
-                mRecipeList.clear();
-                for (Recipe current: recipes){
-                    mRecipeList.add(current);
-                }
-                Log.d("checkpoint5", Integer.toString(mRecipeList.size()));
-                mRecipeListAdapter = new RecipeListAdapter(mRecipeList);
-                mRecipeRecyclerView.setAdapter(mRecipeListAdapter);
-            }
-        });
+        mAdapter = new RecipeAdapter(options);
+        mRecipeRecyclerView.setAdapter(mAdapter);
+
         return view;
     }
 
-    private class RecipeListHolder extends RecyclerView.ViewHolder{
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAdapter.startListening();
+    }
 
-        private Recipe mRecipe;
-        private TextView mNameTextView, mContentTextView, mRatingTextView, CuisineIdTextView;
-        private String recipeId;
+    @Override
+    public void onStop(){
+        super.onStop();
+        mAdapter.stopListening();
+    }
 
-        public RecipeListHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_recipe, parent, false));
-            mNameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
-            mContentTextView = (TextView) itemView.findViewById(R.id.recipe_content);
-            mRatingTextView = (TextView) itemView.findViewById(R.id.recipe_rating);
-            CuisineIdTextView = (TextView) itemView.findViewById(R.id.recipe_cuisineId);
+    private class RecipeAdapter extends FirebaseRecyclerAdapter<Recipe, RecipeAdapter.RecipeViewHolder> {
+        /**
+         * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
+         * {@link FirebaseRecyclerOptions} for configuration options.
+         *
+         * @param options
+         */
+        public RecipeAdapter(@NonNull FirebaseRecyclerOptions<Recipe> options) {
+            super(options);
         }
 
-        public void bind(Recipe current) {
-            mRecipe = current;
-            mNameTextView.setText(mRecipe.getName());
-            mContentTextView.setText(mRecipe.getContent());
-            mRatingTextView.setText(Float.toString(mRecipe.getRating()));
-            CuisineIdTextView.setText(mRecipe.getCuisineId());
-            mRecipeViewModel.returnRecipeId(mRecipe.getName());
-            mRecipeViewModel.getRecipeIdMutableLiveData().observe(getViewLifecycleOwner(), new Observer<String>() {
-                @Override
-                public void onChanged(String s) {
-                    if (s != null){
-                        recipeId = "" + s;
-                    }
-                }
-            });
-            itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        protected void onBindViewHolder(@NonNull RecipeAdapter.RecipeViewHolder holder, int position, @NonNull Recipe model) {
+            Log.d("checkpoint5", "onBindViewHolder");
+            final DatabaseReference itemRef = getRef(position);
+            final String key = itemRef.getKey();
+            holder.mNameTextView.setText(model.getName());
+            holder.mContentTextView.setText(model.getContent());
+            holder.mRatingTextView.setText(Float.toString(model.getRating()));
+            holder.CuisineIdTextView.setText(model.getCuisineId());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Fragment fragment = new RecipeFragment(recipeId);
+                    Fragment fragment = new RecipeFragment(key);
                     getParentFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, fragment)
                             .setReorderingAllowed(true)
@@ -125,30 +118,24 @@ public class ChooseRecipeFragment extends Fragment {
                 }
             });
         }
-    }
 
-    private class RecipeListAdapter extends RecyclerView.Adapter<RecipeListHolder> {
-
-        private List<Recipe> mRecipes;
-        public RecipeListAdapter(List<Recipe> recipes) {
-            mRecipes = recipes;
-        }
         @NonNull
         @Override
-        public RecipeListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            return new RecipeListHolder(layoutInflater, parent);
+        public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_recipe, parent, false);
+            return new RecipeViewHolder(view);
         }
 
-        @Override
-        public void onBindViewHolder(@NonNull RecipeListHolder holder, int position) {
-            Recipe current = mRecipes.get(position);
-            holder.bind(current);
-        }
+        private class RecipeViewHolder extends RecyclerView.ViewHolder {
+            private TextView mNameTextView, mContentTextView, mRatingTextView, CuisineIdTextView;
 
-        @Override
-        public int getItemCount() {
-            return mRecipes.size();
+            public RecipeViewHolder(@NonNull View recipeView) {
+                super(recipeView);
+                mNameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
+                mContentTextView = (TextView) itemView.findViewById(R.id.recipe_content);
+                mRatingTextView = (TextView) itemView.findViewById(R.id.recipe_rating);
+                CuisineIdTextView = (TextView) itemView.findViewById(R.id.recipe_cuisineId);
+            }
         }
     }
 }

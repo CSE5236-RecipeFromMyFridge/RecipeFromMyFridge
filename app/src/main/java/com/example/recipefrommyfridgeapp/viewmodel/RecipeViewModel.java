@@ -8,59 +8,42 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.example.recipefrommyfridgeapp.repository.AppRepository;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.util.List;
 import java.util.Map;
 
 public class RecipeViewModel extends AndroidViewModel {
     private AppRepository mAppRepository;
+    private FirebaseRecyclerOptions<Recipe> options;
     private MutableLiveData<Recipe> mRecipeMutableLiveData;
-    private MutableLiveData<List<Recipe>> recipeListMutableLiveData;
-    private MutableLiveData<String> recipeIdMutableLiveData;
-    private MutableLiveData<Map<String, String>> recipeIngredientsMutableLiveData;
+    private MutableLiveData<List<String>> mRecipeListMutableLiveData;
 
     public RecipeViewModel(@NonNull Application application) {
         super(application);
         mAppRepository = new AppRepository(application);
         mRecipeMutableLiveData = mAppRepository.getRecipeMutableLiveData();
-        recipeListMutableLiveData = mAppRepository.getRecipeListMutableLiveData();
-        recipeIdMutableLiveData = mAppRepository.getRecipeIdMutableLiveData();
-        recipeIngredientsMutableLiveData = mAppRepository.getRecipeIngredientsMutableLiveData();
+        mRecipeListMutableLiveData = mAppRepository.getRecipeListMutableLiveData();
+    }
+
+    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(){
+        options = mAppRepository.retrieveRecipes();
+        return options;
     }
 
     public void getCurrentRecipe(String recipeId){
         mAppRepository.getCurrentRecipe(recipeId);
     }
 
-    public void returnRecipeId(String recipeName){
-        mAppRepository.returnRecipeId(recipeName);
-    }
-
-    public void retrieveRecipeList() {
-        mAppRepository.retrieveRecipeList();
-    }
-
-    public void retrieveRecipeIdList() {
-        mAppRepository.retrieveRecipeList();
-    }
-
-    public void getRecipeIngredients(String recipeId){
-        mAppRepository.getRecipeIngredients(recipeId);
+    public void retrieveRecipeIdList(){
+        mAppRepository.retrieveRecipeIdList();
     }
 
     public MutableLiveData<Recipe> getRecipeMutableLiveData() {
         return mRecipeMutableLiveData;
     }
 
-    public MutableLiveData<List<Recipe>> getRecipeListMutableLiveData() {
-        return recipeListMutableLiveData;
-    }
-
-    public MutableLiveData<String> getRecipeIdMutableLiveData() {
-        return recipeIdMutableLiveData;
-    }
-
-    public MutableLiveData<Map<String, String>> getRecipeIngredientsMutableLiveData() {
-        return recipeIngredientsMutableLiveData;
+    public MutableLiveData<List<String>> getRecipeListMutableLiveData() {
+        return mRecipeListMutableLiveData;
     }
 }
