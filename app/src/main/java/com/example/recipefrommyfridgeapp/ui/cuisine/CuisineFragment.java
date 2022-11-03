@@ -16,12 +16,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Cuisine;
+import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientFragment;
 import com.example.recipefrommyfridgeapp.ui.recipe.ChooseRecipeActivity;
 import com.example.recipefrommyfridgeapp.viewmodel.CuisineViewModel;
 
 import java.util.List;
 
-public class CuisineFragment extends Fragment implements View.OnClickListener{
+public class CuisineFragment extends Fragment implements View.OnClickListener {
 
     private Button generateButton;
     private TextView cuisine_1, cuisine_2, cuisine_3, cuisine_4, cuisine_5,
@@ -34,11 +35,14 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
         Log.i("checkpoint5", "CuisineFragment.onCreate()");
         cuisineViewModel = new ViewModelProvider(this).get(CuisineViewModel.class);
         cuisineViewModel.retrieveCuisines();
+
+        String s = getArguments().getString(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED);
+        Log.i("test", "onCreate: " + s);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_cuisine, container, false);
         generateButton = v.findViewById(R.id.choose_cuisine_generate);
         generateButton.setOnClickListener(this);
@@ -56,12 +60,12 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
             @Override
             //TODO: find an easier way to display it
             public void onChanged(List<Cuisine> cuisines) {
-                if (cuisines != null){
+                if (cuisines != null) {
                     Log.d("checkpoint5", "Successfully get Cuisines list");
-                    for (int i = 0; i < cuisines.size(); i++){
+                    for (int i = 0; i < cuisines.size(); i++) {
                         Cuisine current = cuisines.get(i);
                         String input = current.getName() + " - " + current.getType();
-                        switch (i){
+                        switch (i) {
                             case 0:
                                 cuisine_1.setText(input);
                                 break;
@@ -105,7 +109,7 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.choose_cuisine_generate:
                 startActivity(new Intent(requireContext(), ChooseRecipeActivity.class));
                 break;

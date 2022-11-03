@@ -25,6 +25,7 @@ import java.util.Map;
 
 public class ChooseIngredientFragment extends Fragment implements View.OnClickListener {
 
+    public static final String INTENT_INGREDIENT_SELECTED = "ingredient";
     private IngredientViewModel mIngredientViewModel;
     private Map<String, List<Ingredient>> mIngredients;
     private List<String> mIngredientGroup;
@@ -65,7 +66,9 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.button_choose_cuisine) {
-            startActivity(new Intent(requireContext(), CuisineActivity.class));
+            Intent intent = new Intent(requireContext(), CuisineActivity.class);
+            intent.putExtra(INTENT_INGREDIENT_SELECTED, mIngredientSelected.toString());
+            startActivity(intent);
         }
     }
 }
