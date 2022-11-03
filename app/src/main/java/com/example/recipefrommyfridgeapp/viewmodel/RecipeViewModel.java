@@ -8,17 +8,16 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.example.recipefrommyfridgeapp.repository.AppRepository;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.util.List;
 import java.util.Map;
 
 public class RecipeViewModel extends AndroidViewModel {
     private AppRepository mAppRepository;
-    private FirebaseRecyclerOptions<Recipe> options;
     private MutableLiveData<Recipe> mRecipeMutableLiveData;
     private MutableLiveData<List<Recipe>> recipeListMutableLiveData;
     private MutableLiveData<String> recipeIdMutableLiveData;
+    private MutableLiveData<Map<String, String>> recipeIngredientsMutableLiveData;
 
     public RecipeViewModel(@NonNull Application application) {
         super(application);
@@ -26,24 +25,8 @@ public class RecipeViewModel extends AndroidViewModel {
         mRecipeMutableLiveData = mAppRepository.getRecipeMutableLiveData();
         recipeListMutableLiveData = mAppRepository.getRecipeListMutableLiveData();
         recipeIdMutableLiveData = mAppRepository.getRecipeIdMutableLiveData();
+        recipeIngredientsMutableLiveData = mAppRepository.getRecipeIngredientsMutableLiveData();
     }
-
-//    public void createRecipe(String cuisineId, String name, String content, Float rating){
-//        mAppRepository.createRecipe(cuisineId, name, content, rating);
-//    }
-//
-//    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(){
-//        options = mAppRepository.retrieveRecipes();
-//        return options;
-//    }
-//
-//    public void deleteRecipe(String id){
-//        mAppRepository.deleteRecipe(id);
-//    }
-//
-//    public void updateRecipe(String id, Map<String, Object> newRecipe){
-//        mAppRepository.updateRecipe(id, newRecipe);
-//    }
 
     public void getCurrentRecipe(String recipeId){
         mAppRepository.getCurrentRecipe(recipeId);
@@ -57,6 +40,14 @@ public class RecipeViewModel extends AndroidViewModel {
         mAppRepository.retrieveRecipeList();
     }
 
+    public void retrieveRecipeIdList() {
+        mAppRepository.retrieveRecipeList();
+    }
+
+    public void getRecipeIngredients(String recipeId){
+        mAppRepository.getRecipeIngredients(recipeId);
+    }
+
     public MutableLiveData<Recipe> getRecipeMutableLiveData() {
         return mRecipeMutableLiveData;
     }
@@ -67,5 +58,9 @@ public class RecipeViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> getRecipeIdMutableLiveData() {
         return recipeIdMutableLiveData;
+    }
+
+    public MutableLiveData<Map<String, String>> getRecipeIngredientsMutableLiveData() {
+        return recipeIngredientsMutableLiveData;
     }
 }

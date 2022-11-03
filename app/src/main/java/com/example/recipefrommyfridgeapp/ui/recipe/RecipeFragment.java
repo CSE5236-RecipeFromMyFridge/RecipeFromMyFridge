@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,23 +21,29 @@ import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 
 import java.util.List;
 
-public class RecipeFragment extends Fragment implements View.OnClickListener {
+public class RecipeFragment extends Fragment {
 
-    private TextView recipeName, recipeType, recipeRating, recipeContent;
+    private TextView recipeName, recipeType, recipeRating, recipeContent, recipeIngredient;
     private ImageButton mPreviousButton, mNextButton;
+    private Button saveButton;
 
     private RecipeViewModel mRecipeViewModel;
+
+    private String id;
+
+    public RecipeFragment(String recipeId) {
+        id = "" + recipeId;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "RecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
-        String recipeId = (String) getActivity().getIntent()
-                .getSerializableExtra(RecipeActivity.EXTRA_RECIPE_ID);
+        String recipeId = "" + id;
         Log.d("checkpoint5", recipeId);
         mRecipeViewModel.getCurrentRecipe(recipeId);
-
+        mRecipeViewModel.retrieveRecipeIdList();
     }
 
     @Nullable
@@ -48,10 +55,10 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
         recipeType = v.findViewById(R.id.fragment_recipe_type);
         recipeRating = v.findViewById(R.id.fragment_recipe_rating);
         recipeContent = v.findViewById(R.id.fragment_recipe_content);
+        recipeIngredient = v.findViewById(R.id.fragment_recipe_ingredients);
         mPreviousButton = v.findViewById(R.id.fragment_recipe_previous_button);
         mNextButton = v.findViewById(R.id.fragment_recipe_next_button);
-        mPreviousButton.setOnClickListener(this);
-        mNextButton.setOnClickListener(this);
+        saveButton = v.findViewById(R.id.fragment_recipe_save);
         mRecipeViewModel.getRecipeMutableLiveData().observe(getViewLifecycleOwner(), new Observer<Recipe>() {
             @Override
             public void onChanged(Recipe recipe) {
@@ -59,21 +66,23 @@ public class RecipeFragment extends Fragment implements View.OnClickListener {
                     recipeName.setText(String.format("Name: %s", recipe.getName()));
                     recipeType.setText(String.format("Cuisine Type: %s", recipe.getCuisineId()));
                     recipeRating.setText(String.format("Rating: %s", recipe.getRating()));
-                    recipeContent.setText(String.format("Content: %s", recipe.getContent()));
-                }
+                    recipeContent.setText(String.format("Content: %s", recipe.getContent()));}
             }
         });
 
         return v;
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.fragment_recipe_previous_button:
-                break;
-            case R.id.fragment_recipe_next_button:
-                break;
-        }
+    private void updateRecipe(List<String> ids, int[] idx){
+        getParentFragmentManager().beginTransaction()
+                .remove(RecipeFragment.this)
+                .commit();
+        getParentFragmentManager().popBackStack();
+        Fragment fragment = new RecipeFragment(ids.get(idx[0]));
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .setReorderingAllowed(true)
+                .addToBackStack("Get recipe details")
+                .commit();
     }
 }

@@ -1,6 +1,5 @@
 package com.example.recipefrommyfridgeapp.ui.cuisine;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,20 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Cuisine;
-import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientActivity;
-import com.example.recipefrommyfridgeapp.ui.login.LoggedInFragment;
 import com.example.recipefrommyfridgeapp.ui.recipe.ChooseRecipeActivity;
-import com.example.recipefrommyfridgeapp.ui.recipe.RecipeCreationFragment;
 import com.example.recipefrommyfridgeapp.viewmodel.CuisineViewModel;
 
 import java.util.List;
@@ -52,7 +46,6 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
         createButton.setOnClickListener(this);
         // TODO: for checkpoint 5, user cannot create recipe;
         createButton.setEnabled(false);
-        createButton.setVisibility(View.GONE);
         cuisine_1 = v.findViewById(R.id.cuisine_1);
         cuisine_2 = v.findViewById(R.id.cuisine_2);
         cuisine_3 = v.findViewById(R.id.cuisine_3);
@@ -121,13 +114,5 @@ public class CuisineFragment extends Fragment implements View.OnClickListener{
                 startActivity(new Intent(requireContext(), ChooseRecipeActivity.class));
                 break;
         }
-//        case R.id.choose_cuisine_create:
-//        Fragment fragment = new RecipeCreationFragment();
-//        getParentFragmentManager().beginTransaction()
-//                .replace(R.id.fragment_container, fragment)
-//                .setReorderingAllowed(true)
-//                .addToBackStack("Recipe Creation")
-//                .commit();
-//        break;
     }
 }

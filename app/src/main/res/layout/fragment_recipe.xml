@@ -49,6 +49,20 @@
             app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_subtitle"/>
 
         <TextView
+            android:id="@+id/fragment_recipe_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Ingredients: "
+            android:textSize="24sp"
+            android:selectAllOnFocus="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_name"/>
+
+        <TextView
             android:id="@+id/fragment_recipe_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +74,7 @@
             android:layout_marginRight="15dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_name" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_ingredients" />
 
         <TextView
             android:id="@+id/fragment_recipe_rating"
@@ -116,6 +130,23 @@
                 android:layout_marginLeft="20dp"/>
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/fragment_recipe_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Save Recipe"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_buttons"
+            app:layout_constraintVertical_bias="0.1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

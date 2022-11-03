@@ -45,6 +45,7 @@ public class AppRepository {
     private final MutableLiveData<Recipe> mRecipeMutableLiveData;
     private final MutableLiveData<List<Recipe>> recipeListMutableLiveData;
     private final MutableLiveData<String> recipeIdMutableLiveData;
+    private final MutableLiveData<Map<String, String>> recipeIngredientsMutableLiveData;
 
 
     public AppRepository(Application application) {
@@ -59,6 +60,7 @@ public class AppRepository {
         mRecipeMutableLiveData = new MutableLiveData<>();
         recipeListMutableLiveData = new MutableLiveData<>();
         recipeIdMutableLiveData = new MutableLiveData<>();
+        recipeIngredientsMutableLiveData = new MutableLiveData<>();
 
         if (auth.getCurrentUser() != null) {
             getUserMutableLiveData().postValue(auth.getCurrentUser());
@@ -186,34 +188,6 @@ public class AppRepository {
                 }
             }
         });
-
-
-//        ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot post : snapshot.getChildren()) {
-//                    String ingredientType = post.getKey();
-//                    ingredientGroup.add(ingredientType);
-//                    if (!ingredients.containsKey(ingredientType))
-//                        ingredients.put(ingredientType, new ArrayList<>());
-//
-//                    //get all ingredients under the category (eg. Vegetables, Meat, etc)
-//                    for (DataSnapshot i : post.getChildren()) {
-//                        Ingredient ingredient = i.getValue(Ingredient.class);
-//                        List<Ingredient> tmp = ingredients.remove(ingredientType);
-//                        tmp.add(ingredient);
-//                        ingredients.put(ingredientType, tmp);
-//                    }
-//                }
-//                mIngredientMutableLiveData.postValue(ingredients);
-//                mIngredientGroupMutableLiveData.postValue(ingredientGroup);
-//                Log.i("test", "onDataChange: " + mIngredientGroupMutableLiveData.getValue());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
     }
 
     public void resetPassword(String name, String email, String password, String newPassword) {
@@ -246,50 +220,6 @@ public class AppRepository {
         db.getReference("Users").child(user.getUid()).setValue(person);
 
     }
-
-//    public void createRecipe(String cuisineId, String name, String content, Float rating) {
-//        Recipe recipe = new Recipe(cuisineId, name, content, rating);
-//        DatabaseReference ref = db.getReference("Recipes");
-//        String id = ref.push().getKey();
-//        ref.child(id).setValue(recipe).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if (task.isSuccessful()) {
-//                    Toast.makeText(application.getApplicationContext(), "Recipe has been added successfully!", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(application.getApplicationContext(), "(DB) Failed to add the recipe!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//    }
-
-//    public void deleteRecipe(String id) {
-//        DatabaseReference ref = db.getReference("Recipes");
-//        ref.child(id).removeValue();
-//    }
-
-//    public void updateRecipe(String id, Map<String, Object> newRecipe) {
-//        DatabaseReference ref = db.getReference("Recipes");
-//        ref.child(id).updateChildren(newRecipe)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task task) {
-//                        if (task.isSuccessful()) {
-//                            Toast.makeText(application.getApplicationContext(), "Recipe Updated Successfully!", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Toast.makeText(application.getApplicationContext(), "Failed to login!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//    }
-
-//    public FirebaseRecyclerOptions<Recipe> retrieveRecipes() {
-//        DatabaseReference ref = db.getReference("Recipes");
-//        FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
-//                .setQuery(ref, Recipe.class)
-//                .build();
-//        return options;
-//    }
 
     public void getCurrentRecipe(String recipeId){
         DatabaseReference ref = db.getReference("Recipes");
@@ -329,6 +259,34 @@ public class AppRepository {
         });
     }
 
+    public void getRecipeIngredients(String recipeId) {
+        Map<String, String> ingredients = new HashMap<>();
+        DatabaseReference ref = db.getReference("Recipes");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot shot : snapshot.getChildren()){
+                    if (shot.getKey().equals(recipeId)){
+                        for (DataSnapshot inside : shot.getChildren()){
+                            if (inside.getKey().equals("ingredients")){
+                                for (DataSnapshot type : inside.getChildren()){
+                                    ingredients.put(type.getKey(), type.getValue().toString());
+                                }
+                            }
+                        }
+                    }
+                }
+                recipeIngredientsMutableLiveData.postValue(ingredients);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
         return mUserMutableLiveData;
     }
@@ -359,5 +317,9 @@ public class AppRepository {
 
     public MutableLiveData<String> getRecipeIdMutableLiveData() {
         return recipeIdMutableLiveData;
+    }
+
+    public MutableLiveData<Map<String, String>> getRecipeIngredientsMutableLiveData() {
+        return recipeIngredientsMutableLiveData;
     }
 }

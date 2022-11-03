@@ -1,20 +1,21 @@
 package com.example.recipefrommyfridgeapp.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class Recipe {
 
     public String cuisineId;
     public String name, content;
     public float rating;
-    public List<Ingredient> mIngredients;
+    public Map<String, Ingredient> ingredients;
 
-    public Recipe(String cuisineId, String name, String content, float rating, List<Ingredient> ingredients) {
+    public Recipe(String cuisineId, String name, String content, float rating, Map<String, Ingredient> ingredients) {
         this.cuisineId = cuisineId;
         this.name = name;
         this.content = content;
         this.rating = rating;
-        this.mIngredients = ingredients;
+        this.ingredients = ingredients;
     }
 
     public Recipe() {
@@ -53,11 +54,11 @@ public class Recipe {
         this.rating = rating;
     }
 
-    public List<Ingredient> getIngredients() {
-        return mIngredients;
+    public Map<String, Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        mIngredients = ingredients;
+    public void setIngredients(Map<String, Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

@@ -134,67 +134,17 @@ public class ChooseRecipeFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = RecipeActivity.newIntent(getActivity(), recipeId);
-                    startActivity(intent);
+                    Fragment fragment = new RecipeFragment(recipeId);
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .setReorderingAllowed(true)
+                            .addToBackStack("Get recipe details")
+                            .commit();
                 }
             });
-            editRecipeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final DialogPlus dialogPlus = DialogPlus.newDialog(mNameTextView.getContext())
-                            .setContentHolder(new ViewHolder(R.layout.update_popup))
-                            .setExpanded(true, 1400)
-                            .create();
-
-                    View view = dialogPlus.getHolderView();
-                    EditText name = view.findViewById(R.id.edit_recipe_name);
-                    EditText content = view.findViewById(R.id.edit_recipe_content);
-                    EditText rating = view.findViewById(R.id.edit_recipe_rating);
-                    Spinner spinner = view.findViewById(R.id.update_recipe_spinner);
-                    Button update = view.findViewById(R.id.update_recipe_button);
-                    name.setText(mRecipe.getName());
-                    content.setText(mRecipe.getContent());
-                    rating.setText(Float.toString(mRecipe.getRating()));
-                    ArrayAdapter<String> mArrayAdapter = new ArrayAdapter<String>(getContext(),
-                            android.R.layout.simple_spinner_item, names);
-                    mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                    spinner.setAdapter(mArrayAdapter);
-                    Log.d("checkpoint5", "update cuisine list retrieved");
-                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            cuisineIdChosen = names.get(position);
-                            Toast.makeText(getContext(), cuisineIdChosen, Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                        }
-                    });
-
-                    dialogPlus.show();
-
-                    update.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("name", name.getText().toString());
-                            map.put("content", content.getText().toString());
-                            map.put("rating", Float.parseFloat(rating.getText().toString()));
-                            map.put("cuisineId", cuisineIdChosen);
-                            mRecipeViewModel.updateRecipe(recipeId, map);
-                            dialogPlus.dismiss();
-                        }
-                    });
-                }
-            });
-
-            deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mRecipeViewModel.deleteRecipe(recipeId);
-                }
-            });
+            // TODO: for checkpoint 5, user cannot edit/delete existing recipe;
+            editRecipeButton.setEnabled(false);
+            deleteRecipeButton.setEnabled(false);
 
         }
     }
