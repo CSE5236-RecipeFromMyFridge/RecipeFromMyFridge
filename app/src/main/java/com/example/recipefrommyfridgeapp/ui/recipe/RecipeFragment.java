@@ -32,9 +32,11 @@ public class RecipeFragment extends Fragment {
     private RecipeViewModel mRecipeViewModel;
 
     private String id;
+    private String user;
 
-    public RecipeFragment(String recipeId) {
+    public RecipeFragment(String userId, String recipeId) {
         id = "" + recipeId;
+        user = "" + userId;
     }
 
     @Override
@@ -118,7 +120,7 @@ public class RecipeFragment extends Fragment {
                 .remove(RecipeFragment.this)
                 .commit();
         getParentFragmentManager().popBackStack();
-        Fragment fragment = new RecipeFragment(ids.get(idx[0]));
+        Fragment fragment = new RecipeFragment(user, ids.get(idx[0]));
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .setReorderingAllowed(true)

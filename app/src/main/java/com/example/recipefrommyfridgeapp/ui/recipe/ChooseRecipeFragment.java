@@ -26,12 +26,15 @@ import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Cuisine;
 import com.example.recipefrommyfridgeapp.model.Recipe;
 import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientActivity;
+import com.example.recipefrommyfridgeapp.ui.login.LoggedInFragment;
 import com.example.recipefrommyfridgeapp.viewmodel.CuisineViewModel;
+import com.example.recipefrommyfridgeapp.viewmodel.LoggedInViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -50,12 +53,24 @@ public class ChooseRecipeFragment extends Fragment {
     private FirebaseRecyclerOptions<Recipe> options;
 
     private RecipeViewModel mRecipeViewModel;
+    private LoggedInViewModel mLoggedInViewModel;
+    private String userId;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "ChooseRecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
+        mLoggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
+        mLoggedInViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
+            @Override
+            public void onChanged(FirebaseUser firebaseUser) {
+                if (firebaseUser != null){
+                    userId = "" + firebaseUser.getUid();
+                    Log.d("checkpoint5", "ChooseRecipeFragment.onCreate" + userId);
+                }
+            }
+        });
         options = mRecipeViewModel.retrieveRecipes();
     }
 
@@ -109,7 +124,8 @@ public class ChooseRecipeFragment extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Fragment fragment = new RecipeFragment(key);
+                    Log.d("checkpoint5", "ChooseRecipeFragment.onBindView: " + userId);
+                    Fragment fragment = new RecipeFragment(userId, key);
                     getParentFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, fragment)
                             .setReorderingAllowed(true)
