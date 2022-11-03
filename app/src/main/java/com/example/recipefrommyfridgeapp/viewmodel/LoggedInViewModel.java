@@ -22,8 +22,8 @@ public class LoggedInViewModel extends AndroidViewModel {
         loggedOutMutableLiveData = mAppRepository.getLoggedOutMutableLiveData();
     }
 
-    public void logOut(){
-        mAppRepository.logOut();
+    public void logOut(String userId){
+        mAppRepository.logOut(userId);
     }
 
     public void resetPassword(String name, String email, String password, String newPassword){

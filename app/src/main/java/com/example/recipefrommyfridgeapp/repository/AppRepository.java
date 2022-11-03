@@ -114,7 +114,11 @@ public class AppRepository {
                 });
     }
 
-    public void logOut() {
+    public void logOut(String userId) {
+        DatabaseReference previous = db.getReference(userId);
+        if (previous != null){
+            previous.removeValue();
+        }
         auth.signOut();
         loggedOutMutableLiveData.postValue(true);
     }

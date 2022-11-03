@@ -118,7 +118,7 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
                 startActivity(new Intent(requireContext(), MyAccountActivity.class));
                 break;
             case R.id.fragment_logged_in_log_out:
-                loggedInViewModel.logOut();
+                loggedInViewModel.logOut(userId);
                 break;
         }
     }

@@ -122,7 +122,12 @@ public class RecipeFragment extends Fragment {
                 if (strings.contains(id)){
                     saveButton.setEnabled(false);
                 } else {
-                    mSavedRecipeViewModel.saveRecipe(user, id);
+                    saveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mSavedRecipeViewModel.saveRecipe(user, id);
+                        }
+                    });
                 }
             }
         });
