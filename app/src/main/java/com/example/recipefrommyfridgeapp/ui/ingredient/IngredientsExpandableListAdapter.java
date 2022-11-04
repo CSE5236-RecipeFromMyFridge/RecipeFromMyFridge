@@ -20,6 +20,7 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
     List<String> mIngredientGroup;
     Context mContext;
     StringBuilder mIngredientSelected;
+    //TODO: checked position changes when other groups are expanded
 
     public IngredientsExpandableListAdapter(Context context, Map<String, List<Ingredient>> ingredients, List<String> ingredientGroup, StringBuilder ingredientSelected) {
         mContext = context;
@@ -94,8 +95,6 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (compoundButton.getId() == R.id.ingredient_checkmark) {
-            CheckBox ingredient = compoundButton.findViewById(R.id.ingredient_checkmark);
-            ingredient.setChecked(b);
             if (b) {
                 addIngredient(compoundButton.getText().toString());
             } else {
@@ -124,7 +123,7 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
 
     public void removeIngredient(String ingredient) {
         int i = mIngredientSelected.indexOf(ingredient);
-        i = i == 0 ? i : i - 1; //check if it is at the start else remove comma as well
+        i = i <= 0 ? 0 : i - 1; //check if it is at the start else remove comma as well
         mIngredientSelected.delete(i, i + ingredient.length() + 1);
         while (mIngredientSelected.length() > 0 && mIngredientSelected.charAt(0) == ',') {
             mIngredientSelected.deleteCharAt(0);

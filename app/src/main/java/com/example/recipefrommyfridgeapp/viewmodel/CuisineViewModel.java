@@ -54,7 +54,7 @@ public class CuisineViewModel extends AndroidViewModel {
     public void removeCuisineSelected(String cuisine) {
         StringBuilder s = mCuisineSelectedMutableLiveData.getValue();
         int i = s.indexOf(cuisine);
-        i = i == 0 ? i : i - 1; //check if it is at the start else remove comma as well
+        i = i <= 0 ? i : i - 1; //check if it is at the start else remove comma as well
         s.delete(i, i + cuisine.length() + 1);
         while (s.length() > 0 && s.charAt(0) == ',') {
             s.deleteCharAt(0);
