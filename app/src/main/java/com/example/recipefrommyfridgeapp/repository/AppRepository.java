@@ -260,6 +260,7 @@ public class AppRepository {
 
             }
         });
+        //TODO: find out a way to delete off the query from databse. maybe group under userid instead?
         FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
                 .setQuery(newQuery, Recipe.class)
                 .build();

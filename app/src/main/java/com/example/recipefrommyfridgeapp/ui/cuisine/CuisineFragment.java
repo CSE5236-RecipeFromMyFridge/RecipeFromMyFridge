@@ -23,6 +23,7 @@ import java.util.List;
 
 public class CuisineFragment extends Fragment implements View.OnClickListener {
 
+    public static final String INTENT_CUISINE_SELECTED = "cuisine";
     private Button generateButton;
     private CuisineViewModel cuisineViewModel;
 
@@ -32,9 +33,6 @@ public class CuisineFragment extends Fragment implements View.OnClickListener {
         Log.i("checkpoint5", "CuisineFragment.onCreate()");
         cuisineViewModel = new ViewModelProvider(this).get(CuisineViewModel.class);
         cuisineViewModel.retrieveCuisines();
-
-        String s = getArguments().getString(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED);
-        Log.i("test", "onCreate: " + s);
     }
 
     @Nullable
@@ -68,10 +66,11 @@ public class CuisineFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.choose_cuisine_generate:
-                startActivity(new Intent(requireContext(), ChooseRecipeActivity.class));
-                break;
+        if (v.getId() == R.id.choose_cuisine_generate) {
+            Intent intent = new Intent(requireContext(), ChooseRecipeActivity.class);
+            intent.putExtra(INTENT_CUISINE_SELECTED, cuisineViewModel.getCuisineSelectedMutableLiveData().getValue());
+            intent.putExtra(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED, getArguments().getString(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED));
+            startActivity(intent);
         }
     }
 }
