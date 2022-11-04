@@ -14,15 +14,17 @@ import com.example.recipefrommyfridgeapp.model.Ingredient;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter implements CompoundButton.OnCheckedChangeListener {
     Map<String, List<Ingredient>> mIngredients;
     List<String> mIngredientGroup;
     Context mContext;
-    StringBuilder mIngredientSelected;
-    //TODO: checked position changes when other groups are expanded
+    Set<String> mIngredientSelected;
 
-    public IngredientsExpandableListAdapter(Context context, Map<String, List<Ingredient>> ingredients, List<String> ingredientGroup, StringBuilder ingredientSelected) {
+    public IngredientsExpandableListAdapter(Context context, Map<String, List<Ingredient>> ingredients,
+                                            List<String> ingredientGroup, Set<String> ingredientSelected) {
         mContext = context;
         mIngredients = ingredients;
         mIngredientGroup = ingredientGroup;
@@ -83,6 +85,7 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
         }
         CheckBox ingredient = view.findViewById(R.id.ingredient_checkmark);
         ingredient.setText(getChild(i, i1));
+        ingredient.setChecked(mIngredients.get(getGroup(i)).get(i1).isSelected());
         ingredient.setOnCheckedChangeListener(this);
         return view;
     }
@@ -94,12 +97,25 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (compoundButton.getId() == R.id.ingredient_checkmark) {
-            if (b) {
-                addIngredient(compoundButton.getText().toString());
-            } else {
-                removeIngredient(compoundButton.getText().toString());
+        int id = compoundButton.getId();
+        if (id == R.id.ingredient_checkmark) {
+            String find = compoundButton.getText().toString();
+            Ingredient target = null;
+            for (List<Ingredient> tmp : mIngredients.values()) {
+                Optional<Ingredient> a = tmp.stream().filter(ingredient1 -> ingredient1.getName().equals(find))
+                        .findFirst();
+                if (a.isPresent()) {
+                    target = a.get();
+                    break;
+                }
             }
+            target.setSelected(b);
+            if (b) {
+                addIngredient(find);
+            } else {
+                removeIngredient(find);
+            }
+            notifyDataSetChanged();
         }
     }
 
@@ -114,19 +130,10 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
     }
 
     public void addIngredient(String ingredient) {
-        if (mIngredientSelected.length() == 0) {
-            mIngredientSelected.append(ingredient);
-        } else {
-            mIngredientSelected.append("," + ingredient);
-        }
+        mIngredientSelected.add(ingredient);
     }
 
     public void removeIngredient(String ingredient) {
-        int i = mIngredientSelected.indexOf(ingredient);
-        i = i <= 0 ? 0 : i - 1; //check if it is at the start else remove comma as well
-        mIngredientSelected.delete(i, i + ingredient.length() + 1);
-        while (mIngredientSelected.length() > 0 && mIngredientSelected.charAt(0) == ',') {
-            mIngredientSelected.deleteCharAt(0);
-        }
+        mIngredientSelected.remove(ingredient);
     }
 }

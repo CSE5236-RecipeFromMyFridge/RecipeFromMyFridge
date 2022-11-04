@@ -20,8 +20,10 @@ import com.example.recipefrommyfridgeapp.viewmodel.IngredientViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ChooseIngredientFragment extends Fragment implements View.OnClickListener {
 
@@ -30,7 +32,7 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
     private Map<String, List<Ingredient>> mIngredients;
     private List<String> mIngredientGroup;
     private IngredientsExpandableListAdapter mIngredientsExpandableListAdapter;
-    private StringBuilder mIngredientSelected;
+    private Set<String> mIngredientSelected;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
         mIngredientViewModel.retrieveIngredient();
         mIngredients = new HashMap<>();
         mIngredientGroup = new ArrayList<>();
-        mIngredientSelected = new StringBuilder();
+        mIngredientSelected = new HashSet<>();
     }
 
     @Nullable
@@ -67,7 +69,7 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         if (view.getId() == R.id.button_choose_cuisine) {
             Intent intent = new Intent(requireContext(), CuisineActivity.class);
-            intent.putExtra(INTENT_INGREDIENT_SELECTED, mIngredientSelected.toString());
+            intent.putExtra(INTENT_INGREDIENT_SELECTED, String.join(",", mIngredientSelected.toArray(new String[0])));
             startActivity(intent);
         }
     }
