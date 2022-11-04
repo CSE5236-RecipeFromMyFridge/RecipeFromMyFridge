@@ -26,174 +26,12 @@
             android:fontFamily="sans-serif-black"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/container_cuisine_item"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:paddingHorizontal="16dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/cuisine_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/anhui_cuisine"
-                android:textSize="20sp"/>
-
-            <CheckBox
-                android:id="@+id/anhui_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cuisine_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cantonese_cuisine"
-                android:textSize="20sp"/>
-
-            <CheckBox
-                android:id="@+id/cantonese_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cuisine_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fujian_cuisine"
-                android:textSize="20sp"/>
-
-            <CheckBox
-                android:id="@+id/fujian_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cuisine_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hunan_cuisine"
-                android:textSize="20sp"/>
-
-            <CheckBox
-                android:id="@+id/hunan_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cuisine_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/jiangsu_cuisine"
-                android:textSize="20sp"/>
-
-            <CheckBox
-                android:id="@+id/jiangsu_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cuisine_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/shandong_cuisine"
-                android:textSize="20sp"/>
-
-            <CheckBox
-                android:id="@+id/shandong_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cuisine_7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/szechuan_cuisine"
-                android:textSize="20sp"/>
-
-            <CheckBox
-                android:id="@+id/szechuan_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cuisine_8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/zhejiang_cuisine"
-                android:textSize="20sp"/>
-
-            <CheckBox
-                android:id="@+id/zhejiang_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cuisine_9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/random"
-                android:textSize="20sp"/>
-
-            <CheckBox
-                android:id="@+id/random_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <Button
@@ -205,8 +43,5 @@
             android:textAlignment="center"
             android:layout_marginLeft="90dp"
             android:layout_marginRight="90dp"/>
-
-
-
     </LinearLayout>
 </ScrollView>
