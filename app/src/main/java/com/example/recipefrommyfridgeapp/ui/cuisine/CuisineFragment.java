@@ -49,7 +49,7 @@ public class CuisineFragment extends Fragment implements View.OnClickListener {
                 if (cuisines != null) {
                     for (Cuisine c : cuisines) {
                         getChildFragmentManager().beginTransaction()
-                                .add(R.id.container_cuisine_item, new CuisineItemFragment(c.getName() + " - " + c.getType()))
+                                .add(R.id.container_cuisine_item, new CuisineItemFragment(c.getName(), c.getType()))
                                 .addToBackStack(null)
                                 .commit();
                     }

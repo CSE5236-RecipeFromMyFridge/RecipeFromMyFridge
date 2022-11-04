@@ -17,12 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Recipe;
+import com.example.recipefrommyfridgeapp.ui.cuisine.CuisineFragment;
+import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientFragment;
 import com.example.recipefrommyfridgeapp.viewmodel.LoggedInViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 
 public class ChooseRecipeFragment extends Fragment {
 
@@ -49,7 +50,9 @@ public class ChooseRecipeFragment extends Fragment {
                 }
             }
         });
-        options = mRecipeViewModel.retrieveRecipes("Anhui", "Beef");
+        String cuisine = getArguments().getString(CuisineFragment.INTENT_CUISINE_SELECTED);
+        String ingredient = getArguments().getString(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED);
+        options = mRecipeViewModel.retrieveRecipes(cuisine, "Beef");
     }
 
     @Override
@@ -86,26 +89,13 @@ public class ChooseRecipeFragment extends Fragment {
          *
          * @param options
          */
-//        private final FirebaseRecyclerOptions<Recipe> mOptions;
-
         public RecipeAdapter(@NonNull FirebaseRecyclerOptions<Recipe> options) {
             super(options);
-//            mOptions = options;
         }
 
         @Override
         protected void onBindViewHolder(@NonNull RecipeAdapter.RecipeViewHolder holder, int position, @NonNull Recipe model) {
-//            Log.i("test", "onBindViewHolder: " + position);
-
-//            if(!model.hasIngredient("Beef")){
-//                Log.i("test", "onBindViewHolder: " + getSnapshots().get(position).getName());
-//
-//                getSnapshots().remove(position);
-//                notifyItemRemoved(position);
-//                notifyItemRangeChanged(position,getSnapshots().size());
-//                return;
-//            }
-
+            final String key = getRef(position).getKey();
 
             Log.d("checkpoint5", "onBindViewHolder");
             holder.mNameTextView.setText(model.getName());
@@ -116,7 +106,6 @@ public class ChooseRecipeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Log.d("checkpoint5", "ChooseRecipeFragment.onBindView: " + userId);
-                    String key = getRef(position).getKey();
                     Fragment fragment = new RecipeFragment(userId, key);
                     getParentFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, fragment)
