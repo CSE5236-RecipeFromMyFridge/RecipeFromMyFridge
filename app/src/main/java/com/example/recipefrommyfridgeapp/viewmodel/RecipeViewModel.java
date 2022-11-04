@@ -11,7 +11,6 @@ import com.example.recipefrommyfridgeapp.repository.AppRepository;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.util.List;
-import java.util.Map;
 
 public class RecipeViewModel extends AndroidViewModel {
     private AppRepository mAppRepository;
@@ -26,12 +25,7 @@ public class RecipeViewModel extends AndroidViewModel {
         mRecipeListMutableLiveData = mAppRepository.getRecipeListMutableLiveData();
     }
 
-    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(){
-        options = mAppRepository.retrieveRecipes();
-        return options;
-    }
-
-    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(String cuisine, String ingredient){
+    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(String[] cuisine, String[] ingredient) {
         options = mAppRepository.retrieveRecipes(cuisine, ingredient);
         return options;
     }

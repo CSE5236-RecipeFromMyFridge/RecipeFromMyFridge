@@ -59,7 +59,7 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         if (view.getId() == R.id.button_choose_cuisine) {
             Intent intent = new Intent(requireContext(), CuisineActivity.class);
-            intent.putExtra(INTENT_INGREDIENT_SELECTED, String.join(",", mIngredientSelected.toArray(new String[0])));
+            intent.putExtra(INTENT_INGREDIENT_SELECTED, mIngredientSelected.toArray(new String[0]));
             startActivity(intent);
         }
     }

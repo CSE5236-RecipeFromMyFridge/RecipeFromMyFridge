@@ -23,6 +23,8 @@ import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
+import java.util.Arrays;
+
 public class ChooseRecipeFragment extends Fragment {
 
     private RecyclerView mRecipeRecyclerView;
@@ -46,11 +48,11 @@ public class ChooseRecipeFragment extends Fragment {
             }
         });
         //TODO: change to being able to select multiple cuisine & ingredients
-        String cuisine = getArguments().getString(CuisineFragment.INTENT_CUISINE_SELECTED);
-        String ingredient = getArguments().getString(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED);
-        Log.i("test", "onCreate: " + cuisine);
-        Log.i("test", "onCreate: " + ingredient);
-        options = mRecipeViewModel.retrieveRecipes(cuisine, ingredient);
+        String[] cuisines = getArguments().getStringArray(CuisineFragment.INTENT_CUISINE_SELECTED);
+        String[] ingredients = getArguments().getStringArray(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED);
+        Log.i("test", "onCreate: " + Arrays.toString(cuisines));
+        Log.i("test", "onCreate: " + Arrays.toString(ingredients));
+        options = mRecipeViewModel.retrieveRecipes(cuisines, ingredients);
     }
 
     @Override

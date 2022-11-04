@@ -13,8 +13,8 @@ public class CuisineActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         Intent intent = getIntent();
         Bundle bundle = new Bundle();
-        bundle.putString(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED,
-                intent.getStringExtra(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED));
+        bundle.putStringArray(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED,
+                intent.getStringArrayExtra(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED));
         CuisineFragment cuisineFragment = new CuisineFragment();
         cuisineFragment.setArguments(bundle);
         return cuisineFragment;

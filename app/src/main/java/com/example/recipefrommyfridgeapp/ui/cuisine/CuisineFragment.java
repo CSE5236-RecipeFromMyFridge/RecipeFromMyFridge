@@ -18,6 +18,8 @@ import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientFragment;
 import com.example.recipefrommyfridgeapp.ui.recipe.ChooseRecipeActivity;
 import com.example.recipefrommyfridgeapp.viewmodel.CuisineViewModel;
 
+import java.util.Arrays;
+
 public class CuisineFragment extends Fragment implements View.OnClickListener {
 
     public static final String INTENT_CUISINE_SELECTED = "cuisine";
@@ -58,9 +60,14 @@ public class CuisineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.choose_cuisine_generate) {
+            String[] ingredients = getArguments().getStringArray(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED);
+            String[] cuisines = mCuisineViewModel.getCuisineSelectedMutableLiveData().getValue().toArray(new String[0]);
+            Log.i("test", "onClick: ingredients - " + Arrays.toString(ingredients));
+            Log.i("test", "onClick: cuisines - " + Arrays.toString(cuisines));
+
             Intent intent = new Intent(requireContext(), ChooseRecipeActivity.class);
-            intent.putExtra(INTENT_CUISINE_SELECTED, String.join(",", mCuisineViewModel.getCuisineSelectedMutableLiveData().getValue().toArray(new String[0])));
-            intent.putExtra(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED, getArguments().getString(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED));
+            intent.putExtra(INTENT_CUISINE_SELECTED, cuisines);
+            intent.putExtra(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED, ingredients);
             startActivity(intent);
         }
     }

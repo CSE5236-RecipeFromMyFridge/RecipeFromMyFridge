@@ -229,20 +229,10 @@ public class AppRepository {
         db.getReference("Users").child(user.getUid()).setValue(person);
     }
 
-    public FirebaseRecyclerOptions<Recipe> retrieveRecipes() {
-        DatabaseReference ref = db.getReference("Recipes");
-        FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
-                .setQuery(ref, Recipe.class)
-                .build();
-        return options;
-    }
-
-    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(String cuisine, String ingredient) {
+    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(String[] cuisines, String[] ingredients) {
         DatabaseReference ref = db.getReference("Recipes");
         DatabaseReference recipeQuery = db.getReference("RecipeQuery");
         DatabaseReference newQuery = recipeQuery.push();
-
-        String[] cuisines = cuisine.split(","), ingredients = ingredient.split(",");
 
         for (String c : cuisines) {
             Query q = ref.orderByChild("cuisineId").equalTo(c); //get by each cuisine
