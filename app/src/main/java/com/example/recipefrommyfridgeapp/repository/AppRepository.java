@@ -227,7 +227,6 @@ public class AppRepository {
                 });
         User person = new User(name, email, newPassword);
         db.getReference("Users").child(user.getUid()).setValue(person);
-
     }
 
     public FirebaseRecyclerOptions<Recipe> retrieveRecipes() {
@@ -240,26 +239,31 @@ public class AppRepository {
 
     public FirebaseRecyclerOptions<Recipe> retrieveRecipes(String cuisine, String ingredient) {
         DatabaseReference ref = db.getReference("Recipes");
-        Query q = ref.orderByChild("cuisineId").equalTo(cuisine); //get by cuisine
         DatabaseReference recipeQuery = db.getReference("RecipeQuery");
         DatabaseReference newQuery = recipeQuery.push();
-        q.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot s : snapshot.getChildren()) {
-                    Recipe r = s.getValue(Recipe.class);
-                    if (r.hasIngredient(ingredient)) {
-                        newQuery.push().setValue(r);
+
+        String[] cuisines = cuisine.split(","), ingredients = ingredient.split(",");
+
+        for (String c : cuisines) {
+            Query q = ref.orderByChild("cuisineId").equalTo(c); //get by each cuisine
+            q.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot s : snapshot.getChildren()) {
+                        Recipe r = s.getValue(Recipe.class);
+                        if (r.hasIngredient(ingredient)) {
+                            newQuery.push().setValue(r);
+                        }
                     }
                 }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
 
-            }
-        });
         //TODO: find out a way to delete off the query from databse. maybe group under userid instead?
         FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
                 .setQuery(newQuery, Recipe.class)
