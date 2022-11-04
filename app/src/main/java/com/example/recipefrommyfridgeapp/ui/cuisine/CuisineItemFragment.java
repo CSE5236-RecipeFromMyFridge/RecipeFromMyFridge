@@ -15,11 +15,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.viewmodel.CuisineViewModel;
 
+import java.util.Set;
+
 public class CuisineItemFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
     private final String mCuisine;
     private final String mType;
     private CuisineViewModel mCuisineViewModel;
+    private Set<String> mCuisineSelected;
 
     CuisineItemFragment(String cuisine, String type) {
         mCuisine = cuisine;
@@ -30,6 +33,7 @@ public class CuisineItemFragment extends Fragment implements CompoundButton.OnCh
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCuisineViewModel = new ViewModelProvider(requireParentFragment()).get(CuisineViewModel.class);
+        mCuisineSelected = mCuisineViewModel.getCuisineSelectedMutableLiveData().getValue();
     }
 
     @Nullable
@@ -46,9 +50,9 @@ public class CuisineItemFragment extends Fragment implements CompoundButton.OnCh
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (compoundButton.getId() == R.id.cuisine_checkbox) {
             if (b) {
-                mCuisineViewModel.addCuisineSelected(mType);
+                mCuisineSelected.add(mType);
             } else {
-                mCuisineViewModel.removeCuisineSelected(mType);
+                mCuisineSelected.remove(mType);
             }
         }
     }
