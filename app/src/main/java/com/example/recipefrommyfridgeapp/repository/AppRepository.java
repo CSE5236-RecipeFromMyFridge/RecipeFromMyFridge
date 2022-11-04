@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -118,7 +119,7 @@ public class AppRepository {
 
     public void logOut(String userId) {
         DatabaseReference previous = db.getReference(userId);
-        if (previous != null){
+        if (previous != null) {
             previous.removeValue();
         }
         auth.signOut();
@@ -237,18 +238,46 @@ public class AppRepository {
         return options;
     }
 
-    public void getCurrentRecipe(String recipeId){
+    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(String cuisine, String ingredient) {
+        DatabaseReference ref = db.getReference("Recipes");
+        Query q = ref.orderByChild("cuisineId").equalTo(cuisine); //get by cuisine
+        DatabaseReference recipeQuery = db.getReference("RecipeQuery");
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot s : snapshot.getChildren()) {
+                    Recipe r = s.getValue(Recipe.class);
+                    if (r.hasIngredient(ingredient)) {
+                        recipeQuery.push().setValue(r);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
+                .setQuery(recipeQuery, Recipe.class)
+                .build();
+        return options;
+    }
+
+    public void getCurrentRecipe(String recipeId) {
         DatabaseReference ref = db.getReference("Recipes");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot shot : snapshot.getChildren()){
-                    if (shot.getKey().equals(recipeId)){
+                for (DataSnapshot shot : snapshot.getChildren()) {
+                    if (shot.getKey().equals(recipeId)) {
                         Recipe current = shot.getValue(Recipe.class);
                         mRecipeMutableLiveData.postValue(current);
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -262,11 +291,12 @@ public class AppRepository {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot shot: snapshot.getChildren()){
+                for (DataSnapshot shot : snapshot.getChildren()) {
                     String current = shot.getKey();
                     recipeIds.add(current);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -274,7 +304,7 @@ public class AppRepository {
         });
 
         DatabaseReference previous = db.getReference(userId);
-        if (previous != null){
+        if (previous != null) {
             previous.removeValue();
         }
 
@@ -283,14 +313,15 @@ public class AppRepository {
         recipes.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot shot : snapshot.getChildren()){
+                for (DataSnapshot shot : snapshot.getChildren()) {
                     String currentId = shot.getKey();
-                    if (recipeIds.contains(currentId)){
+                    if (recipeIds.contains(currentId)) {
                         Recipe include = shot.getValue(Recipe.class);
                         currentUserSavedRecipe.child(currentId).setValue(include);
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -302,18 +333,19 @@ public class AppRepository {
         return options;
     }
 
-    public void getCurrentSavedRecipe(String userId, String recipeId){
+    public void getCurrentSavedRecipe(String userId, String recipeId) {
         DatabaseReference ref = db.getReference(userId);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot shot : snapshot.getChildren()){
-                    if (shot.getKey().equals(recipeId)){
+                for (DataSnapshot shot : snapshot.getChildren()) {
+                    if (shot.getKey().equals(recipeId)) {
                         Recipe current = shot.getValue(Recipe.class);
                         savedRecipeMutableLiveData.postValue(current);
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -341,7 +373,7 @@ public class AppRepository {
         });
     }
 
-    public void userSavedRecipe(String userId){
+    public void userSavedRecipe(String userId) {
         List<String> recipes = new ArrayList<>();
         DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
         ref.addValueEventListener(new ValueEventListener() {
@@ -353,6 +385,7 @@ public class AppRepository {
                 }
                 userSavedRecipeMutableLiveData.postValue(recipes);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -360,7 +393,7 @@ public class AppRepository {
         });
     }
 
-    public void saveRecipe(String userId, String recipeId){
+    public void saveRecipe(String userId, String recipeId) {
         DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
         ref.child(recipeId).setValue(true);
     }
@@ -371,7 +404,6 @@ public class AppRepository {
         DatabaseReference currentUserSaved = db.getReference(userId);
         currentUserSaved.child(recipeId).removeValue();
     }
-
 
 
     public MutableLiveData<FirebaseUser> getUserMutableLiveData() {
