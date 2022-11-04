@@ -61,4 +61,8 @@ public class Recipe {
     public void setIngredients(Map<String, Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+
+    public boolean hasIngredient(String ingredient){
+        return this.ingredients.containsKey(ingredient);
+    }
 }

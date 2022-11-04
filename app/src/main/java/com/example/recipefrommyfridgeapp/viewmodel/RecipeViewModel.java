@@ -31,6 +31,11 @@ public class RecipeViewModel extends AndroidViewModel {
         return options;
     }
 
+    public FirebaseRecyclerOptions<Recipe> retrieveRecipes(String cuisine, String ingredient){
+        options = mAppRepository.retrieveRecipes(cuisine, ingredient);
+        return options;
+    }
+
     public void getCurrentRecipe(String recipeId){
         mAppRepository.getCurrentRecipe(recipeId);
     }

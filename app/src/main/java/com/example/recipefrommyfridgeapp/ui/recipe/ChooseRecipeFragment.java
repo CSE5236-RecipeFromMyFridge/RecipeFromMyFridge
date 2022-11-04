@@ -1,18 +1,11 @@
 package com.example.recipefrommyfridgeapp.ui.recipe;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,28 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipefrommyfridgeapp.R;
-import com.example.recipefrommyfridgeapp.model.Cuisine;
 import com.example.recipefrommyfridgeapp.model.Recipe;
-import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientActivity;
-import com.example.recipefrommyfridgeapp.ui.login.LoggedInFragment;
-import com.example.recipefrommyfridgeapp.viewmodel.CuisineViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.LoggedInViewModel;
 import com.example.recipefrommyfridgeapp.viewmodel.RecipeViewModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ViewHolder;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ChooseRecipeFragment extends Fragment {
 
@@ -65,13 +43,13 @@ public class ChooseRecipeFragment extends Fragment {
         mLoggedInViewModel.getUserMutableLiveData().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
-                if (firebaseUser != null){
+                if (firebaseUser != null) {
                     userId = "" + firebaseUser.getUid();
                     Log.d("checkpoint5", "ChooseRecipeFragment.onCreate" + userId);
                 }
             }
         });
-        options = mRecipeViewModel.retrieveRecipes();
+        options = mRecipeViewModel.retrieveRecipes("Anhui", "Beef");
     }
 
     @Override
@@ -96,7 +74,7 @@ public class ChooseRecipeFragment extends Fragment {
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         mAdapter.stopListening();
     }
@@ -108,15 +86,28 @@ public class ChooseRecipeFragment extends Fragment {
          *
          * @param options
          */
+//        private final FirebaseRecyclerOptions<Recipe> mOptions;
+
         public RecipeAdapter(@NonNull FirebaseRecyclerOptions<Recipe> options) {
             super(options);
+//            mOptions = options;
         }
 
         @Override
         protected void onBindViewHolder(@NonNull RecipeAdapter.RecipeViewHolder holder, int position, @NonNull Recipe model) {
+//            Log.i("test", "onBindViewHolder: " + position);
+
+//            if(!model.hasIngredient("Beef")){
+//                Log.i("test", "onBindViewHolder: " + getSnapshots().get(position).getName());
+//
+//                getSnapshots().remove(position);
+//                notifyItemRemoved(position);
+//                notifyItemRangeChanged(position,getSnapshots().size());
+//                return;
+//            }
+
+
             Log.d("checkpoint5", "onBindViewHolder");
-            final DatabaseReference itemRef = getRef(position);
-            final String key = itemRef.getKey();
             holder.mNameTextView.setText(model.getName());
             holder.mContentTextView.setText(model.getContent());
             holder.mRatingTextView.setText(Float.toString(model.getRating()));
@@ -125,6 +116,7 @@ public class ChooseRecipeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Log.d("checkpoint5", "ChooseRecipeFragment.onBindView: " + userId);
+                    String key = getRef(position).getKey();
                     Fragment fragment = new RecipeFragment(userId, key);
                     getParentFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, fragment)
@@ -143,7 +135,10 @@ public class ChooseRecipeFragment extends Fragment {
         }
 
         private class RecipeViewHolder extends RecyclerView.ViewHolder {
-            private TextView mNameTextView, mContentTextView, mRatingTextView, CuisineIdTextView;
+            private final TextView mNameTextView;
+            private final TextView mContentTextView;
+            private final TextView mRatingTextView;
+            private final TextView CuisineIdTextView;
 
             public RecipeViewHolder(@NonNull View recipeView) {
                 super(recipeView);
