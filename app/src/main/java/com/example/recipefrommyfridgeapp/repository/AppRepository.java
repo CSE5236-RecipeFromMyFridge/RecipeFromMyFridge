@@ -242,13 +242,14 @@ public class AppRepository {
         DatabaseReference ref = db.getReference("Recipes");
         Query q = ref.orderByChild("cuisineId").equalTo(cuisine); //get by cuisine
         DatabaseReference recipeQuery = db.getReference("RecipeQuery");
+        DatabaseReference newQuery = recipeQuery.push();
         q.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot s : snapshot.getChildren()) {
                     Recipe r = s.getValue(Recipe.class);
                     if (r.hasIngredient(ingredient)) {
-                        recipeQuery.push().setValue(r);
+                        newQuery.push().setValue(r);
                     }
                 }
 
@@ -260,7 +261,7 @@ public class AppRepository {
             }
         });
         FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
-                .setQuery(recipeQuery, Recipe.class)
+                .setQuery(newQuery, Recipe.class)
                 .build();
         return options;
     }
