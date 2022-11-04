@@ -45,9 +45,12 @@ public class ChooseRecipeFragment extends Fragment {
                 Log.d("checkpoint5", "ChooseRecipeFragment.onCreate" + userId);
             }
         });
+        //TODO: change to being able to select multiple cuisine & ingredients
         String cuisine = getArguments().getString(CuisineFragment.INTENT_CUISINE_SELECTED);
         String ingredient = getArguments().getString(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED);
-        options = mRecipeViewModel.retrieveRecipes(cuisine, "Beef");
+        Log.i("test", "onCreate: " + cuisine);
+        Log.i("test", "onCreate: " + ingredient);
+        options = mRecipeViewModel.retrieveRecipes(cuisine, ingredient);
     }
 
     @Override
@@ -56,8 +59,7 @@ public class ChooseRecipeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
         Log.d("checkpoint5", "ChooseRecipeFragment.onCreateView");
 
-        mRecipeRecyclerView = (RecyclerView) view
-                .findViewById(R.id.recipe_recycler_view);
+        mRecipeRecyclerView = view.findViewById(R.id.recipe_recycler_view);
         mRecipeRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mAdapter = new RecipeAdapter(options);
         mRecipeRecyclerView.setAdapter(mAdapter);
@@ -123,10 +125,10 @@ public class ChooseRecipeFragment extends Fragment {
 
             public RecipeViewHolder(@NonNull View recipeView) {
                 super(recipeView);
-                mNameTextView = (TextView) itemView.findViewById(R.id.recipe_name);
-                mContentTextView = (TextView) itemView.findViewById(R.id.recipe_content);
-                mRatingTextView = (TextView) itemView.findViewById(R.id.recipe_rating);
-                CuisineIdTextView = (TextView) itemView.findViewById(R.id.recipe_cuisineId);
+                mNameTextView = itemView.findViewById(R.id.recipe_name);
+                mContentTextView = itemView.findViewById(R.id.recipe_content);
+                mRatingTextView = itemView.findViewById(R.id.recipe_rating);
+                CuisineIdTextView = itemView.findViewById(R.id.recipe_cuisineId);
             }
         }
     }

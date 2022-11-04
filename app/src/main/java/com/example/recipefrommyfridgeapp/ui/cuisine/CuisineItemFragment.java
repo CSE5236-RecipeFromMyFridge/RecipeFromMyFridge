@@ -46,7 +46,9 @@ public class CuisineItemFragment extends Fragment implements CompoundButton.OnCh
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (compoundButton.getId() == R.id.cuisine_checkbox) {
             if (b) {
-                mCuisineViewModel.setCuisineSelectedMutableLiveData(mType);
+                mCuisineViewModel.addCuisineSelected(mType);
+            } else {
+                mCuisineViewModel.removeCuisineSelected(mType);
             }
         }
     }

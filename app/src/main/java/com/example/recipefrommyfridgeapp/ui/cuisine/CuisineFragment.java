@@ -29,6 +29,7 @@ public class CuisineFragment extends Fragment implements View.OnClickListener {
         Log.i("checkpoint5", "CuisineFragment.onCreate()");
         mCuisineViewModel = new ViewModelProvider(this).get(CuisineViewModel.class);
         mCuisineViewModel.retrieveCuisines();
+        mCuisineViewModel.setCuisineSelectedMutableLiveData(new StringBuilder());
     }
 
     @Nullable
@@ -59,7 +60,7 @@ public class CuisineFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.choose_cuisine_generate) {
             Intent intent = new Intent(requireContext(), ChooseRecipeActivity.class);
-            intent.putExtra(INTENT_CUISINE_SELECTED, mCuisineViewModel.getCuisineSelectedMutableLiveData().getValue());
+            intent.putExtra(INTENT_CUISINE_SELECTED, mCuisineViewModel.getCuisineSelectedMutableLiveData().getValue().toString());
             intent.putExtra(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED, getArguments().getString(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED));
             startActivity(intent);
         }
