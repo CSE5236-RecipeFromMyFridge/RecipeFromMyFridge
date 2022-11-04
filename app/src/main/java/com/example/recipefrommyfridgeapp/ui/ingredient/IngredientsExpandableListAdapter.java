@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Ingredient;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,11 +25,10 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
     Context mContext;
     Set<String> mIngredientSelected;
 
-    public IngredientsExpandableListAdapter(Context context, Map<String, List<Ingredient>> ingredients,
-                                            List<String> ingredientGroup, Set<String> ingredientSelected) {
+    public IngredientsExpandableListAdapter(Context context, Set<String> ingredientSelected) {
         mContext = context;
-        mIngredients = ingredients;
-        mIngredientGroup = ingredientGroup;
+        mIngredients = new HashMap<>();
+        mIngredientGroup = new ArrayList<>();
         mIngredientSelected = ingredientSelected;
     }
 

@@ -14,23 +14,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
-import com.example.recipefrommyfridgeapp.model.Ingredient;
 import com.example.recipefrommyfridgeapp.ui.cuisine.CuisineActivity;
 import com.example.recipefrommyfridgeapp.viewmodel.IngredientViewModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class ChooseIngredientFragment extends Fragment implements View.OnClickListener {
 
     public static final String INTENT_INGREDIENT_SELECTED = "ingredient";
     private IngredientViewModel mIngredientViewModel;
-    private Map<String, List<Ingredient>> mIngredients;
-    private List<String> mIngredientGroup;
     private IngredientsExpandableListAdapter mIngredientsExpandableListAdapter;
     private Set<String> mIngredientSelected;
 
@@ -39,9 +31,7 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
         super.onCreate(savedInstanceState);
         mIngredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
         mIngredientViewModel.retrieveIngredient();
-        mIngredients = new HashMap<>();
-        mIngredientGroup = new ArrayList<>();
-        mIngredientSelected = new HashSet<>();
+        mIngredientSelected = mIngredientViewModel.getIngredientSelectedMutableLiveData().getValue();
     }
 
     @Nullable
@@ -50,12 +40,12 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
         View v = inflater.inflate(R.layout.activity_choose_ingredient, container, false);
 
         final ExpandableListView expandableListView = v.findViewById(R.id.expandable_list_choose_ingredients);
-        mIngredientsExpandableListAdapter = new IngredientsExpandableListAdapter(v.getContext(), mIngredients, mIngredientGroup, mIngredientSelected);
+        mIngredientsExpandableListAdapter = new IngredientsExpandableListAdapter(v.getContext(), mIngredientSelected);
         expandableListView.setAdapter(mIngredientsExpandableListAdapter);
 
+        //update data in the Adapter
         mIngredientViewModel.getIngredientMutableLiveData().observe(getViewLifecycleOwner(),
                 map -> mIngredientsExpandableListAdapter.updateItems(map));
-
         mIngredientViewModel.getIngredientGroupMutableLiveData().observe(getViewLifecycleOwner(),
                 list -> mIngredientsExpandableListAdapter.updateItems(list));
 
