@@ -251,7 +251,7 @@ public class AppRepository {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot s : snapshot.getChildren()) {
                         Recipe r = s.getValue(Recipe.class);
-                        if (r.hasIngredient(ingredient)) {
+                        if (r.hasIngredient(ingredients)) {
                             newQuery.push().setValue(r);
                         }
                     }

@@ -1,6 +1,5 @@
 package com.example.recipefrommyfridgeapp.model;
 
-import java.util.List;
 import java.util.Map;
 
 public class Recipe {
@@ -62,7 +61,13 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public boolean hasIngredient(String ingredient){
-        return this.ingredients.containsKey(ingredient);
+    public boolean hasIngredient(String[] ingredients) {
+        boolean contains = false;
+        for (String ingredient : ingredients) {
+            if (this.ingredients.containsKey(ingredient)) {
+                contains = true;
+            }
+        }
+        return contains;
     }
 }
