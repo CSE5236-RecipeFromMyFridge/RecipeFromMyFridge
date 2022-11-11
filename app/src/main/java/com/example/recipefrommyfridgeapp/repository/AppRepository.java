@@ -149,12 +149,13 @@ public class AppRepository {
 
     public void retrieveRecipeIdList() {
         List<String> recipes = new ArrayList<>();
-        DatabaseReference ref = db.getReference("Recipes");
+        DatabaseReference ref = db.getReference("RecipeQuery");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot post : snapshot.getChildren()) {
-                    String single = post.getKey();
+                    Recipe current = post.getValue(Recipe.class);
+                    String single = current.getRecipeId();
                     recipes.add(single);
                 }
                 mRecipeListMutableLiveData.postValue(recipes);
@@ -231,8 +232,12 @@ public class AppRepository {
 
     public FirebaseRecyclerOptions<Recipe> retrieveRecipes(String[] cuisines, String[] ingredients) {
         DatabaseReference ref = db.getReference("Recipes");
+        DatabaseReference oldRecipeQuery = db.getReference("RecipeQuery");
+        // Clear the query every time
+        if (oldRecipeQuery != null){
+            oldRecipeQuery.removeValue();
+        }
         DatabaseReference recipeQuery = db.getReference("RecipeQuery");
-        DatabaseReference newQuery = recipeQuery.push();
 
         for (String c : cuisines) {
             Query q = ref.orderByChild("cuisineId").equalTo(c); //get by each cuisine
@@ -243,7 +248,7 @@ public class AppRepository {
                         Recipe r = s.getValue(Recipe.class);
                         r.setRecipeId(s.getKey());
                         if (r.hasIngredient(ingredients)) {
-                            newQuery.push().setValue(r);
+                            recipeQuery.push().setValue(r);
                         }
                     }
                 }
@@ -257,7 +262,7 @@ public class AppRepository {
 
         //TODO: find out a way to delete off the query from databse. maybe group under userid instead?
         FirebaseRecyclerOptions<Recipe> options = new FirebaseRecyclerOptions.Builder<Recipe>()
-                .setQuery(newQuery, Recipe.class)
+                .setQuery(recipeQuery, Recipe.class)
                 .build();
         return options;
     }

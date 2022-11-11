@@ -82,8 +82,7 @@ public class SavedRecipeFragment extends Fragment {
         @Override
         protected void onBindViewHolder(@NonNull RecipeAdapter.RecipeViewHolder holder, int position, @NonNull Recipe model) {
             Log.d("checkpoint5", "onBindViewHolder");
-            final DatabaseReference itemRef = getRef(position);
-            final String key = itemRef.getKey();
+            String key = model.getRecipeId();
             holder.mNameTextView.setText(model.getName());
             holder.mContentTextView.setText(model.getContent());
             holder.mRatingTextView.setText(Float.toString(model.getRating()));
