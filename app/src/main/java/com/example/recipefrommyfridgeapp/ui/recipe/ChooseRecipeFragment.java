@@ -47,11 +47,10 @@ public class ChooseRecipeFragment extends Fragment {
                 Log.d("checkpoint5", "ChooseRecipeFragment.onCreate" + userId);
             }
         });
-        //TODO: change to being able to select multiple cuisine & ingredients
         String[] cuisines = getArguments().getStringArray(CuisineFragment.INTENT_CUISINE_SELECTED);
         String[] ingredients = getArguments().getStringArray(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED);
-        Log.i("test", "onCreate: " + Arrays.toString(cuisines));
-        Log.i("test", "onCreate: " + Arrays.toString(ingredients));
+        Log.d("checkpoint5", "ChooseRecipeFragment.onCreate(), cuisines: " + Arrays.toString(cuisines));
+        Log.d("checkpoint5", "ChooseRecipeFragment.onCreate(), ingredients: " + Arrays.toString(ingredients));
         options = mRecipeViewModel.retrieveRecipes(cuisines, ingredients);
     }
 
@@ -94,7 +93,7 @@ public class ChooseRecipeFragment extends Fragment {
 
         @Override
         protected void onBindViewHolder(@NonNull RecipeAdapter.RecipeViewHolder holder, int position, @NonNull Recipe model) {
-            final String key = getRef(position).getKey();
+            final String key = model.getRecipeId();
 
             Log.d("checkpoint5", "onBindViewHolder");
             holder.mNameTextView.setText(model.getName());
@@ -102,7 +101,7 @@ public class ChooseRecipeFragment extends Fragment {
             holder.mRatingTextView.setText(Float.toString(model.getRating()));
             holder.CuisineIdTextView.setText(model.getCuisineId());
             holder.itemView.setOnClickListener(v -> {
-                Log.d("checkpoint5", "ChooseRecipeFragment.onBindView: " + userId);
+                Log.d("checkpoint5", "ChooseRecipeFragment.onBindView: " + userId + ", " + key);
                 Fragment fragment = new RecipeFragment(userId, key);
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, fragment)

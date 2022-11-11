@@ -51,7 +51,7 @@ public class RecipeFragment extends Fragment {
         mSavedRecipeViewModel = new ViewModelProvider(this).get(SavedRecipeViewModel.class);
         mLoggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
         String recipeId = "" + id;
-        Log.d("checkpoint5", recipeId);
+        Log.d("checkpoint5", "RecipeFragment.onCreate(): " + recipeId);
         mRecipeViewModel.getCurrentRecipe(recipeId);
         mRecipeViewModel.retrieveRecipeIdList();
         mSavedRecipeViewModel.userSavedRecipe(user);

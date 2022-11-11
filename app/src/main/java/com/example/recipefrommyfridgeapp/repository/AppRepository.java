@@ -241,6 +241,7 @@ public class AppRepository {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot s : snapshot.getChildren()) {
                         Recipe r = s.getValue(Recipe.class);
+                        r.setRecipeId(s.getKey());
                         if (r.hasIngredient(ingredients)) {
                             newQuery.push().setValue(r);
                         }
@@ -269,6 +270,7 @@ public class AppRepository {
                 for (DataSnapshot shot : snapshot.getChildren()) {
                     if (shot.getKey().equals(recipeId)) {
                         Recipe current = shot.getValue(Recipe.class);
+                        current.setRecipeId(shot.getKey());
                         mRecipeMutableLiveData.postValue(current);
                     }
                 }
@@ -313,6 +315,7 @@ public class AppRepository {
                     String currentId = shot.getKey();
                     if (recipeIds.contains(currentId)) {
                         Recipe include = shot.getValue(Recipe.class);
+                        include.setRecipeId(currentId);
                         currentUserSavedRecipe.child(currentId).setValue(include);
                     }
                 }
@@ -337,6 +340,7 @@ public class AppRepository {
                 for (DataSnapshot shot : snapshot.getChildren()) {
                     if (shot.getKey().equals(recipeId)) {
                         Recipe current = shot.getValue(Recipe.class);
+                        current.setRecipeId(shot.getKey());
                         savedRecipeMutableLiveData.postValue(current);
                     }
                 }

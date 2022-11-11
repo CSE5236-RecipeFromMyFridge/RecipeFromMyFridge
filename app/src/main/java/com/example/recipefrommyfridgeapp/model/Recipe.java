@@ -4,12 +4,14 @@ import java.util.Map;
 
 public class Recipe {
 
+    public String recipeId;
     public String cuisineId;
     public String name, content;
     public float rating;
     public Map<String, Ingredient> ingredients;
 
     public Recipe(String cuisineId, String name, String content, float rating, Map<String, Ingredient> ingredients) {
+        this.recipeId = null;
         this.cuisineId = cuisineId;
         this.name = name;
         this.content = content;
@@ -59,6 +61,14 @@ public class Recipe {
 
     public void setIngredients(Map<String, Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(String recipeId) {
+        this.recipeId = recipeId;
     }
 
     public boolean hasIngredient(String[] ingredients) {
