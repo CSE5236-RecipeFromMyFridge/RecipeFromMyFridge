@@ -1,5 +1,10 @@
 package com.example.recipefrommyfridgeapp.ui.recipe;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +30,7 @@ import com.example.recipefrommyfridgeapp.viewmodel.SavedRecipeViewModel;
 import java.util.List;
 import java.util.Map;
 
-public class RecipeFragment extends Fragment {
+public class RecipeFragment extends Fragment implements SensorEventListener {
 
     private TextView recipeName, recipeType, recipeRating, recipeContent, recipeIngredient;
     private ImageButton mPreviousButton, mNextButton;
@@ -37,6 +42,9 @@ public class RecipeFragment extends Fragment {
 
     private String id;
     private String user;
+
+    private SensorManager sm;
+    private Sensor mSensor;
 
     public RecipeFragment(String userId, String recipeId) {
         id = "" + recipeId;
@@ -55,6 +63,11 @@ public class RecipeFragment extends Fragment {
         mRecipeViewModel.getCurrentRecipe(recipeId);
         mRecipeViewModel.retrieveRecipeIdList();
         mSavedRecipeViewModel.userSavedRecipe(user);
+
+        sm = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        mSensor = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sm.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_UI);
+        Log.d("checkpoint5", mSensor.getName());
     }
 
     @Nullable
@@ -159,5 +172,40 @@ public class RecipeFragment extends Fragment {
                 .setReorderingAllowed(true)
                 .addToBackStack("Get recipe details")
                 .commit();
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float[] values = event.values;
+        double curValue = magnitude(values[0], values[1], values[2]);
+        if (curValue > 40){
+            Log.d("checkpoint5", "onSensorChanged.curValue > 40");
+            mRecipeViewModel.getRecipeListMutableLiveData().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+                @Override
+                public void onChanged(List<String> ids) {
+                    if (ids.size() != 0){
+                        final int[] idx = {ids.indexOf(id)};
+                        idx[0] = (idx[0] + 1) % ids.size();
+                        updateRecipe(ids, idx);
+                    }
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    public double magnitude(float x, float y, float z){
+        return Math.sqrt(x * x + y * y + z * z);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sm.unregisterListener(this);
     }
 }
