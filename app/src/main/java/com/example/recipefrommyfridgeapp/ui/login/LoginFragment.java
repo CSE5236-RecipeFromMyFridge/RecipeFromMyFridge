@@ -1,6 +1,9 @@
 package com.example.recipefrommyfridgeapp.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +36,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
     private LoginRegisterViewModel loginRegisterViewModel;
 
+    private ConnectivityManager cm;
+    private NetworkInfo activeNetwork;
+    private boolean isConnected;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,12 +67,22 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         Log.i("checkpoint2", "LoginFragment.onCreateView()");
+        cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        activeNetwork = cm.getActiveNetworkInfo();
+        isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
         usernameEditText = v.findViewById(R.id.fragment_login_email);
         passwordEditText = v.findViewById(R.id.fragment_login_password);
         loginButton = v.findViewById(R.id.fragment_login_login);
         createAccountButton = v.findViewById(R.id.fragment_login_createAccount);
         guestAccountButton = v.findViewById(R.id.fragment_login_guestAccount);
+
+        if (!isConnected){
+            Toast.makeText(getContext(), "Not connecting internet!", Toast.LENGTH_SHORT).show();
+            loginButton.setEnabled(false);
+            createAccountButton.setEnabled(false);
+            guestAccountButton.setEnabled(false);
+        }
 
         createAccountButton.setOnClickListener(view -> {
             //replace with account creation fragment
