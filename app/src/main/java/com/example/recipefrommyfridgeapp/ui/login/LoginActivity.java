@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.fragment.app.Fragment;
 
 import com.example.recipefrommyfridgeapp.SingleFragmentActivity;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends SingleFragmentActivity {
 
@@ -17,6 +18,7 @@ public class LoginActivity extends SingleFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         Log.i("checkpoint2", "LoginActivity.onCreate()");
     }
 

@@ -64,6 +64,7 @@ public class ChooseRecipeFragment extends Fragment {
         mRecipeRecyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mAdapter = new RecipeAdapter(options);
         mRecipeRecyclerView.setAdapter(mAdapter);
+        mRecipeRecyclerView.setItemViewCacheSize(3);
 
         return view;
     }
