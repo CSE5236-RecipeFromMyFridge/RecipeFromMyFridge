@@ -77,12 +77,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         createAccountButton = v.findViewById(R.id.fragment_login_createAccount);
         guestAccountButton = v.findViewById(R.id.fragment_login_guestAccount);
 
-        if (!isConnected){
-            Toast.makeText(getContext(), "Not connecting internet!", Toast.LENGTH_SHORT).show();
-            loginButton.setEnabled(false);
-            createAccountButton.setEnabled(false);
-            guestAccountButton.setEnabled(false);
-        }
+//        if (!isConnected){
+//            Toast.makeText(getContext(), "Not connecting internet!", Toast.LENGTH_SHORT).show();
+//            loginButton.setEnabled(false);
+//            createAccountButton.setEnabled(false);
+//            guestAccountButton.setEnabled(false);
+//        }
 
         createAccountButton.setOnClickListener(view -> {
             //replace with account creation fragment
