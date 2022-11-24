@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
     // Add the Google services Gradle plugin
     id 'com.google.gms.google-services'
+    // Add the Performance Monitoring Gradle plugin
+    id 'com.google.firebase.firebase-perf'
+
 }
 
 android {
@@ -50,6 +53,14 @@ dependencies {
     implementation 'com.orhanobut:dialogplus:1.11@aar'
     implementation 'androidx.navigation:navigation-fragment:2.5.2'
     implementation 'androidx.navigation:navigation-ui:2.5.2'
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
+
+    // Add the dependency for the Performance Monitoring library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-perf'
+
     // Import the Firebase BoM
 //    implementation platform('com.google.firebase:firebase-bom:31.0.0')
 //    implementation 'com.google.firebase:firebase-database'
