@@ -234,7 +234,7 @@ public class AppRepository {
         DatabaseReference ref = db.getReference("Recipes");
         DatabaseReference oldRecipeQuery = db.getReference("RecipeQuery");
         // Clear the query every time
-        if (oldRecipeQuery != null){
+        if (oldRecipeQuery != null) {
             oldRecipeQuery.removeValue();
         }
         DatabaseReference recipeQuery = db.getReference("RecipeQuery");

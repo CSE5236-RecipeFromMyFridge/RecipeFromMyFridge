@@ -1,8 +1,11 @@
 package com.example.recipefrommyfridgeapp.model;
 
+import java.util.Locale;
+
 public class Ingredient {
 
     public String name;
+    public String zhName;
     public String amount;
     public boolean mSelected;
 
@@ -15,14 +18,19 @@ public class Ingredient {
         mSelected = false;
     }
 
-    public Ingredient(String name, String amount) {
+    public Ingredient(String name, String zhName, String amount) {
         this.name = name;
+        this.zhName = zhName;
         this.amount = amount;
         mSelected = false;
     }
 
     public String getName() {
-        return name;
+        if (Locale.getDefault().toString().contains("en_US")) {
+            return name;
+        } else {
+            return zhName;
+        }
     }
 
     public void setName(String name) {
