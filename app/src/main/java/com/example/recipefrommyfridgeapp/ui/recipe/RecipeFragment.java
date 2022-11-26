@@ -97,14 +97,18 @@ public class RecipeFragment extends Fragment implements SensorEventListener {
             @Override
             public void onChanged(Recipe recipe) {
                 if (recipe != null){
-                    recipeName.setText(String.format("Name: %s", recipe.getName()));
-                    recipeType.setText(String.format("Cuisine Type: %s", recipe.getCuisineId()));
-                    recipeRating.setText(String.format("Rating: %s", recipe.getRating()));
-                    recipeContent.setText(String.format("Content: %s", recipe.getContent()));
+                    recipeName.setText(String.format("%s %s",
+                            getResources().getString(R.string.field_name), recipe.getName()));
+                    recipeType.setText(String.format("%s %s",
+                            getResources().getString(R.string.field_cuisine_type), recipe.getCuisineId()));
+                    recipeRating.setText(String.format("%s %s",
+                            getResources().getString(R.string.field_rating), recipe.getRating()));
+                    recipeContent.setText(String.format("%s %s",
+                            getResources().getString(R.string.field_content), recipe.getContent()));
                     Map<String, Ingredient> ingredientMap = recipe.getIngredients();
                     StringBuilder output = new StringBuilder();
-                    output.append("Ingredients: ");
-                    for (Ingredient current : ingredientMap.values()){
+                    output.append(getResources().getString(R.string.field_ingredients) + " ");
+                    for (Ingredient current : ingredientMap.values()) {
                         Log.d("checkpoint5", current.getName());
                         output.append(current.getName());
                         output.append(" - ");
