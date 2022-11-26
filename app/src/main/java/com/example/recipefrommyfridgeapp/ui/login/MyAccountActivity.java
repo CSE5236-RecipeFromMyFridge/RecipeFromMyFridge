@@ -41,8 +41,6 @@ public class MyAccountActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
 
-        Locale.setDefault(new Locale("zh"));
-        Log.i("checkpoint6", "onCreate: " + Locale.getDefault().toString() + ", ");
         userName = findViewById(R.id.my_account_name);
         userEmail = findViewById(R.id.my_account_email);
         userPassword = findViewById(R.id.my_account_password);

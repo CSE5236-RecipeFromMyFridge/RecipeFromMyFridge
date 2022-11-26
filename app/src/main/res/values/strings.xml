@@ -4,8 +4,9 @@
     <string name="app_front_page">Recipe From Fridge</string>
     <string name="app_description">Save Time and Be Creative</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_user_name">User Name</string>
+    <string name="prompt_user_name">Username</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_new_password">New Password</string>
     <string name="prompt_confirm_password">Confirm Password</string>
     <string name="action_sign_in">Login</string>
     <string name="action_creation">Create Account</string>
@@ -17,7 +18,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name= "successful_registration">User has been registered successfully!</string>
     <!-- Strings related to MyAccount -->
-    <string name="action_change_password">Change Password</string>
+    <string name="change_password">Change Password</string>
     <string name="title_my_account">My Account</string>
     <string name="field_username">User Name: </string>
     <string name="field_email">Email: </string>
@@ -28,6 +29,7 @@
     <string name="change_ingredient">Change Ingredient</string>
     <string name="change_cuisine">Change Cuisine</string>
     <string name="saved_recipe">Saved Recipes</string>
+    <string name="update_recipe">Update Recipe</string>
     <string name="setting">Setting</string>
     <string name="back_button">Back</string>
     <string name="log_out">Log Out</string>
@@ -36,6 +38,9 @@
     <string name="generate">Generate</string>
     <!-- Strings related to Recipe -->
     <string name="title_recipe">Recipe</string>
+    <string name="title_content">Content</string>
+    <string name="title_rating">Rating</string>
+    <string name="title_name">Name </string>
     <string name="field_name">Name: </string>
     <string name="field_ingredients">Ingredients: </string>
     <string name="field_cuisine_type">Cuisine Type: </string>
@@ -45,4 +50,6 @@
     <string name="previous_button">Previous</string>
     <string name="next_button">Next</string>
     <string name="button_delete">Delete</string>
+    <string name="button_reset">Reset</string>
+    <string name="button_update">Update</string>
 </resources>
