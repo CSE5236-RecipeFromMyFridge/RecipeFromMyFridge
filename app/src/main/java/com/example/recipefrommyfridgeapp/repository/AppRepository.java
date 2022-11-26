@@ -290,6 +290,7 @@ public class AppRepository {
 
     public FirebaseRecyclerOptions<Recipe> retrieveSavedRecipes(String userId) {
         DatabaseReference ref = db.getReference("SavedRecipes").child(userId);
+        ref.keepSynced(true);
         List<String> recipeIds = new ArrayList<>();
         ref.addValueEventListener(new ValueEventListener() {
             @Override
