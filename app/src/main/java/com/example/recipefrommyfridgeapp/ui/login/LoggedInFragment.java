@@ -78,7 +78,7 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             User user = snapshot.getValue(User.class);
                             Log.d("checkpoint5", "the user name retrieved");
-                            greetingUser.setText("Hello, " + user.getName());
+                            greetingUser.setText(getResources().getText(R.string.greeting) + ", " + user.getName());
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {

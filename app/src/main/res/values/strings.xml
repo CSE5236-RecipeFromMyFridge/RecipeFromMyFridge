@@ -26,15 +26,14 @@
     <!-- Strings related to Menu -->
     <string name="title_menu">Menu</string>
     <string name="greeting">Hello</string>
-    <string name="change_ingredient">Change Ingredient</string>
-    <string name="change_cuisine">Change Cuisine</string>
+    <string name="choose_ingredient">Choose Ingredient</string>
+    <string name="choose_cuisine">Choose Cuisine</string>
     <string name="saved_recipe">Saved Recipes</string>
     <string name="update_recipe">Update Recipe</string>
     <string name="setting">Setting</string>
     <string name="back_button">Back</string>
     <string name="log_out">Log Out</string>
     <!-- Strings related to Cuisine -->
-    <string name="choose_cuisine">Choose Cuisine</string>
     <string name="generate">Generate</string>
     <!-- Strings related to Recipe -->
     <string name="title_recipe">Recipe</string>
@@ -50,6 +49,6 @@
     <string name="previous_button">Previous</string>
     <string name="next_button">Next</string>
     <string name="button_delete">Delete</string>
-    <string name="button_reset">Reset</string>
+    <string name="button_change">Change</string>
     <string name="button_update">Update</string>
 </resources>

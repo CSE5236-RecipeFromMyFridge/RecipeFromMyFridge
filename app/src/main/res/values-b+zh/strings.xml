@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Recipe From My Fridge App</string>
+    <!-- Strings related to login -->
+    <string name="app_front_page">Recipe From Fridge</string>
+    <string name="app_description">省时与创新</string>
+    <string name="prompt_email">邮件</string>
+    <string name="prompt_user_name">用户名称</string>
+    <string name="prompt_password">密码</string>
+    <string name="prompt_new_password">New Password</string>
+    <string name="prompt_confirm_password">确定密码</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_creation">创建新账户</string>
+    <string name="action_guest_sign_in">以访客继续</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">欢迎!</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"登录失败"</string>
+    <string name= "successful_registration">用户已成功登记！</string>
+    <!-- Strings related to MyAccount -->
+    <string name="change_password">更改密码</string>
+    <string name="title_my_account">我的账号</string>
+    <string name="field_username">用户名称: </string>
+    <string name="field_email">邮件: </string>
+    <string name="field_password">密码: </string>
+    <!-- Strings related to Menu -->
+    <string name="title_menu">Menu</string>
+    <string name="greeting">您好</string>
+    <string name="saved_recipe">喜欢的食谱</string>
+    <string name="update_recipe">Update Recipe</string>
+    <string name="setting">设置</string>
+    <string name="back_button">返回</string>
+    <string name="log_out">退出</string>
+    <!-- Strings related to Cuisine -->
+    <string name="choose_ingredient">选择食材</string>
+    <string name="choose_cuisine">选择烹饪法</string>
+    <string name="generate">产生食谱</string>
+    <!-- Strings related to Recipe -->
+    <string name="title_recipe">食谱</string>
+    <string name="title_content">内容</string>
+    <string name="title_rating">评分</string>
+    <string name="title_name">Name </string>
+    <string name="field_name">食谱: </string>
+    <string name="field_ingredients">食材: </string>
+    <string name="field_cuisine_type">烹饪法: </string>
+    <string name="field_rating">评分: </string>
+    <string name="field_content">内容: </string>
+    <string name="save_recipe">保存食谱</string>
+    <string name="previous_button">上一个</string>
+    <string name="next_button">下一个</string>
+    <string name="button_delete">删除</string>
+    <string name="button_change">更改</string>
+    <string name="button_update">Update</string>
+</resources>
