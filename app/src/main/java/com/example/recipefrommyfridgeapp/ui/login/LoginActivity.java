@@ -51,6 +51,4 @@ public class LoginActivity extends SingleFragmentActivity {
         super.onDestroy();
         Log.i("checkpoint2", "LoginActivity.onDestroy()");
     }
-
-
 }

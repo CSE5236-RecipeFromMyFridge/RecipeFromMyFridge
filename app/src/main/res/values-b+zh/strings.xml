@@ -1,20 +1,20 @@
 <resources>
     <string name="app_name">Recipe From My Fridge App</string>
     <!-- Strings related to login -->
-    <string name="app_front_page">Recipe From Fridge</string>
+    <string name="app_front_page">我的冰箱能做什么？</string>
     <string name="app_description">省时与创新</string>
     <string name="prompt_email">邮件</string>
     <string name="prompt_user_name">用户名称</string>
     <string name="prompt_password">密码</string>
-    <string name="prompt_new_password">New Password</string>
+    <string name="prompt_new_password">新密码</string>
     <string name="prompt_confirm_password">确定密码</string>
     <string name="action_sign_in">登录</string>
     <string name="action_creation">创建新账户</string>
     <string name="action_guest_sign_in">以访客继续</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_in_short">登录</string>
     <string name="welcome">欢迎!</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_password">密码必须多过5</string>
     <string name="login_failed">"登录失败"</string>
     <string name= "successful_registration">用户已成功登记！</string>
     <!-- Strings related to MyAccount -->
