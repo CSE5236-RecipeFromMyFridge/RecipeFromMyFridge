@@ -1,30 +1,40 @@
 package com.example.recipefrommyfridgeapp.model;
 
+import java.util.Locale;
+
 public class Cuisine {
 
-    public String name, type;
+    public String enName, zhName;
 
-    public Cuisine(String name, String type) {
-        this.name = name;
-        this.type = type;
+    public Cuisine(String enName, String zhName) {
+        this.enName = enName;
+        this.zhName = zhName;
     }
 
     public Cuisine() {
     }
 
     public String getName() {
-        return name;
+        if (Locale.getDefault().toString().contains("en_US")) {
+            return enName;
+        } else {
+            return zhName;
+        }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getEnName() {
+        return enName;
     }
 
-    public String getType() {
-        return type;
+    public void setEnName(String enName) {
+        this.enName = enName;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public String getZhName() {
+        return zhName;
+    }
+
+    public void setZhName(String zhName) {
+        this.zhName = zhName;
     }
 }

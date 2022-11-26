@@ -4,7 +4,7 @@ import java.util.Locale;
 
 public class Ingredient {
 
-    public String name;
+    public String enName;
     public String zhName;
     public String amount;
     public boolean mSelected;
@@ -13,13 +13,13 @@ public class Ingredient {
         mSelected = false;
     }
 
-    public Ingredient(String name) {
-        this.name = name;
+    public Ingredient(String enName) {
+        this.enName = enName;
         mSelected = false;
     }
 
-    public Ingredient(String name, String zhName, String amount) {
-        this.name = name;
+    public Ingredient(String enName, String zhName, String amount) {
+        this.enName = enName;
         this.zhName = zhName;
         this.amount = amount;
         mSelected = false;
@@ -27,14 +27,26 @@ public class Ingredient {
 
     public String getName() {
         if (Locale.getDefault().toString().contains("en_US")) {
-            return name;
+            return enName;
         } else {
             return zhName;
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getEnName() {
+        return enName;
+    }
+
+    public void setEnName(String enName) {
+        this.enName = enName;
+    }
+
+    public String getZhName() {
+        return zhName;
+    }
+
+    public void setZhName(String zhName) {
+        this.zhName = zhName;
     }
 
     public String getAmount() {

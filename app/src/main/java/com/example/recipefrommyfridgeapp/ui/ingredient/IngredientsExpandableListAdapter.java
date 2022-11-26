@@ -112,9 +112,9 @@ public class IngredientsExpandableListAdapter extends BaseExpandableListAdapter 
             }
             target.setSelected(b);
             if (b) {
-                addIngredient(find);
+                addIngredient(target.getEnName());
             } else {
-                removeIngredient(find);
+                removeIngredient(target.getEnName());
             }
             notifyDataSetChanged();
         }
