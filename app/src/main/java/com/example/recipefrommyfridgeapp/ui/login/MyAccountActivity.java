@@ -9,14 +9,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.User;
 import com.example.recipefrommyfridgeapp.viewmodel.LoggedInViewModel;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,8 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
-
-import java.util.Locale;
 
 public class MyAccountActivity extends AppCompatActivity{
 
@@ -66,9 +62,9 @@ public class MyAccountActivity extends AppCompatActivity{
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             User user = dataSnapshot.getValue(User.class);
                             Log.d("checkpoint5", "the user retrieved");
-                            userName.setText("User Name: " + user.getName());
-                            userEmail.setText("User Email: " + user.getEmail());
-                            userPassword.setText("User Password: " + user.getPassword());
+                            userName.setText(getResources().getString(R.string.field_username) + " " + user.getName());
+                            userEmail.setText(getResources().getString(R.string.field_email) + " " + user.getEmail());
+                            userPassword.setText(getResources().getString(R.string.field_password) + " " + user.getPassword());
                             // TODO: Not sure if this is the right place or I should have two observers
                             resetPasswordButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
