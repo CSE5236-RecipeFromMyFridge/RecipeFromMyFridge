@@ -7,6 +7,6 @@
         android:id="@+id/cuisine_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Placeholder for cuisine name"
+        android:text=""
         android:textSize="20sp" />
 </androidx.appcompat.widget.LinearLayoutCompat>

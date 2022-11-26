@@ -12,6 +12,6 @@
         android:paddingLeft="8dp"
         android:layout_marginLeft="24dp"
         android:gravity="center_vertical"
-        android:text="Placeholder for ingredient name"/>
+        android:text=""/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

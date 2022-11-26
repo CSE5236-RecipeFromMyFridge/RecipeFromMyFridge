@@ -18,7 +18,6 @@
             android:id="@+id/recipe_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recipe Name"
             android:textStyle="bold"
             android:textAlignment="center"/>
 
@@ -26,21 +25,18 @@
             android:id="@+id/recipe_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recipe Content"
             android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/recipe_rating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recipe Rating"
             android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/recipe_cuisineId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recipe Cuisine Id"
             android:textAlignment="center"/>
 
         <Button
@@ -49,10 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:text="Delete"
+            android:text="@string/button_delete"
             android:textAllCaps="false"
-            android:layout_marginLeft="10dp" />
-
+            android:layout_marginStart="10dp" />
     </LinearLayout>
 
 

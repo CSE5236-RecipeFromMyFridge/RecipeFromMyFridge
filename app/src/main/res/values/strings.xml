@@ -11,38 +11,38 @@
     <string name="action_creation">Create Account</string>
     <string name="action_guest_sign_in">Continue As Guest</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">Welcome!</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="back">Back</string>
     <string name= "successful_registration">User has been registered successfully!</string>
     <!-- Strings related to MyAccount -->
     <string name="action_change_password">Change Password</string>
     <string name="title_my_account">My Account</string>
+    <string name="field_username">User Name: </string>
     <string name="field_email">Email: </string>
     <string name="field_password">Password: </string>
     <!-- Strings related to Menu -->
     <string name="title_menu">Menu</string>
+    <string name="greeting">Hello</string>
+    <string name="change_ingredient">Change Ingredient</string>
     <string name="change_cuisine">Change Cuisine</string>
-    <string name="my_account">My Account</string>
+    <string name="saved_recipe">Saved Recipes</string>
     <string name="setting">Setting</string>
     <string name="back_button">Back</string>
+    <string name="log_out">Log Out</string>
     <!-- Strings related to Cuisine -->
     <string name="choose_cuisine">Choose Cuisine</string>
-    <string name="anhui_cuisine">Anhui 安徽菜</string>
-    <string name="cantonese_cuisine">Cantonese 粤菜</string>
-    <string name="fujian_cuisine">Fujian 福建菜</string>
-    <string name="hunan_cuisine">Hunan 湖南菜</string>
-    <string name="jiangsu_cuisine">Jiangsu 江苏菜</string>
-    <string name="shandong_cuisine">Shandong 山东菜</string>
-    <string name="szechuan_cuisine">Szechuan 四川菜</string>
-    <string name="zhejiang_cuisine">Zhejiang 浙江菜</string>
-    <string name="random">Choose one for me</string>
     <string name="generate">Generate</string>
-    <string name="create_recipe">Create Recipe</string>
     <!-- Strings related to Recipe -->
+    <string name="title_recipe">Recipe</string>
+    <string name="field_name">Name: </string>
+    <string name="field_ingredients">Ingredients: </string>
+    <string name="field_cuisine_type">Cuisine Type: </string>
+    <string name="field_rating">Rating: </string>
+    <string name="field_content">Content: </string>
+    <string name="save_recipe">Save Recipe</string>
     <string name="previous_button">Previous</string>
     <string name="next_button">Next</string>
-
+    <string name="button_delete">Delete</string>
 </resources>

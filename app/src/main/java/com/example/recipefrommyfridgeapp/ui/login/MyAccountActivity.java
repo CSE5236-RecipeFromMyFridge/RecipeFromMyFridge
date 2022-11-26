@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
+import java.util.Locale;
+
 public class MyAccountActivity extends AppCompatActivity{
 
     private TextView userName, userEmail, userPassword;
@@ -39,6 +41,8 @@ public class MyAccountActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_account);
 
+        Locale.setDefault(new Locale("zh"));
+        Log.i("checkpoint6", "onCreate: " + Locale.getDefault().toString() + ", ");
         userName = findViewById(R.id.my_account_name);
         userEmail = findViewById(R.id.my_account_email);
         userPassword = findViewById(R.id.my_account_password);
