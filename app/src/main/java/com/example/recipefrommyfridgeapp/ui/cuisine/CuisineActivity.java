@@ -2,6 +2,7 @@ package com.example.recipefrommyfridgeapp.ui.cuisine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
@@ -17,6 +18,7 @@ public class CuisineActivity extends SingleFragmentActivity {
                 intent.getStringArrayExtra(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED));
         CuisineFragment cuisineFragment = new CuisineFragment();
         cuisineFragment.setArguments(bundle);
+        Log.i("rotation","creating cuisine fragment");
         return cuisineFragment;
     }
 }

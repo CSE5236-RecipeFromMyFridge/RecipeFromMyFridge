@@ -35,6 +35,7 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
         mIngredientViewModel = new ViewModelProvider(this).get(IngredientViewModel.class);
         mIngredientViewModel.retrieveIngredient();
         mIngredientSelected = mIngredientViewModel.getIngredientSelectedMutableLiveData().getValue();
+        Log.i("rotation","ingredient fragment onCreate");
     }
 
     @Nullable
@@ -54,6 +55,8 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
 
         final Button chooseCuisineButton = v.findViewById(R.id.button_choose_cuisine);
         chooseCuisineButton.setOnClickListener(this);
+
+        Log.i("rotation","ingredient fragment onCreateView");
 
         return v;
     }
@@ -87,6 +90,7 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
                 mIngredientSelected.add(item);
 //                Log.i("rotation", "put back " + item);
             }
+            Log.i("rotation","retrieving selected ingredients");
             Toast.makeText(getActivity(), "You selected " + combine, Toast.LENGTH_LONG).show();
         }
     }

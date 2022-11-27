@@ -14,6 +14,7 @@ import java.util.Locale;
 
     @Override
     protected Fragment createFragment() {
+        Log.i("rotation","creating ingredient fragment");
         return new ChooseIngredientFragment();
     }
 }
