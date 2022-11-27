@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import com.example.recipefrommyfridgeapp.SingleFragmentActivity;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Locale;
+
 public class LoginActivity extends SingleFragmentActivity {
 
     @Override
@@ -19,6 +21,7 @@ public class LoginActivity extends SingleFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        Log.d("checkpoint6", "onCreate: " + Locale.getDefault().getLanguage());
         Log.i("checkpoint2", "LoginActivity.onCreate()");
     }
 

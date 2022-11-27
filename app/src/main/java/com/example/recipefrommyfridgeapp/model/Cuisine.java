@@ -15,7 +15,7 @@ public class Cuisine {
     }
 
     public String getName() {
-        if (Locale.getDefault().toString().contains("en_US")) {
+        if (Locale.getDefault().getLanguage().equals("en")) {
             return enName;
         } else {
             return zhName;
