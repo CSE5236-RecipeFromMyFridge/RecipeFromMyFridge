@@ -2,11 +2,13 @@ package com.example.recipefrommyfridgeapp.ui.ingredient;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +19,7 @@ import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.ui.cuisine.CuisineActivity;
 import com.example.recipefrommyfridgeapp.viewmodel.IngredientViewModel;
 
+import java.util.Arrays;
 import java.util.Set;
 
 public class ChooseIngredientFragment extends Fragment implements View.OnClickListener {
@@ -61,6 +64,30 @@ public class ChooseIngredientFragment extends Fragment implements View.OnClickLi
             Intent intent = new Intent(requireContext(), CuisineActivity.class);
             intent.putExtra(INTENT_INGREDIENT_SELECTED, mIngredientSelected.toArray(new String[0]));
             startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String ing[] = new String[mIngredientSelected.size()];
+        ing = mIngredientSelected.toArray(ing);
+        outState.putStringArray("ingredients", ing);
+        Log.i("rotation", "Saving " + Arrays.toString(ing));
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if(savedInstanceState != null){
+            String checked[] = (String[]) savedInstanceState.get("ingredients");
+            String combine = "";
+            for(String item : checked){
+                combine += item + " ";
+                mIngredientSelected.add(item);
+//                Log.i("rotation", "put back " + item);
+            }
+            Toast.makeText(getActivity(), "You selected " + combine, Toast.LENGTH_LONG).show();
         }
     }
 }

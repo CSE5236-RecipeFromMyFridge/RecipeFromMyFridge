@@ -3,42 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/activity_choose_ingredient.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/activity_choose_recipe.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/activity_cuisine.xml" value="0.12" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/activity_my_account.xml" value="0.2" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/fragment_account_creation.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/fragment_container.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/fragment_cuisine_item.xml" value="0.11197916666666667" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/fragment_expandable_group_ingredient.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/fragment_expandable_list_item_ingredient.xml" value="0.11302083333333333" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/fragment_logged_in.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/fragment_login.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/fragment_recipe.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/fragment_recipe_list.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/list_item_recipe.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/list_item_saved_recipe.xml" value="0.11510416666666666" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/password_popup.xml" value="0.146875" />
-        <entry key="..\:/D_Drive_Folders/AndroidStudioWorkspace/RecipeFromMyFridge/app/src/main/res/layout/update_popup.xml" value="0.11302083333333333" />
-        <entry key="..\:/Young Li/Young Li/OSU/AU22/RecipeFromMyFridge/app/src/main/res/layout/activity_cuisine.xml" value="0.2" />
-        <entry key="..\:/Young Li/Young Li/OSU/AU22/RecipeFromMyFridge/app/src/main/res/layout/activity_menu.xml" value="0.18697916666666667" />
-        <entry key="..\:/Young Li/Young Li/OSU/AU22/RecipeFromMyFridge/app/src/main/res/layout/activity_my_account.xml" value="0.11367753623188406" />
-        <entry key="..\:/Young Li/Young Li/OSU/AU22/RecipeFromMyFridge/app/src/main/res/layout/fragment_logged_in.xml" value="0.18697916666666667" />
-        <entry key="app/src/main/res/layout/activity_choose_ingredient.xml" value="0.1671875" />
-        <entry key="app/src/main/res/layout/activity_cuisine.xml" value="0.1671875" />
-        <entry key="app/src/main/res/layout/activity_menu.xml" value="0.14166666666666666" />
-        <entry key="app/src/main/res/layout/activity_my_account.xml" value="0.2526041666666667" />
-        <entry key="app/src/main/res/layout/fragment_account_creation.xml" value="0.14166666666666666" />
-        <entry key="app/src/main/res/layout/fragment_checkbox_ingredient.xml" value="0.14166666666666666" />
-        <entry key="app/src/main/res/layout/fragment_container.xml" value="0.14166666666666666" />
-        <entry key="app/src/main/res/layout/fragment_expandable_group_ingredient.xml" value="0.1671875" />
-        <entry key="app/src/main/res/layout/fragment_logged_in.xml" value="0.1671875" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1671875" />
-        <entry key="app/src/main/res/layout/fragment_recipe.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_recipe_list.xml" value="0.17798913043478262" />
-        <entry key="app/src/main/res/layout/list_item_recipe.xml" value="0.17798913043478262" />
-        <entry key="app/src/main/res/layout/password_popup.xml" value="0.16614583333333333" />
-        <entry key="app/src/main/res/layout/update_popup.xml" value="0.1671875" />
+        <entry key="app/src/main/res/layout-land/fragment_logged_in.xml" value="0.15343915343915343" />
+        <entry key="app/src/main/res/layout-land/fragment_login.xml" value="0.15343915343915343" />
+        <entry key="app/src/main/res/layout/activity_choose_ingredient.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_choose_recipe.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_cuisine.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/activity_my_account.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_account_creation.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_container.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_cuisine_item.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_expandable_group_ingredient.xml" value="0.18125" />
+        <entry key="app/src/main/res/layout/fragment_expandable_list_item_ingredient.xml" value="0.18645833333333334" />
+        <entry key="app/src/main/res/layout/fragment_logged_in.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.28020833333333334" />
+        <entry key="app/src/main/res/layout/fragment_recipe.xml" value="0.28020833333333334" />
+        <entry key="app/src/main/res/layout/password_popup.xml" value="0.13072916666666667" />
+        <entry key="app/src/main/res/layout/update_popup.xml" value="0.18489583333333334" />
       </map>
     </option>
   </component>
