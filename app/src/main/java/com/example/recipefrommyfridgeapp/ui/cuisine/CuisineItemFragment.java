@@ -1,6 +1,7 @@
 package com.example.recipefrommyfridgeapp.ui.cuisine;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,24 @@ import java.util.Set;
 
 public class CuisineItemFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
-    private final Cuisine mCuisine;
+    private static Cuisine mCuisine;
     private CuisineViewModel mCuisineViewModel;
     private Set<String> mCuisineSelected;
 
-    CuisineItemFragment(Cuisine cuisine) {
+//    CuisineItemFragment(Cuisine cuisine) {
+//        mCuisine = cuisine;
+//    }
+    public CuisineItemFragment(){}
+
+    public static CuisineItemFragment newInstance(Cuisine cuisine){
+        Bundle args = new Bundle();
+        args.putParcelable("cuisine", cuisine);
         mCuisine = cuisine;
+        Log.d("rotation", mCuisine.getName());
+        CuisineItemFragment f = new CuisineItemFragment();
+        Log.d("rotation", args.toString());
+        f.setArguments(args);
+        return f;
     }
 
     @Override

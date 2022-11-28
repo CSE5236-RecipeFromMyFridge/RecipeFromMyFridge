@@ -49,9 +49,10 @@ public class CuisineFragment extends Fragment implements View.OnClickListener {
             if (cuisines != null) {
                 for (Cuisine c : cuisines) {
                     getChildFragmentManager().beginTransaction()
-                            .add(R.id.container_cuisine_item, new CuisineItemFragment(c))
+                            .add(R.id.container_cuisine_item, CuisineItemFragment.newInstance(c))
                             .addToBackStack(null)
                             .commit();
+                    Log.i("rotation", c.getName());
                 }
                 Log.d("checkpoint5", "Successfully get Cuisines list");
             } else {
