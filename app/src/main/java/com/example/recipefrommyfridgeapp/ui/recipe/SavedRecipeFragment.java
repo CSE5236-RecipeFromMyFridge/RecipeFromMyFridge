@@ -90,7 +90,7 @@ public class SavedRecipeFragment extends Fragment {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Fragment fragment = new SavedRecipeDetailsFragment(key);
+                    Fragment fragment = SavedRecipeDetailsFragment.newInstance(key);
                     getParentFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, fragment)
                             .setReorderingAllowed(true)

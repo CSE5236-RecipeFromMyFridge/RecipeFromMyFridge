@@ -34,8 +34,18 @@ public class SavedRecipeDetailsFragment extends Fragment {
     private String id;
     private String userId;
 
-    public SavedRecipeDetailsFragment(String recipeId) {
-        id = "" + recipeId;
+//    public SavedRecipeDetailsFragment(String recipeId) {
+//        id = "" + recipeId;
+//    }
+
+    public SavedRecipeDetailsFragment() {}
+
+    public static SavedRecipeDetailsFragment newInstance(String recipeId){
+        Bundle args = new Bundle();
+        args.putString("recipeId", recipeId);
+        SavedRecipeDetailsFragment fragment = new SavedRecipeDetailsFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -43,6 +53,7 @@ public class SavedRecipeDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.i("checkpoint5", "RecipeFragment.onCreate()");
         mRecipeViewModel = new ViewModelProvider(this).get(SavedRecipeViewModel.class);
+        id = getArguments().getString("recipeId");
         String recipeId = "" + id;
         Log.d("checkpoint5", recipeId);
         userId = (String) getActivity().getIntent()
@@ -125,7 +136,7 @@ public class SavedRecipeDetailsFragment extends Fragment {
                 .remove(SavedRecipeDetailsFragment.this)
                 .commit();
         getParentFragmentManager().popBackStack();
-        Fragment fragment = new SavedRecipeDetailsFragment(ids.get(idx[0]));
+        Fragment fragment = newInstance(ids.get(idx[0]));
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .setReorderingAllowed(true)
