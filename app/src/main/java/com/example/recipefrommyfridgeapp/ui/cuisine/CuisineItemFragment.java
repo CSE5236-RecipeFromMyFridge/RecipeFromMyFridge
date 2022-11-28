@@ -1,7 +1,6 @@
 package com.example.recipefrommyfridgeapp.ui.cuisine;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,20 +24,15 @@ public class CuisineItemFragment extends Fragment implements CompoundButton.OnCh
     private CuisineViewModel mCuisineViewModel;
     private Set<String> mCuisineSelected;
 
-//    CuisineItemFragment(Cuisine cuisine) {
-//        mCuisine = cuisine;
-//    }
-    public CuisineItemFragment(){}
+    public CuisineItemFragment() {
+    }
 
-    public static CuisineItemFragment newInstance(Cuisine cuisine){
+    public static CuisineItemFragment newInstance(Cuisine cuisine) {
         Bundle args = new Bundle();
         args.putParcelable("cuisine", cuisine);
-        mCuisine = cuisine;
-        Log.d("rotation", mCuisine.getName());
-        CuisineItemFragment f = new CuisineItemFragment();
-        Log.d("rotation", args.toString());
-        f.setArguments(args);
-        return f;
+        CuisineItemFragment fragment = new CuisineItemFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -53,6 +47,7 @@ public class CuisineItemFragment extends Fragment implements CompoundButton.OnCh
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_cuisine_item, container, false);
         CheckBox checkBox = v.findViewById(R.id.cuisine_checkbox);
+        mCuisine = getArguments().getParcelable("cuisine");
         checkBox.setText(mCuisine.getName());
         checkBox.setOnCheckedChangeListener(this);
         return v;
