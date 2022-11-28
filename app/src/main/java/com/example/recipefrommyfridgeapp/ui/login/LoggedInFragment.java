@@ -110,13 +110,13 @@ public class LoggedInFragment extends Fragment implements  View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fragment_logged_in_change_ingredient:
-                startActivity(new Intent(requireContext(), ChooseIngredientActivity.class));
+                startActivity(new Intent(getContext(), ChooseIngredientActivity.class));
                 break;
             case R.id.fragment_logged_in_change_cuisine:
-                startActivity(new Intent(requireContext(), CuisineActivity.class));
+                startActivity(new Intent(getContext(), CuisineActivity.class));
                 break;
             case R.id.fragment_logged_in_my_account:
-                startActivity(new Intent(requireContext(), MyAccountActivity.class));
+                startActivity(new Intent(getContext(), MyAccountActivity.class));
                 break;
             case R.id.fragment_logged_in_log_out:
                 loggedInViewModel.logOut(userId);
