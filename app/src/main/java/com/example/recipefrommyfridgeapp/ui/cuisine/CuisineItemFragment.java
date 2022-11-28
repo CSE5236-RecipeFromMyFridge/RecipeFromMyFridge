@@ -1,6 +1,7 @@
 package com.example.recipefrommyfridgeapp.ui.cuisine;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,11 +57,17 @@ public class CuisineItemFragment extends Fragment implements CompoundButton.OnCh
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (compoundButton.getId() == R.id.cuisine_checkbox) {
+            String find = compoundButton.getText().toString();
+            Log.d("checkpoint6", "find: " + find);
+            Log.d("checkpoint6", "mCuisine is: " + mCuisine.getName());
             if (b) {
-                mCuisineSelected.add(mCuisine.getEnName());
+//                mCuisineSelected.add(mCuisine.getEnName());
+                mCuisineSelected.add(find);
             } else {
-                mCuisineSelected.remove(mCuisine.getEnName());
+//                mCuisineSelected.remove(mCuisine.getEnName());
+                mCuisineSelected.remove(find);
             }
+            Log.d("checkpoint6", mCuisineSelected.toString());
         }
     }
 }

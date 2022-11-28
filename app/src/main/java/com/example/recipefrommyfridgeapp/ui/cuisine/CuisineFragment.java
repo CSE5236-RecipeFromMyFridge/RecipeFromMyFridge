@@ -15,9 +15,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
 import com.example.recipefrommyfridgeapp.model.Cuisine;
+import com.example.recipefrommyfridgeapp.model.Ingredient;
 import com.example.recipefrommyfridgeapp.ui.ingredient.ChooseIngredientFragment;
 import com.example.recipefrommyfridgeapp.ui.recipe.ChooseRecipeActivity;
 import com.example.recipefrommyfridgeapp.viewmodel.CuisineViewModel;
+
+import java.util.Arrays;
 
 public class CuisineFragment extends Fragment implements View.OnClickListener {
 
@@ -64,7 +67,12 @@ public class CuisineFragment extends Fragment implements View.OnClickListener {
         if (v.getId() == R.id.choose_cuisine_generate) {
             String[] ingredients = getArguments().getStringArray(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED);
             String[] cuisines = mCuisineViewModel.getCuisineSelectedMutableLiveData().getValue().toArray(new String[0]);
-
+            for (String ingredient : ingredients){
+                Log.d("checkpoint6", "Selected " + ingredient);
+            }
+            for (String cuisine : cuisines){
+                Log.d("checkpoint6", "Selected " + cuisine);
+            }
             Intent intent = new Intent(requireContext(), ChooseRecipeActivity.class);
             intent.putExtra(INTENT_CUISINE_SELECTED, cuisines);
             intent.putExtra(ChooseIngredientFragment.INTENT_INGREDIENT_SELECTED, ingredients);
