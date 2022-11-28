@@ -46,9 +46,20 @@ public class RecipeFragment extends Fragment implements SensorEventListener {
     private SensorManager sm;
     private Sensor mSensor;
 
-    public RecipeFragment(String userId, String recipeId) {
-        id = "" + recipeId;
-        user = "" + userId;
+//    public RecipeFragment(String userId, String recipeId) {
+//        id = "" + recipeId;
+//        user = "" + userId;
+//    }
+
+    public RecipeFragment() {}
+
+    public static RecipeFragment newInstance(String userId, String recipeId){
+        Bundle args = new Bundle();
+        args.putString("userId", userId);
+        args.putString("recipeId", recipeId);
+        RecipeFragment fragment = new RecipeFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -58,10 +69,12 @@ public class RecipeFragment extends Fragment implements SensorEventListener {
         mRecipeViewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         mSavedRecipeViewModel = new ViewModelProvider(this).get(SavedRecipeViewModel.class);
         mLoggedInViewModel = new ViewModelProvider(this).get(LoggedInViewModel.class);
+        id = getArguments().getString("recipeId");
         String recipeId = "" + id;
         Log.d("checkpoint5", "RecipeFragment.onCreate(): " + recipeId);
         mRecipeViewModel.getCurrentRecipe(recipeId);
         mRecipeViewModel.retrieveRecipeIdList();
+        user = getArguments().getString("userId");
         mSavedRecipeViewModel.userSavedRecipe(user);
 
         sm = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
@@ -170,7 +183,7 @@ public class RecipeFragment extends Fragment implements SensorEventListener {
                 .remove(RecipeFragment.this)
                 .commit();
         getParentFragmentManager().popBackStack();
-        Fragment fragment = new RecipeFragment(user, ids.get(idx[0]));
+        Fragment fragment = newInstance(user, ids.get(idx[0]));
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .setReorderingAllowed(true)

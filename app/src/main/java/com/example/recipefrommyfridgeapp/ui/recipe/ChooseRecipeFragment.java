@@ -103,7 +103,7 @@ public class ChooseRecipeFragment extends Fragment {
             holder.CuisineIdTextView.setText(model.getCuisineId());
             holder.itemView.setOnClickListener(v -> {
                 Log.d("checkpoint5", "ChooseRecipeFragment.onBindView: " + userId + ", " + key);
-                Fragment fragment = new RecipeFragment(userId, key);
+                Fragment fragment = RecipeFragment.newInstance(userId, key);
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .setReorderingAllowed(true)
