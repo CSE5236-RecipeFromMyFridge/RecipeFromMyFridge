@@ -20,7 +20,6 @@ public class LoginActivity extends SingleFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         Log.d("checkpoint6", "onCreate: " + Locale.getDefault().getLanguage());
         Log.i("checkpoint2", "LoginActivity.onCreate()");
     }
