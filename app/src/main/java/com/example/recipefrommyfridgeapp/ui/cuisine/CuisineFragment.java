@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.recipefrommyfridgeapp.R;
@@ -41,10 +42,13 @@ public class CuisineFragment extends Fragment implements View.OnClickListener {
         mCuisineViewModel.getCuisineMutableLiveData().observe(getViewLifecycleOwner(), cuisines -> {
             if (cuisines != null) {
                 for (Cuisine c : cuisines) {
-                    getChildFragmentManager().beginTransaction()
-                            .add(R.id.container_cuisine_item, CuisineItemFragment.newInstance(c))
-                            .addToBackStack(null)
-                            .commit();
+                    FragmentManager fm = getChildFragmentManager();
+                    if (fm.findFragmentByTag(c.getEnName()) == null) { //prevent adding of duplicate fragment
+                        fm.beginTransaction()
+                                .add(R.id.container_cuisine_item, CuisineItemFragment.newInstance(c), c.getEnName())
+                                .addToBackStack(null)
+                                .commit();
+                    }
                 }
                 Log.d("checkpoint5", "Successfully get Cuisines list");
             } else {
