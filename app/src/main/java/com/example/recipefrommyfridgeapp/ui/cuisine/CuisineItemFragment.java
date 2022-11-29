@@ -58,14 +58,15 @@ public class CuisineItemFragment extends Fragment implements CompoundButton.OnCh
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (compoundButton.getId() == R.id.cuisine_checkbox) {
             String find = compoundButton.getText().toString();
-            Log.d("checkpoint6", "find: " + find);
+            String[] output = find.split(" - ");
+            Log.d("checkpoint6", "find: " + output[1]);
             Log.d("checkpoint6", "mCuisine is: " + mCuisine.getName());
             if (b) {
 //                mCuisineSelected.add(mCuisine.getEnName());
-                mCuisineSelected.add(find);
+                mCuisineSelected.add(output[1]);
             } else {
 //                mCuisineSelected.remove(mCuisine.getEnName());
-                mCuisineSelected.remove(find);
+                mCuisineSelected.remove(output[1]);
             }
             Log.d("checkpoint6", mCuisineSelected.toString());
         }
