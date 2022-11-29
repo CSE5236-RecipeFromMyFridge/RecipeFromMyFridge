@@ -49,7 +49,7 @@ public class CuisineItemFragment extends Fragment implements CompoundButton.OnCh
         View v = inflater.inflate(R.layout.fragment_cuisine_item, container, false);
         CheckBox checkBox = v.findViewById(R.id.cuisine_checkbox);
         mCuisine = getArguments().getParcelable("cuisine");
-        checkBox.setText(mCuisine.getName());
+        checkBox.setText(mCuisine.getZhName() + " - " + mCuisine.getEnName());
         checkBox.setOnCheckedChangeListener(this);
         return v;
     }
